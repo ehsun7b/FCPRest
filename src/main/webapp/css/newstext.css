@@ -1,0 +1,39 @@
+body {
+	direction: rtl;
+}
+
+div.text-news {
+	direction: rtl;
+}
+
+div.date-news {
+	float: left;
+	font-size: 10px;
+	color: gray;
+}
+
+div.title-news {
+	font-size: 20px;
+	padding: 10px;
+}
+
+div.image-news {
+	padding: 1px 20px 20px 1px;
+	
+	float: left;	
+}
+
+img {
+	box-shadow: 5px 5px 3px 0px #AAA;
+}
+
+div.donation {
+	border-top: 1px solid black;
+	padding: 30px;
+	background-color: #CFCFCF;
+	text-align: center;
+}
+
+div.donation form {
+	text-align: center;
+}
