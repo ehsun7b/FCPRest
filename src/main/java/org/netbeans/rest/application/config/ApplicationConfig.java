@@ -24,6 +24,8 @@ public class ApplicationConfig extends Application {
    * If required, comment out calling this method in getClasses().
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.ArteshSorkhNews.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.OfficialWebsiteNews.class);
   }
   
 }

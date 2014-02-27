@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -54,7 +55,7 @@ public class OfficialWebsiteNews {
   @GET
   @Path("jsonp")
   @Produces("application/javascript; charset=UTF-8")
-  public String newsJsonp() throws IOException {
+  public String newsJsonp(@QueryParam("callback") String callback) throws IOException {
 
     if (cacheIsOld()) {
       try {
@@ -68,7 +69,7 @@ public class OfficialWebsiteNews {
 
     Gson gson = new Gson();
     String json = gson.toJson(cache);
-    return "callback(".concat(json).concat(")");
+    return callback.concat("(").concat(json).concat(")");
   }
 
 

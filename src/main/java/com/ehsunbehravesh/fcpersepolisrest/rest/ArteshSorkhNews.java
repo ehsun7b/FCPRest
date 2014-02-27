@@ -2,12 +2,6 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.news.News;
 import com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet;
-import static com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet.CACHE_MAX_AGE;
-import static com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet.MAX_ITEMS;
-import static com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet.RSS_URL;
-import static com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet.cache;
-import static com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet.cacheDate;
-import static com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet.cacheLock;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,7 +14,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.QueryParam;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -67,7 +61,7 @@ public class ArteshSorkhNews {
   @GET
   @Path("jsonp")
   @Produces("application/javascript; charset=UTF-8")
-  public String newsJsonp() throws IOException {
+  public String newsJsonp(@QueryParam("callback") String callback) throws IOException {
 
     if (cacheIsOld()) {
       try {
@@ -78,10 +72,10 @@ public class ArteshSorkhNews {
         }
       }
     }
-
+    
     Gson gson = new Gson();
     String json = gson.toJson(cache);
-    return "callback(".concat(json).concat(")");
+    return callback.concat("(").concat(json).concat(")");
   }
 
   private void load() throws ParserConfigurationException, MalformedURLException, SAXException, IOException {
