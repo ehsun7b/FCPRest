@@ -48,7 +48,7 @@ public class NewsTextServlet extends HttpServlet {
       log.info("URL NOT found in Cache!");
       try {
         NewsDescriptionFetch fetch = NewsDescriptionFetchFactory.generateNewsDescriptionFetch(url);
-        String description = fetch.loadDescription();
+        String description = fetch.loadDescription();        
         String date = fetch.loadDate();
         String image = fetch.loadImage();
         log.log(Level.INFO, "fetch content: {0} url: {1}", new Object[]{description, url});
