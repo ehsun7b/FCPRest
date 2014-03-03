@@ -23,7 +23,7 @@ div.image-news {
 	float: left;	
 }
 
-img {
+div.image-news img {
 	box-shadow: 5px 5px 3px 0px #AAA;
 }
 
@@ -36,4 +36,8 @@ div.donation {
 
 div.donation form {
 	text-align: center;
+}
+
+div.facebook {
+  text-align: center;
 }

@@ -1,0 +1,11 @@
+body {
+  direction: rtl;
+  background-color: #FFAAAA;
+  margin: 20px;
+}
+
+div#main_container {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}

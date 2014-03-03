@@ -1,13 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport"
-          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+    <script src="js/newstext.js"></script>
     <!-- JQM -->
     <link rel="stylesheet"
           href="js/jquery.mobile-1.3.2/jquery.mobile.structure-1.3.2.min.css" />
@@ -35,6 +34,15 @@
           </div>
         </c:if>
         <div class="text-news">${news.description}</div>
+        <br/>
+        <div class="facebook">
+          <a id="facebook" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+            <img src="img/fbshare.png" alt="Share on Facebook"/>
+          </a>
+          <script type="text/javascript">
+            setShareLink();
+          </script>
+        </div>
       </div>
 
       <div class="donation">

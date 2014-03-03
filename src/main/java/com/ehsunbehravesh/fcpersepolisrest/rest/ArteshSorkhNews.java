@@ -1,7 +1,6 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.news.News;
-import com.ehsuhnbehravesh.persepolis.news.servlets.ArteshNewsServlet;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +30,7 @@ import org.xml.sax.SAXException;
 @Path("artesh")
 public class ArteshSorkhNews {
 
-  private static final Logger log = Logger.getLogger(ArteshNewsServlet.class.getName());
+  private static final Logger log = Logger.getLogger(ArteshSorkhNews.class.getName());
   public static final String RSS_URL = "http://www.arteshesorkh.com/index/feed_all/new_rss";
   public static List<News> cache = new ArrayList<>();
   public static Date cacheDate;
@@ -75,6 +74,11 @@ public class ArteshSorkhNews {
     
     Gson gson = new Gson();
     String json = gson.toJson(cache);
+    
+    if (callback == null) {
+      callback = "";
+    }
+    
     return callback.concat("(").concat(json).concat(")");
   }
 
