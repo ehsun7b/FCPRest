@@ -28,18 +28,18 @@ import org.xml.sax.SAXException;
  *
  * @author ehsun7b
  */
-@Path("varzesh3")
-public class Varzesh3News {
-
-  private static final Logger log = Logger.getLogger(Varzesh3News.class.getName());
-  public static final String RSS_URL = "http://www.varzesh3.com/rss";
+@Path("irna")
+public class IRNANews {
+  
+  private static final Logger log = Logger.getLogger(IRNANews.class.getName());
+  public static final String RSS_URL = "http://www.irna.ir/fa/rss.aspx?kind=15&area=0";
   public static List<News> cache = new ArrayList<>();
   public static Date cacheDate;
   public static final Object cacheLock = new Object();
   public static final long CACHE_MAX_AGE = 10 * 60 * 1000; // milliseconds //
   // first is minutes
   public static final int MAX_ITEMS = 15;
-
+  
   @GET
   @Path("json")
   @Produces("application/json; charset=UTF-8")

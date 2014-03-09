@@ -1,11 +1,109 @@
 body {
   direction: rtl;
-  background-color: #FFAAAA;
-  margin: 20px;
+  background-color: #FFF;
+  margin: 0px;
 }
 
 div#main_container {
   background-color: white;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 0px;  
+}
+
+div#header {
+  height: 200px;
+  background-image: url(/img/stripe.png);
+  box-shadow: 2px 2px 2px #BBB;
+}
+
+div#logo {  
+  float: right;
+  position: relative;
+  top: 20px;
+  right: 20px;
+}
+
+div#results {
+  height: 200px;
+  position: relative;
+  top: 2px; left: 2px;
+  overflow: hidden;
+  float: left;  
+  font: normal normal 10px tahoma;
+}
+
+table#tblMatchInfo {
+  border-spacing: 1px;
+  text-shadow: 1px 1px 1px #EEE;
+}
+
+table#tblMatchInfo td {
+  text-align: center;
+  padding: 0px;
+}
+
+table#tblMatchInfo td#preMatchTitle, table#tblMatchInfo td#nextMatchTitle {
+  font-weight: bold;
+}
+
+table#tblMatchInfo td#preMatchInfo, table#tblMatchInfo td#nextMatchInfo {
+  font-size: 8px;
+}
+
+table#tblMatchInfo td#preMatchInfo {
+  padding-bottom: 5px;
+}
+
+table#tblMatchInfo td#preHomeScore, table#tblMatchInfo td#preAwayScore {
+  font-size: 14px;
+}
+
+div#results img {
+  width: 35px;
+}
+
+div#ranking {
+  float: left;
+  margin: 10px;
+  font: normal normal 12px tahoma;
+}
+
+table#tblRanking {
+  border-spacing: 3px;
+  background-image: url(/img/stripe2.png);
+  border: 1px solid #C3E3CB;
+  box-shadow: 2px 2px 2px #C3E3CB;
+}
+
+table#tblRanking th {
+  color: #7BBD8A;
+}
+
+table#tblRanking td {  
+  padding: 1px;   
+  text-align: center;
+}
+
+div.news_group {
+  margin: 30px;
+}
+
+div.news_group_header {
+  font: normal bold 20px arial;
+  margin: 2px;
+  text-shadow: 1px 1px 1px #BBF;
+}
+
+div.news_group_content {
+  
+}
+
+div.news_group_content a {
+  text-decoration: none;
+  line-height: 30px;
+  text-shadow: 1px 1px 1px #bbb;
+  color: red;
+}
+
+div.news_group_content a:visited {
+  color: #b81a1a;
 }

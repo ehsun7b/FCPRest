@@ -4,6 +4,9 @@ $(function() {
   showOfficialNews();
   showVarzesh3News();
   showArteshNews();
+  showIsnaNews();
+  showIrnaNews();
+  showKhabarOnlineNews();
 });
 
 function loadGeneralNews(newsUrl, callback) {
@@ -27,13 +30,29 @@ function loadVarzesh3News(callback) {
   loadGeneralNews("/rest/varzesh3/json", callback);
 }
 
-function showGeneralNews(data, board) {
+function loadIsnaNews(callback) {
+  loadGeneralNews("/rest/isna/json", callback);
+}
+
+function loadIrnaNews(callback) {
+  loadGeneralNews("/rest/irna/json", callback);
+}
+
+function loadKhabarOnlineNews(callback) {
+  loadGeneralNews("/rest/khabaronline/json", callback);
+}
+
+function showGeneralNews(data, board, internal) {
   board.html("");
   console.log(data);
   var len = Math.min(data.length, SIZE);
   for (var i = 0; i < len; ++i) {
     var news = data[i];
-    board.append($("<div/>", {"class": "news"}).append($("<a/>", {"href": "newstext?url=" + news.link + "&title=" + news.title}).append(news.title)));
+    if (internal) {
+      board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: "newstext?url=" + news.link + "&title=" + news.title}).append(news.title)));
+    } else {
+      board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: news.link}).append(news.title)));
+    }
   }
 }
 
@@ -55,5 +74,20 @@ function showVarzesh3News() {
   });
 }
 
+function showIsnaNews() {
+  loadIsnaNews(function(data) {
+    showGeneralNews(data, $("#isna_news_content"));
+  });
+}
 
+function showIrnaNews() {
+  loadIrnaNews(function(data) {
+    showGeneralNews(data, $("#irna_news_content"));
+  });
+}
 
+function showKhabarOnlineNews() {
+  loadKhabarOnlineNews(function(data) {
+    showGeneralNews(data, $("#khabaronline_news_content"));
+  });
+}

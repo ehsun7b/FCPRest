@@ -25,8 +25,13 @@ public class ApplicationConfig extends Application {
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.ArteshSorkhNews.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.IRNANews.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.ISNANews.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.KhabarOnlineNews.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Live.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.MatchInfo.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.OfficialWebsiteNews.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Ranking.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Varzesh3News.class);
   }
   

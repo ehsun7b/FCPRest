@@ -1,51 +1,61 @@
-package com.ehsuhnbehravesh.persepolis.news.servlets;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.net.PreviousAndNextMatchFetch;
 import com.ehsuhnbehravesh.persepolis.news.PreviousNextMatchInfo;
 import com.google.gson.Gson;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import java.util.Date;
+import java.util.logging.Logger;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
-@WebServlet(urlPatterns = {"/matchinfo"})
-@SuppressWarnings("serial")
-public class MatchInfoServlet extends HttpServlet {
+/**
+ *
+ * @author ehsun7b
+ */
+@Path("matchinfo")
+public class MatchInfo {
 
-  private static final Logger log = Logger.getLogger(MatchInfoServlet.class.getName());
+  private static final Logger log = Logger.getLogger(MatchInfo.class.getName());
 
   public static final long CACHE_MAX_AGE = 120 * 60 * 1000; // milliseconds //
   public static Date cacheDate;
   public static final Object cacheLock = new Object();
   private PreviousNextMatchInfo cache = null;
 
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-          throws ServletException, IOException {
-
-    resp.setContentType("application/json");
-    resp.setCharacterEncoding("UTF-8");
-
+  @GET
+  @Path("json")
+  @Produces("application/json; charset=UTF-8")
+  public PreviousNextMatchInfo json() {
+    
     if (cacheIsOld()) {
       load();
     }
-
-    PrintWriter writer = resp.getWriter();
+    
+    return cache;
+  }
+  
+  
+  @GET
+  @Path("jsonp")
+  @Produces("application/javascript; charset=UTF-8")
+  public String jsonp(@QueryParam("callback") String callback) {
+    
+    if (cacheIsOld()) {
+      load();
+    }
+    
     Gson gson = new Gson();
     String json = gson.toJson(cache);
-    writer.write(req.getParameter("callback") + "(".concat(json).concat(")"));
 
-    resp.getWriter().close();
-    resp.flushBuffer();
+    if (callback == null) {
+      callback = "";
+    }
 
+    return callback.concat("(").concat(json).concat(")");
   }
-
+  
   private void load() {
     PreviousAndNextMatchFetch fetch = new PreviousAndNextMatchFetch();
     synchronized (cacheLock) {

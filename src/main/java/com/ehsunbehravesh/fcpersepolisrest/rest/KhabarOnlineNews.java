@@ -28,11 +28,11 @@ import org.xml.sax.SAXException;
  *
  * @author ehsun7b
  */
-@Path("varzesh3")
-public class Varzesh3News {
+@Path("khabaronline")
+public class KhabarOnlineNews {
 
-  private static final Logger log = Logger.getLogger(Varzesh3News.class.getName());
-  public static final String RSS_URL = "http://www.varzesh3.com/rss";
+  private static final Logger log = Logger.getLogger(KhabarOnlineNews.class.getName());
+  public static final String RSS_URL = "http://khabaronline.ir/RSS/Service/sport";
   public static List<News> cache = new ArrayList<>();
   public static Date cacheDate;
   public static final Object cacheLock = new Object();
@@ -93,7 +93,7 @@ public class Varzesh3News {
       if (items.getLength() > 0) {
         cache.clear();
       }
-      
+
       for (int i = 0; i < items.getLength(); i++) {
         try {
           Element item = (Element) items.item(i);
@@ -106,7 +106,7 @@ public class Varzesh3News {
           news.setTitle(title.getTextContent());
           news.setDescription(description.getTextContent());
           news.setLink(link.getTextContent());
-          news.setPublishDate(pubDate.getTextContent());
+          //news.setPublishDate(pubDate.getTextContent());
 
           if (isPersepolisNews(news) && cache.size() < MAX_ITEMS) {
             cache.add(news);
@@ -129,7 +129,7 @@ public class Varzesh3News {
   }
 
   private boolean isPersepolisNews(News news) {
-    PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();    
-    return matcher.match(news);        
+    PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();
+    return matcher.match(news);
   }
 }
