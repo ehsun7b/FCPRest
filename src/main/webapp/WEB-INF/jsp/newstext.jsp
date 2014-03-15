@@ -8,10 +8,8 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
     <script src="js/newstext.js"></script>
     <!-- JQM -->
-    <link rel="stylesheet"
-          href="js/jquery.mobile-1.3.2/jquery.mobile.structure-1.3.2.min.css" />
-    <link rel="stylesheet"
-          href="js/jquery.mobile-1.3.2/fcpersepolis.min.css" />
+    <link rel="stylesheet" href="js/jquery.mobile-1.3.2/jquery.mobile.structure-1.3.2.min.css" />
+    <link rel="stylesheet" href="js/jquery.mobile-1.3.2/fcpersepolis.min.css" />
     <script src="js/jquery.mobile-1.3.2/jquery-1.9.1.min.js"></script>
     <script src="js/jquery.mobile-1.3.2/jquery.mobile-1.3.2.min.js"></script>
     <!-- /JQM -->

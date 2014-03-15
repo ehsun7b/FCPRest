@@ -1,0 +1,53 @@
+body {
+  direction: rtl;
+}
+
+div#results {
+  text-align: center;
+}
+
+table#tblMatchInfo {    
+  margin: 0px auto;
+}
+
+table#tblMatchInfo td {
+  text-align: center;
+}
+
+div#map-canvas {
+  height: 300px;
+  width: 100%;
+  margin: 5px auto;
+}
+
+div.map {
+  text-align: center;
+}
+
+div#ranking {
+  text-align: center;
+}
+
+table#tblRanking {
+  margin: 5px auto;
+  width: 99%;
+  box-shadow: 2px 2px 2px #AAA;
+}
+
+table#tblRanking td {
+  text-align: center;
+}
+
+table#tblRanking tr:nth-child(even) {
+  background: #CCC;
+}
+table#tblRanking tr:nth-child(odd) {
+  background: #FFF;
+}
+
+div.advert {
+  text-align: center;
+  padding: 5px 0px;
+}
+
+

@@ -1,18 +1,22 @@
 body {
   direction: rtl;
   background-color: #FFF;
-  margin: 0px;
+  background-image: url(/img/stripe.png);
+  background-attachment: fixed;
+  margin: 6px;
 }
 
 div#main_container {
-  background-color: white;
   padding: 0px;  
+  width: 800px;
+  margin: 0px auto;
+  background-color: white;
+  box-shadow: 0px 0px 4px #BBB;
 }
 
 div#header {
-  height: 200px;
-  background-image: url(/img/stripe.png);
-  box-shadow: 2px 2px 2px #BBB;
+  height: 200px;  
+  background: linear-gradient(#EEE, transparent);  
 }
 
 div#logo {  
@@ -22,18 +26,17 @@ div#logo {
   right: 20px;
 }
 
-div#results {
-  height: 200px;
-  position: relative;
-  top: 2px; left: 2px;
-  overflow: hidden;
-  float: left;  
-  font: normal normal 10px tahoma;
+
+div#results {    
+  margin: 10px auto;
+  width: 100%;
+  font: normal normal 12px tahoma;    
 }
 
 table#tblMatchInfo {
   border-spacing: 1px;
   text-shadow: 1px 1px 1px #EEE;
+  margin: 0px auto;
 }
 
 table#tblMatchInfo td {
@@ -43,10 +46,11 @@ table#tblMatchInfo td {
 
 table#tblMatchInfo td#preMatchTitle, table#tblMatchInfo td#nextMatchTitle {
   font-weight: bold;
+  font-size: 16px;
 }
 
 table#tblMatchInfo td#preMatchInfo, table#tblMatchInfo td#nextMatchInfo {
-  font-size: 8px;
+  font-size: 12px;
 }
 
 table#tblMatchInfo td#preMatchInfo {
@@ -58,11 +62,10 @@ table#tblMatchInfo td#preHomeScore, table#tblMatchInfo td#preAwayScore {
 }
 
 div#results img {
-  width: 35px;
+  
 }
 
-div#ranking {
-  float: left;
+div#ranking {    
   margin: 10px;
   font: normal normal 12px tahoma;
 }
@@ -72,6 +75,7 @@ table#tblRanking {
   background-image: url(/img/stripe2.png);
   border: 1px solid #C3E3CB;
   box-shadow: 2px 2px 2px #C3E3CB;
+  margin: 0px auto;
 }
 
 table#tblRanking th {
@@ -84,26 +88,40 @@ table#tblRanking td {
 }
 
 div.news_group {
-  margin: 30px;
+  margin: 20px 60px;
 }
 
 div.news_group_header {
-  font: normal bold 20px arial;
+  font: normal bold 14px arial;
   margin: 2px;
   text-shadow: 1px 1px 1px #BBF;
 }
 
 div.news_group_content {
-  
+  line-height: 30px;
 }
 
 div.news_group_content a {
-  text-decoration: none;
-  line-height: 30px;
+  text-decoration: none;  
   text-shadow: 1px 1px 1px #bbb;
   color: red;
+  font: normal bold 18px arial;
 }
 
 div.news_group_content a:visited {
   color: #b81a1a;
+}
+
+div.next_match_location {  
+  text-align: center;
+  padding: 2px;
+  font: normal bold 12px tahoma;
+  margin: 10px auto;
+}
+
+div.next_match_location div#map-canvas {  
+  margin: 0px auto;
+  width: 400px;
+  height: 200px;
+  max-width: 100%; 
 }
