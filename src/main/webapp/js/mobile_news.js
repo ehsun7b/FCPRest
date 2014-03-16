@@ -1,4 +1,5 @@
 var SIZE = 30;
+var IMAGE_SIZE = {width: 100, height: 100};
 
 $(function() {
   $("#pageOfficialNews").on("pageshow", function(event) {
@@ -8,22 +9,22 @@ $(function() {
   $("#pageArteshNews").on("pageshow", function(event) {
     showMobileArteshNews();
   });
-  
+
   $("#pageVarzesh3News").on("pageshow", function(event) {
     showMobileVarzesh3News();
   });
-  
+
   $("#pageIsnaNews").on("pageshow", function(event) {
     showMobileIsnaNews();
   });
-  
+
   $("#pageIrnaNews").on("pageshow", function(event) {
     showMobileIrnaNews();
   });
-  
+
   $("#pageKhabarOnlineNews").on("pageshow", function(event) {
     showMobileKhabarOnlineNews();
-  });      
+  });
 });
 
 function showMobileGeneralNews(data, board) {
@@ -31,17 +32,17 @@ function showMobileGeneralNews(data, board) {
   console.log(data);
   var len = Math.min(data.length, SIZE);
   for (var i = 0; i < len; ++i) {
-    var news = data[i];
-    board.append($("<li/>", {"class": "news", "data-icon": "false"}).append($("<a/>", {target: "_blank", href: "newstext?url=" + news.link + "&title=" + news.title}).append(news.title)));
+    var news = data[i];    
+    board.append($("<li/>", {"class": "news", "data-icon": "false"}).append($("<a/>", {target: "_blank", href: "newstext?url=" + news.link + "&title=" + news.title}).append(news.title).append(news.image !== undefined ? $("<img/>", {src: "rest/image/thumbnail/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.image)}) : $("<img/>", {src: "rest/image/link/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.link)}))));
     board.listview('refresh', true);
   }
 }
 
-function showMobileOfficialNews() {  
+function showMobileOfficialNews() {
   $.mobile.loading('show');
   loadOfficialNews(function(data) {
     $.mobile.loading('hide');
-    showMobileGeneralNews(data, $("#official_news_content"));    
+    showMobileGeneralNews(data, $("#official_news_content"));
   });
 }
 

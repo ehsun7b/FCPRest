@@ -2,6 +2,8 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.news.News;
 import com.ehsuhnbehravesh.persepolis.news.PersepolisNewsMatcher;
+import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetch;
+import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetchFactory;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -107,7 +109,7 @@ public class Varzesh3News {
           news.setDescription(description.getTextContent());
           news.setLink(link.getTextContent());
           news.setPublishDate(pubDate.getTextContent());
-
+          
           if (isPersepolisNews(news) && cache.size() < MAX_ITEMS) {
             cache.add(news);
           }

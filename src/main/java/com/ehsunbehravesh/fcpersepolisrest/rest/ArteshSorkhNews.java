@@ -1,6 +1,8 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.news.News;
+import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetch;
+import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetchFactory;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -96,10 +98,8 @@ public class ArteshSorkhNews {
         try {
           Element item = (Element) items.item(i);
           Element title = (Element) item.getElementsByTagName("title").item(0);
-          Element description = (Element) item.getElementsByTagName(
-                  "description").item(0);
-          Element pubDate = (Element) item.getElementsByTagName("pubDate")
-                  .item(0);
+          Element description = (Element) item.getElementsByTagName("description").item(0);
+          Element pubDate = (Element) item.getElementsByTagName("pubDate").item(0);
           Element link = (Element) item.getElementsByTagName("link").item(0);
 
           News news = new News();
@@ -107,7 +107,16 @@ public class ArteshSorkhNews {
           news.setDescription(description.getTextContent());
           news.setLink(link.getTextContent());
           news.setPublishDate(pubDate.getTextContent());
-
+          
+          /*
+          try {
+            NewsDescriptionFetch fetch = NewsDescriptionFetchFactory.generateNewsDescriptionFetch(news.getLink());
+            news.setImage(fetch.loadImage());
+          } catch (Exception ex) {
+            log.log(Level.SEVERE, "Finding image of artesh news failed. {0}", ex.getMessage());
+          }*/
+          
+          
           cache.add(news);
         } catch (DOMException ex) {
           log.log(Level.SEVERE, "Error in loading RSS: " + RSS_URL + " {0}", ex.getMessage());

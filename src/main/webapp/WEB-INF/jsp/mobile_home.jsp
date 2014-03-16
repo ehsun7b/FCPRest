@@ -23,17 +23,6 @@
     <script src="js/mobile_news.js"></script>
     <link rel="stylesheet" type="text/css" href="css/mobile.css"/>    
     <title>FC Persepolis</title>
-
-    <!-- google adsense -->
-    <script type="text/javascript"><!--
-google_ad_client = "ca-pub-1305937802991389";
-      /* FCPersepolisMobileBanner */
-      google_ad_slot = "7953692798";
-      google_ad_width = 320;
-      google_ad_height = 100;
-//-->
-    </script>    
-    <!-- -------------- -->
   </head>
   <body>
 
@@ -52,13 +41,20 @@ google_ad_client = "ca-pub-1305937802991389";
         </div>
       </div>
 
-      <div class="advert">
-        
+      <div class="advert" id="home_adsense">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- FCPersepolisMobileBanner -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:100px"
+             data-ad-client="ca-pub-1305937802991389"
+             data-ad-slot="7953692798"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
 
       <div data-role="footer" data-id="footer" data-position="fixed" data-theme="a">
-        <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-        </script>
+
       </div>
       <!-- footer -->
     </div>
@@ -81,7 +77,13 @@ google_ad_client = "ca-pub-1305937802991389";
         </div>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" data-rel="back">صفحه اصلی</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>
 
@@ -100,7 +102,13 @@ google_ad_client = "ca-pub-1305937802991389";
         </div>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" data-rel="back">صفحه اصلی</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>
 
@@ -122,7 +130,13 @@ google_ad_client = "ca-pub-1305937802991389";
         </div>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" data-rel="back">صفحه اصلی</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>    
 
@@ -137,7 +151,14 @@ google_ad_client = "ca-pub-1305937802991389";
         <ul data-role="listview" id="official_news_content"></ul>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
+            <li><a data-rol="button" data-rel="back">اخبار</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>    
 
@@ -152,7 +173,14 @@ google_ad_client = "ca-pub-1305937802991389";
         <ul data-role="listview" id="artesh_news_content"></ul>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
+            <li><a data-rol="button" data-rel="back">اخبار</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>
 
@@ -167,7 +195,14 @@ google_ad_client = "ca-pub-1305937802991389";
         <ul data-role="listview" id="varzesh3_news_content"></ul>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
+            <li><a data-rol="button" data-rel="back">اخبار</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>
 
@@ -182,7 +217,14 @@ google_ad_client = "ca-pub-1305937802991389";
         <ul data-role="listview" id="isna_news_content"></ul>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
+            <li><a data-rol="button" data-rel="back">اخبار</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div> 
 
@@ -197,7 +239,14 @@ google_ad_client = "ca-pub-1305937802991389";
         <ul data-role="listview" id="irna_news_content"></ul>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
+            <li><a data-rol="button" data-rel="back">اخبار</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>
 
@@ -212,7 +261,14 @@ google_ad_client = "ca-pub-1305937802991389";
         <ul data-role="listview" id="khabaronline_news_content"></ul>
       </div>
 
-      <div data-role="footer" data-id="footer" data-theme="a"></div>
+      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
+            <li><a data-rol="button" data-rel="back">اخبار</a></li>
+          </ul>
+        </div>        
+      </div>
       <!-- footer -->
     </div>
 

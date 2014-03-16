@@ -2,12 +2,16 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.net.OfficialWebsiteNewsFetch;
 import com.ehsuhnbehravesh.persepolis.news.News;
+import com.ehsunbehravesh.utils.image.ThumbnailUtils;
 import com.google.gson.Gson;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -32,6 +36,7 @@ public class OfficialWebsiteNews {
   public static final long CACHE_MAX_AGE = 10 * 60 * 1000; // milliseconds //
   // first is minutes
   public static final int MAX_ITEMS = 15;
+  private final Dimension thumbnailSize = new Dimension(60, 30);
 
   @Path("json")
   @GET
@@ -75,13 +80,11 @@ public class OfficialWebsiteNews {
     
     return callback.concat("(").concat(json).concat(")");
   }
-
-
   
   private void load() throws ParserConfigurationException, MalformedURLException, SAXException, IOException {
     synchronized (cacheLock) {
       OfficialWebsiteNewsFetch fetch = new OfficialWebsiteNewsFetch(URL);
-      List<News> news = fetch.fetch();
+      List<News> news = fetch.fetch();      
       if (news.size() > 0) {
         cache.clear();
         cache = news;
@@ -97,5 +100,5 @@ public class OfficialWebsiteNews {
     Date now = new Date();
     long diff = now.getTime() - cacheDate.getTime();
     return (diff > CACHE_MAX_AGE);
-  }
+  }  
 }

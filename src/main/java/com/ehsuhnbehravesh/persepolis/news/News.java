@@ -7,7 +7,7 @@ public class News {
   private String description;
   private String publishDate;
   private long firstLikeTime;
-  private String image;
+  private String image;  
 
   public String getImage() {
     return image;

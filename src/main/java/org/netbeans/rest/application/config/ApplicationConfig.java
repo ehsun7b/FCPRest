@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Direction.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.IRNANews.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.ISNANews.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Image.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.KhabarOnlineNews.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Live.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.MatchInfo.class);
