@@ -8,7 +8,7 @@ $(function() {
   });
 });
 
-function initialize() {
+function mapInitialize() {
   /*
    var statiumTitle = "ورزشگاه وطنی";
    var link = "https://www.google.com/maps/place/Vatani+Satadium/@36.4663282,52.8618202,18z/data=!4m2!3m1!1s0x3f855d25183473f1:0x566bd441a5a01a3b";   
@@ -45,7 +45,7 @@ function initialize() {
   });*/
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+//google.maps.event.addDomListener(window, 'load', initialize);
 
 
 function showTravelingTime(board) {

@@ -1,4 +1,5 @@
 var SIZE = 10;
+var IMAGE_SIZE = {width: 80, height: 80};
 
 $(function() {
   showOfficialNews();
@@ -15,7 +16,9 @@ function showGeneralNews(data, board) {
   var len = Math.min(data.length, SIZE);
   for (var i = 0; i < len; ++i) {
     var news = data[i];
-    board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: news.link}).append(news.title)));
+    var image = news.image !== undefined ? $("<img/>", {src: "rest/image/thumbnail/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.image)})
+            : $("<img/>", {src: "rest/image/link/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.link)});
+    board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: news.link}).append(news.title)).append(image));
   }
 }
 

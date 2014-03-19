@@ -26,43 +26,43 @@ div#logo {
   right: 20px;
 }
 
-
 div#results {    
   margin: 10px auto;
   width: 100%;
   font: normal normal 12px tahoma;    
 }
 
-table#tblMatchInfo {
+table#tblMatchInfo, table#tblPreMatchInfo, table#tblNextMatchInfo {
   border-spacing: 1px;
   text-shadow: 1px 1px 1px #EEE;
   margin: 0px auto;
+  font-family: tahoma;
 }
 
-table#tblMatchInfo td {
+table#tblMatchInfo td, table#tblPreMatchInfo td, table#tblNextMatchInfo td {
   text-align: center;
   padding: 0px;
 }
 
-table#tblMatchInfo td#preMatchTitle, table#tblMatchInfo td#nextMatchTitle {
+td#preMatchTitle, td#nextMatchTitle {
   font-weight: bold;
   font-size: 16px;
 }
 
-table#tblMatchInfo td#preMatchInfo, table#tblMatchInfo td#nextMatchInfo {
+td#preMatchInfo, td#nextMatchInfo {
   font-size: 12px;
 }
 
-table#tblMatchInfo td#preMatchInfo {
+td#preMatchInfo {
   padding-bottom: 5px;
 }
 
-table#tblMatchInfo td#preHomeScore, table#tblMatchInfo td#preAwayScore {
+td#preHomeScore, td#preAwayScore {
   font-size: 14px;
 }
 
 div#results img {
-  
+
 }
 
 div#ranking {    
@@ -71,20 +71,34 @@ div#ranking {
 }
 
 table#tblRanking {
-  border-spacing: 3px;
-  background-image: url(/img/stripe2.png);
-  border: 1px solid #C3E3CB;
-  box-shadow: 2px 2px 2px #C3E3CB;
+  border-spacing: 3px;  
+  border: 1px solid #CCC;
+  box-shadow: 2px 2px 2px #EEE;
   margin: 0px auto;
+  width: 95%;
+}
+
+table#tblRanking tr:nth-child(even) {
+  background: #EEE;
+}
+
+table#tblRanking tr:nth-child(odd) {
+  background: #FFF;
+}
+
+table#tblRanking tr:hover {
+  outline: 1px dotted red;
 }
 
 table#tblRanking th {
-  color: #7BBD8A;
+  color: #000;
+  text-align: center;
 }
 
 table#tblRanking td {  
   padding: 1px;   
   text-align: center;
+  cursor: pointer;
 }
 
 div.news_group {
@@ -101,11 +115,29 @@ div.news_group_content {
   line-height: 30px;
 }
 
+div.news_group_content div.news {  
+  padding: 5px;
+  margin: 5px 1px;
+  background-color: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px #DDD;
+  min-height: 50px;
+}
+
+div.news img {
+  display: block;
+  margin-right: auto;    
+}
+
 div.news_group_content a {
+  margin: 2px 5px;
+  max-width: 500px;
+  float: right;  
   text-decoration: none;  
   text-shadow: 1px 1px 1px #bbb;
   color: red;
-  font: normal bold 18px arial;
+  font: normal bold 12px tahoma;
 }
 
 div.news_group_content a:visited {
@@ -125,3 +157,89 @@ div.next_match_location div#map-canvas {
   height: 200px;
   max-width: 100%; 
 }
+
+/* TABS */
+.tab_wrapper {
+
+}
+#tabs {
+  width: 770px;
+  height:30px; 
+  border-bottom: solid 1px #CCC;
+  padding-right: 2px;
+  margin-top: 30px;  
+  margin-bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+a {cursor:pointer;}
+
+#tabs li {
+  float:right; 
+  list-style:none; 
+  border-top:1px solid #ccc; 
+  border-left:1px solid #ccc; 
+  border-right:1px solid #ccc; 
+  margin-right:5px; 
+  border-top-left-radius:3px;  
+  border-top-right-radius:3px;
+  outline:none;
+}
+
+#tabs li a {
+  font-family:tahoma; 
+  font-size: small;
+  font-weight: bold; 
+  color: #5685bc;;
+  padding-top: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 8px; 
+  display:block; 
+  background: #FFF;
+  border-top-left-radius:3px; 
+  border-top-right-radius:3px; 
+  text-decoration:none;
+  outline:none;
+
+}
+
+#tabs li a.inactive{
+  padding-top:5px;
+  padding-bottom:8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color:#666666;
+  background: #EEE;
+  outline:none;
+  border-bottom: solid 1px #CCC;
+
+}
+
+#tabs li a:hover, #tabs li a.inactive:hover {
+  color: #5685bc;
+  outline:none;
+}
+
+.tab_container {
+  clear:both;           
+  width:750px; 
+  padding: 10px;
+  border-left: solid 1px #CCC;
+  border-right: solid 1px #CCC;
+  border-bottom: solid 1px #CCC;
+  text-align:right;  
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 0px 0px 4px 4px;
+}
+
+.tab_container h2 { margin-left: 15px;  margin-right: 15px;  margin-bottom: 10px; color: #5685bc; }
+
+.tab_container p { margin-left: 15px; margin-right: 15px;  margin-top: 10px; margin-bottom: 10px; line-height: 1.3; font-size: small; }
+
+.tab_container ul { margin-left: 25px; font-size: small; line-height: 1.4; list-style-type: disc; }
+
+.tab_container li { padding-bottom: 5px; margin-left: 5px;}
+
+/* ---- */
