@@ -9,13 +9,17 @@
     <script type="text/javascript" src="/js/news.js"></script>
     <script type="text/javascript" src="/js/desktop_news.js"></script>
     <script type="text/javascript" src="/js/results.js"></script>
+    <script type="text/javascript" src="/js/newspaper.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="js/stadium_map.js"></script>
   </head>
-  <body>
+  <body>    
     <div id="main_container">
       <div id="header">
         <div id="logo"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></div>
+        <div id="newspaper">
+          <a id="newspaper_thumbnail" href="/rest/newspaper/pdf"></a>
+        </div>
       </div>      
 
       <div class="tab_wrapper">

@@ -1,7 +1,7 @@
 body {
   direction: rtl;
   background-color: #FFF;
-  background-image: url(/img/stripe.png);
+  background-image: url(/img/honey_im_subtle.png);
   background-attachment: fixed;
   margin: 6px;
 }
@@ -11,7 +11,7 @@ div#main_container {
   width: 800px;
   margin: 0px auto;
   background-color: white;
-  box-shadow: 0px 0px 4px #BBB;
+  box-shadow: 0px 0px 6px #999;
 }
 
 div#header {
@@ -156,6 +156,16 @@ div.next_match_location div#map-canvas {
   width: 400px;
   height: 200px;
   max-width: 100%; 
+}
+
+div#newspaper {
+  float: left;
+  margin: 30px;
+}
+
+div#newspaper a#newspaper_thumbnail img {
+  border: 1px solid #777;
+  box-shadow: 2px 2px 2px #AAA;
 }
 
 /* TABS */
