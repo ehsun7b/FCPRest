@@ -63,7 +63,8 @@ public class Image {
           @PathParam("width") int width,
           @PathParam("height") int height) {
     try {
-      String key = url.concat(width + "").concat(height + "");
+      String key = url + width + "-" + height;
+      System.out.println("!!! " + key);
       BufferedImage cachedContent = fromCache(key);
       if (cachedContent == null) {
         key = url;
@@ -125,11 +126,11 @@ public class Image {
   }
 
   private BufferedImage fromCache(String key) {
-    if (cache.containsKey(key)) {
-      return cache.get(key);
-    } else {
+    //if (cache.containsKey(key)) {
+      //return cache.get(key);
+    //} else {
       return null;
-    }
+    //}
   }
 
   private synchronized void toCache(String key, BufferedImage content) {

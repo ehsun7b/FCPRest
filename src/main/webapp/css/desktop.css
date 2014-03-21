@@ -161,11 +161,25 @@ div.next_match_location div#map-canvas {
 div#newspaper {
   float: left;
   margin: 30px;
+  position: relative;
 }
 
 div#newspaper a#newspaper_thumbnail img {
   border: 1px solid #777;
   box-shadow: 2px 2px 2px #AAA;
+}
+
+div#newspapers-thumbnails {
+  width: 100px;
+  background-color: transparent;
+  position: absolute;
+}
+
+div#newspapers-thumbnails img {
+  display: inline-block;
+  box-shadow: 2px 2px 2px #AAA;
+  cursor: pointer;
+  border: 1px solid #777;
 }
 
 /* TABS */

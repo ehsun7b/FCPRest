@@ -10,6 +10,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
     <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCRYiaS1SawMg6ybt0-39FFqUbHMtEtzsU&sensor=false"></script>-->
