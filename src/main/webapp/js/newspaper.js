@@ -1,7 +1,7 @@
-var SIZE = {width: 200, height: 100};
+var NEWSPAPER_THUMBNAIL_SIZE = {width: 200, height: 100};
 
 $(function() {
-  showRandomNewspaperPhoto("newspaper_thumbnail", SIZE);
+  showRandomNewspaperPhoto("newspaper_thumbnail", NEWSPAPER_THUMBNAIL_SIZE);
 });
 
 function getRandomNewspaperPhoto(callback) {

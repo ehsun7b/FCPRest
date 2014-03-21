@@ -69,7 +69,6 @@
         <div class="news_group_content" id="varzesh3_news_content"></div>
       </div>
 
-
       <!-- ISNA -->
       <div class="news_group" id="isna_new_group">
         <div class="news_group_header">اخبار ایسنا</div>

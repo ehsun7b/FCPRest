@@ -50,7 +50,7 @@ public class NewspaperPDFBean {
       doc.add(anchor);
       //doc.add(new Paragraph("روزنامه های ورزشی ایران", new Font(Font.FontFamily.valueOf("tahoma"))));
 
-      List<Newspaper> photoURLs = photos.getPhotoURLs();
+      List<Newspaper> photoURLs = photos.getNewspapers();
 
       int i = 0;
       if (photoURLs.size() > 0) {

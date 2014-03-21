@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -23,13 +22,13 @@ import org.jsoup.select.Elements;
  */
 @Startup
 @Singleton
-@LocalBean
 public class NewspaperPhotosBean {
 
   private static final Logger log = Logger.getLogger(NewspaperPhotosBean.class.getName());
 
   private List<Newspaper> photoURLs = new ArrayList<>();
   private final String url = "http://varzesh3.com";
+  private static final Object lock = new Object();
 
   @PostConstruct
   public void init() {
@@ -55,22 +54,27 @@ public class NewspaperPhotosBean {
         Element p = li.select("p").get(0);
         String ownText = p.text();
         Newspaper newspaper = new Newspaper();
-        newspaper.setPhotoURL(src);
-        newspaper.setTitle(ownText);
 
-        newPhotoURLs.add(newspaper);
-      }
+        String photoUrl = null;
 
-      for (Newspaper newspaper : newPhotoURLs) {
         try {
-          getPhotoURL(newspaper);
+          if (src != null && src.length() > 0) {
+            photoUrl = findPhotoURL(src);
+          }
         } catch (Exception ex) {
-          newPhotoURLs.remove(newspaper);
-          log.log(Level.SEVERE, "Error in fining real URL of newspaper image. {0}", ex.getMessage());
+          log.log(Level.SEVERE, "Error in finding real newspaper photo url. {0}", ex.getMessage());
+        }
+
+        if (photoUrl != null) {
+          newspaper.setPhotoURL(photoUrl);
+          newspaper.setTitle(ownText);
+          newPhotoURLs.add(newspaper);
         }
       }
 
-      photoURLs = newPhotoURLs;
+      synchronized (lock) {
+        photoURLs = newPhotoURLs;
+      }
     } catch (IOException ex) {
       log.log(Level.SEVERE, "Error in fetching newspaper photos. {0}", ex.getMessage());
     }
@@ -80,22 +84,25 @@ public class NewspaperPhotosBean {
     }
   }
 
-  public List<Newspaper> getPhotoURLs() {
-    return photoURLs;
+  public List<Newspaper> getNewspapers() {
+    synchronized (lock) {
+      List<Newspaper> result = (List<Newspaper>) ((ArrayList<Newspaper>) photoURLs).clone();
+      return result;
+    }
   }
 
   public String randomPhoto() {
     Random random = new Random(System.currentTimeMillis());
-    int index = random.nextInt(getPhotoURLs().size());
-    return getPhotoURLs().get(index).getPhotoURL();    
+    int index = random.nextInt(getNewspapers().size());
+    return getNewspapers().get(index).getPhotoURL();    
   }
-  
-  private void getPhotoURL(Newspaper newspaper) throws IOException {
-    Document doc = Jsoup.connect(newspaper.getPhotoURL()).get();
+
+  private String findPhotoURL(String url) throws IOException {
+    Document doc = Jsoup.connect(url).get();
     Elements div = doc.select("div#news-col-right-old");
     Element h1 = div.select("h1").get(0);
     //newspaper.setTitle(h1.text());
     Element img = div.select("img").get(0);
-    newspaper.setPhotoURL(img.attr("abs:src"));
+    return img.attr("abs:src");
   }
 }

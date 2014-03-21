@@ -12,9 +12,9 @@ $(function() {
 
 function showGeneralNews(data, board) {
   board.html("");
-  console.log(data);
-  var len = Math.min(data.length, SIZE);
-  for (var i = 0; i < len; ++i) {
+  console.log(data);  
+  var len = Math.min(data.length, SIZE);    
+  for (var i = 0; i < len; ++i) {        
     var news = data[i];
     var image = news.image !== undefined ? $("<img/>", {src: "rest/image/thumbnail/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.image)})
             : $("<img/>", {src: "rest/image/link/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.link)});
@@ -24,6 +24,7 @@ function showGeneralNews(data, board) {
 
 function showOfficialNews() {
   loadOfficialNews(function(data) {
+    console.log("show official news")
     showGeneralNews(data, $("#official_news_content"));
   });
 }

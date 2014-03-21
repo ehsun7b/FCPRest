@@ -1,15 +1,12 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
+import com.ehsunbehravesh.fcpersepolisrest.ejb.Newspaper;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperPDFBean;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperPhotosBean;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.google.gson.Gson;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.Random;
-import java.util.logging.Level;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -50,5 +47,23 @@ public class NewspaperPDF {
   @Produces("text/plain")
   public String randomPhoto() {
     return photos.randomPhoto();
+  }
+  
+  @Path("photos")
+  @GET
+  @Produces("application/json; charset=UTF-8")
+  public String photos() {
+    List<Newspaper> photoURLs = photos.getNewspapers();
+    List<String> result = new ArrayList<>();
+    
+    for (Newspaper n : photoURLs) {
+      String photoURL = n.getPhotoURL();
+      if (photoURL != null && photoURL.length() > 0) {
+        result.add(photoURL);
+      }
+    }
+    
+    Gson gson = new Gson();
+    return gson.toJson(result);
   }
 }
