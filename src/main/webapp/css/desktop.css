@@ -164,9 +164,16 @@ div#newspaper {
   position: relative;
 }
 
-div#newspaper a#newspaper_thumbnail img {
+div#newspaper {
   border: 1px solid #777;
   box-shadow: 2px 2px 2px #AAA;
+  width: 138px;
+  height: 100px;
+  visibility: hidden;
+}
+
+div#newspaper a#newspaper_thumbnail {
+  display: inline-block;
 }
 
 div#newspapers-thumbnails {

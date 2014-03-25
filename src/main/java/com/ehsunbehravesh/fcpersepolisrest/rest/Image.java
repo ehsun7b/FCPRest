@@ -63,8 +63,7 @@ public class Image {
           @PathParam("width") int width,
           @PathParam("height") int height) {
     try {
-      String key = url + width + "-" + height;
-      System.out.println("!!! " + key);
+      String key = url + width + "-" + height;      
       BufferedImage cachedContent = fromCache(key);
       if (cachedContent == null) {
         key = url;
@@ -95,14 +94,15 @@ public class Image {
           @PathParam("width") int width,
           @PathParam("height") int height) {
     try {
+
       String url = findImageUrl(newsUrl);
 
       if (url != null) {
         String key = url.concat(width + "").concat(height + "");
-        BufferedImage cachedContent = fromCache(key);
+        BufferedImage cachedContent = null; fromCache(key);
         if (cachedContent == null) {
           key = url;
-          cachedContent = fromCache(key);
+          cachedContent = null; fromCache(key);
           if (cachedContent == null) {
             BufferedImage image = ThumbnailUtils.fetchImage(url);
             BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));

@@ -78,10 +78,6 @@ public class NewspaperPhotosBean {
     } catch (IOException ex) {
       log.log(Level.SEVERE, "Error in fetching newspaper photos. {0}", ex.getMessage());
     }
-
-    for (Newspaper n : photoURLs) {
-      System.out.println(n.getTitle() + " !!! " + n.getPhotoURL());
-    }
   }
 
   public List<Newspaper> getNewspapers() {

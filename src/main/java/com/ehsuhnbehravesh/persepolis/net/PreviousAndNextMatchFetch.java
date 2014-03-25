@@ -102,16 +102,4 @@ public class PreviousAndNextMatchFetch {
 
     return doc;
   }
-
-  public static void main(String[] s) {
-    try {
-      PreviousAndNextMatchFetch pn = new PreviousAndNextMatchFetch();
-      pn.load();
-      String guestTeam = pn.getPreviousNextMatchInfo().getNextMatch().getMatchDescription();
-      System.out.println(guestTeam);
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
 }

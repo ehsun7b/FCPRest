@@ -7,6 +7,8 @@ public class NewsDescriptionFetchFactory {
   public static final String PERSEPOLISNEWS_IR = "persepolisnews.ir";
   public static final String VARZESH3 = "varzesh3.com";
   public static final String KHABARONLINE = "khabaronline.ir";
+  public static final String ISNA_IR = "isna.ir";
+  public static final String IRNA_IR = "irna.ir";
   
   public static NewsDescriptionFetch generateNewsDescriptionFetch(String url) throws Exception {
     if (url.toLowerCase().contains(FC_PERSPOLIS_COM)) {
@@ -27,6 +29,14 @@ public class NewsDescriptionFetchFactory {
       return newsDescriptionFetch;
     } else if (url.toLowerCase().contains(KHABARONLINE)) {
       NewsDescriptionFetch newsDescriptionFetch = new KhabarOnlineNewsDescriptionFetch();
+      newsDescriptionFetch.setNewsUrl(url);
+      return newsDescriptionFetch;
+    } else if (url.toLowerCase().contains(ISNA_IR)) {
+      NewsDescriptionFetch newsDescriptionFetch = new IsnaNewsDescriptionFetch();
+      newsDescriptionFetch.setNewsUrl(url);
+      return newsDescriptionFetch;
+    } else if (url.toLowerCase().contains(IRNA_IR)) {
+      NewsDescriptionFetch newsDescriptionFetch = new IrnaNewsDescriptionFetch();
       newsDescriptionFetch.setNewsUrl(url);
       return newsDescriptionFetch;
     } else {

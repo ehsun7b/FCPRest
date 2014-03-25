@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/desktop.css"/>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
     <script type="text/javascript" src="/js/news.js"></script>
     <script type="text/javascript" src="/js/desktop_news.js"></script>
     <script type="text/javascript" src="/js/results.js"></script>
@@ -22,7 +23,6 @@
           <a id="newspaper_thumbnail" href="/rest/newspaper/pdf"></a>
         </div>
       </div>      
-
       <div class="tab_wrapper">
         <ul id="tabs">
           <li><a id="tab1">بازی بعدی</a></li>

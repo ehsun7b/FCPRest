@@ -79,17 +79,4 @@ public class OfficialWebsiteNewsFetch {
 
     return doc;
   }
-
-  public static void main(String[] args) {
-    OfficialWebsiteNewsFetch fetch = new OfficialWebsiteNewsFetch("http://www.fc-perspolis.com");
-    List<News> news = fetch.fetch();
-    System.out.println("size: " + news.size());
-
-    for (News news1: news) {
-      System.out.println("title: " + news1.getTitle());
-      System.out.println("description: " + news1.getDescription());
-      System.out.println("link: " + news1.getLink());
-      System.out.println("");
-    }
-  }
 }
