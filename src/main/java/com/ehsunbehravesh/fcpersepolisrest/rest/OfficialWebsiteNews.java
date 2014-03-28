@@ -2,16 +2,13 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsuhnbehravesh.persepolis.net.OfficialWebsiteNewsFetch;
 import com.ehsuhnbehravesh.persepolis.news.News;
-import com.ehsunbehravesh.utils.image.ThumbnailUtils;
 import com.google.gson.Gson;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

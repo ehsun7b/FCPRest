@@ -110,6 +110,7 @@ function showAnimatedNewspapers(board, photos, size) {
         });
 
         layer.add(img[j]);
+        img[j].moveToBottom();
         layer.draw();
         
         img[j].on("mouseover", function(){

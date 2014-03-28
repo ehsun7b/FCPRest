@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.KhabarOnlineNews.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Live.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.MatchInfo.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.NewsBoard.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.NewspaperPDF.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.OfficialWebsiteNews.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Ranking.class);

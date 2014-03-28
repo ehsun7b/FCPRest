@@ -2,7 +2,7 @@ $(function() {
   makeTabs();
   showRanking("ranking");
   //showMatchInfo("results");
-  showMatchInfoTabs("tab1C", "tab2C");
+  showMatchInfoTabs("tab2C", "tab3C");
 });
 
 function makeTabs() {
