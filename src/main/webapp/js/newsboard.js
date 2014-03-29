@@ -11,11 +11,16 @@ function NewsBoard(config) {
     var index = 0;
 
     var l = newsList.length;
-    var images = [];
     for (var i = 0; i < l; ++i) {
       var img = new Image();
-      img.src = newsList[i].image;
-      images.push(img);
+      newsList[i].imageInfo = {loaded: false, img: img};
+      newsList[i].imageInfo.img.onload = (function(j) {
+        return function() {
+          newsList[j].imageInfo.loaded = true;
+          console.log("image of board loaded: " + j + " src: " + newsList[j].imageInfo.img.src);
+        };
+      })(i);
+      newsList[i].imageInfo.img.src = newsList[i].image;
     }
 
     if (Kinetic === undefined) {
@@ -87,41 +92,36 @@ function NewsBoard(config) {
     });
 
     if (news.image !== undefined && news.image !== null) {
-      var img = new Image();
-      img.addEventListener("load", function() {
-        var imgSize = _calculateSize(img);
-        nodeImage = new Kinetic.Image({
-          x: 10,
-          y: 10,
-          width: imgSize.width,
-          height: imgSize.height,
-          image: img,
-          stroke: "black",
-          strokeWidth: 1,
-          opacity: 1
+      if (news.imageInfo.loaded) {
+        _addImageToLayer(news.imageInfo.img, layer1);
+      } else {
+        var img = new Image();
+        img.addEventListener("load", function() {
+          _addImageToLayer(img, layer1);
         });
-
-        nodeImage.on("mouseover", function(event) {
-          $(document.body).css({"cursor": "pointer"});
-        });
-
-        nodeImage.on("mouseout", function(event) {
-          $(document.body).css({"cursor": "default"});
-        });
-
-        nodeImage.on("click", function(event) {
-          window.open(newsList[index].link);
-        });
-
-        layer1.add(nodeImage);
-        layer1.drawScene();
-        stage.draw();
-      });
-      img.src = news.image;
+        img.src = news.image;
+      }
     }
 
     layer1.add(nodeTitle);
     layer1.add(nodeDescription);
+  }
+
+  function _addImageToLayer(img, layer) {
+    var imgSize = _calculateSize(img);
+    nodeImage = new Kinetic.Image({
+      x: 10,
+      y: 10,
+      width: imgSize.width,
+      height: imgSize.height,
+      image: img,
+      stroke: "black",
+      strokeWidth: 1,
+      opacity: 1
+    });
+
+    layer.add(nodeImage);
+    layer.drawScene();
   }
 
   function _breakText(text, width) {
@@ -157,18 +157,18 @@ function NewsBoard(config) {
     var size = null;
     if (image.width <= imageSize.width && image.height <= imageSize.height) {
       return imageSize;
-    } else {      
+    } else {
       if (image.width > imageSize.width) {
         var ratio = imageSize.width / image.width;
-        var size = {width: imageSize.width, height: image.height * ratio};        
+        var size = {width: imageSize.width, height: image.height * ratio};
       }
 
       if (image.height > imageSize.height || size.height > imageSize.height) {
         var ratio = imageSize.height / image.height;
-        var size = {height: imageSize.height, width: image.width * ratio};        
+        var size = {height: imageSize.height, width: image.width * ratio};
       }
     }
-    
+
     return size;
   }
 
@@ -197,7 +197,7 @@ function NewsBoard(config) {
           }
         } else {
           this.stop();
-          nodeTitle.opacity(1.0);
+          nodeTitle.opacity(0.0);
         }
       }, layer1);
 
@@ -212,13 +212,13 @@ function NewsBoard(config) {
             nodeDescription.opacity(nodeDescription.opacity() - 0.1);
           }
         } else if (frame.time < 700) {
-          nodeDescription.x(nodeDescription.x() + 15);
+          nodeDescription.x(nodeDescription.x() + 18);
           if (nodeDescription.opacity() > 0.1) {
             nodeDescription.opacity(nodeDescription.opacity() - 0.1);
           }
         } else {
           this.stop();
-          nodeDescription.opacity(1.0);
+          nodeDescription.opacity(0.0);
         }
       }, layer1);
 
@@ -234,7 +234,7 @@ function NewsBoard(config) {
           }
         } else {
           this.stop();
-          nodeImage.opacity(1.0);
+          nodeImage.opacity(0.0);
         }
       }, layer1);
 
@@ -243,27 +243,40 @@ function NewsBoard(config) {
       animImage.start();
 
       setTimeout(function() {
-        //console.log("second");
         var news = newsList[index];
         nodeTitle.text(_fixText(news.title));
         nodeDescription.text(_fixText(_breakText(news.description, maxTextWidth)));
-        var img = new Image();
-        img.addEventListener("load", function() {
-          nodeImage.image(img);
-          var imgSize = _calculateSize(img);
+
+        if (news.imageInfo.loaded) {
+          var imgSize = _calculateSize(news.imageInfo.img);
+          nodeImage.image(news.imageInfo.img);
           nodeImage.width(imgSize.width);
           nodeImage.height(imgSize.height);
-          layer1.drawScene();
-        });
-        img.src = news.image;
+          nodeImage.x(nodeImagePos.x);
+          nodeImage.y(nodeImagePos.y);
+        } else {
+          var img = new Image();
+          img.addEventListener("load", function() {
+            var imgSize = _calculateSize(img);
+            nodeImage.image(img);
+            nodeImage.width(imgSize.width);
+            nodeImage.height(imgSize.height);
+            nodeImage.x(nodeImagePos.x);
+            nodeImage.y(nodeImagePos.y);
+          });
+          img.src = news.image;
+        }
 
         nodeTitle.x(stage.width() - nodeTitle.width() - 10);
         nodeTitle.y(nodeTitlePos.y);
         nodeDescription.x(stage.width() - nodeDescription.width() - 10);
         nodeDescription.y(nodeDescriptionPos.y);
-        nodeImage.x(nodeImagePos.x);
-        nodeImage.y(nodeImagePos.y);
 
+        nodeTitle.opacity(1.0);
+        nodeDescription.opacity(1.0);
+        nodeImage.opacity(1.0);
+
+        layer1.draw();
         stage.draw();
       }, 1000);
     }, interval);

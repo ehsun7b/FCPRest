@@ -28,8 +28,8 @@
         <ul id="tabs">
           <li><a id="tab1">سرخط خبرها</a></li>
           <li><a id="tab2">بازی بعدی</a></li>
-          <li><a id="tab4">محل بازی بعدی</a></li>
-          <li><a id="tab3">بازی قبلی</a></li>
+          <li><a id="tab3">محل بازی بعدی</a></li>
+          <li><a id="tab4">بازی قبلی</a></li>
           <li><a id="tab5">جدول لیگ برتر</a></li>
         </ul>
       </div>
@@ -42,24 +42,24 @@
           }).done(function(data) {
             var newsBoard = new NewsBoard({
               "container": "newsBoard",
-              "size": {"width": 650, "height": 100},
+              "size": {"width": 700, "height": 100},
               "newsList": data,
-              "maxTextWidth": 100,
+              "maxTextWidth": 70,
               "imageSize": {width: 130, height: 80},
-              "interval": 7000
+              "interval": 10000
             });
           });
         </script>
       </div>
-      <div class="tab_container" id="tab2C"></div>
-      <div class="tab_container" id="tab3C"></div>
-      <div class="tab_container" id="tab4C">
+      <div class="tab_container" id="tab2C"></div>      
+      <div class="tab_container" id="tab3C">
         <!-- MAP OF NEXT MATCH -->
         <div class="next_match_location">
           محل برگزاری بازی بعدی<br/><br/>
           <div id="map-canvas"></div>
         </div>      
       </div>
+      <div class="tab_container" id="tab4C"></div>
       <div class="tab_container" id="tab5C">
         <!-- RANKING -->
         <div id="ranking"></div>
