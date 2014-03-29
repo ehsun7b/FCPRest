@@ -32,15 +32,7 @@
           </div>
         </c:if>
         <div class="text-news">${news.description}</div>
-        <br/>
-        <div class="facebook">
-          <a id="facebook" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
-            <img src="img/fbshare.png" alt="Share on Facebook"/>
-          </a>
-          <script type="text/javascript">
-            setShareLink();
-          </script>
-        </div>
+        <br/>        
       </div>
 
       <div class="donation">

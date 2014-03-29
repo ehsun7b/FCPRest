@@ -64,14 +64,15 @@ class ArteshNewsDescriptionFetch extends NewsDescriptionFetch {
     return result;
   }
 
-  public static void main(String[] s) throws Exception {
-    String url = "http://www.arteshesorkh.com/index/post_44004/%DA%A9%D8%A7%D8%B1-%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84-%D8%AE%D9%84%D8%B9%D8%AA%D8%A8%D8%B1%DB%8C-%D8%A8%D9%87-%D9%BE%D8%B1%D8%B3%D9%BE%D9%88%D9%84%DB%8C%D8%B3-%D8%AA%D9%85%D8%A7%D9%85-%D8%B4%D8%AF-%D8%AD%D8%B6%D9%88%D8%B1-%D8%AF%D8%B1-%D8%AA%D9%85%D8%B1%DB%8C%D9%86%D8%A7%D8%AA/";
-    NewsDescriptionFetch fetch = NewsDescriptionFetchFactory.generateNewsDescriptionFetch(url);
-
-    String des = fetch.loadDescription();
-
-    String date = fetch.loadImage();
-    System.out.println(date);
-    System.out.println(des);
+  @Override
+  public String loadTitle() throws Exception {
+    if (doc == null) {
+      doc = Jsoup.connect(newsUrl).get();
+    }
+    
+    Elements div = doc.select("div.title_with_detail");
+    String title = div.select("h1").get(0).text();
+    return title;
   }
+
 }

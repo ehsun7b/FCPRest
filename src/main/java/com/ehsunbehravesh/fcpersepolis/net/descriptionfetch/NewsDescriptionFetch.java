@@ -17,4 +17,6 @@ public abstract class NewsDescriptionFetch {
   public abstract String loadDate() throws Exception;
   
   public abstract String loadImage() throws Exception;
+  
+  public abstract String loadTitle() throws Exception;
 }

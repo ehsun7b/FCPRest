@@ -50,4 +50,15 @@ public class Varzesh3NewsDescriptionFetch extends NewsDescriptionFetch {
     return img;
   }
 
+  @Override
+  public String loadTitle() throws Exception {
+    if (doc == null) {
+      doc = Jsoup.connect(newsUrl).get();
+    }
+    
+    Element newsTable = doc.select("table#NewsTable").get(0);
+    String title = newsTable.select("h1").get(0).text();
+    return title;
+  }
+
 }

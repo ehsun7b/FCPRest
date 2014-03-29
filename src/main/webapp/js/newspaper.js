@@ -61,6 +61,7 @@ function showAllNewspaperThumbnails(board, size) {
 
       $("#" + board).mouseenter(function() {
         $("#newspapers-thumbnails").fadeIn();
+        $("#newspapers-thumbnails").css({"z-index": 1000});
       });
 
       $("#" + board).mouseleave(function() {

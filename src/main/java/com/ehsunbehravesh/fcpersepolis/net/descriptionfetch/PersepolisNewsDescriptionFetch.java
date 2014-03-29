@@ -56,4 +56,9 @@ class PersepolisNewsDescriptionFetch extends NewsDescriptionFetch {
     return date;
   }
 
+  @Override
+  public String loadTitle() throws Exception {
+    return "title";
+  }
+
 }

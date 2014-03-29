@@ -8,7 +8,7 @@ body {
 
 div#main_container {
   padding: 0px;  
-  width: 800px;
+  width: 950px;
   margin: 0px auto;
   background-color: white;
   box-shadow: 0px 0px 6px #999;
@@ -165,8 +165,7 @@ div#newspaper {
 }
 
 div#newspaper {
-  border: 1px solid #777;
-  box-shadow: 2px 2px 2px #AAA;
+  border: 1px solid #777;  
   width: 138px;
   height: 100px;
   visibility: hidden;
@@ -184,7 +183,7 @@ div#newspapers-thumbnails {
 
 div#newspapers-thumbnails img {
   display: inline-block;
-  box-shadow: 2px 2px 2px #AAA;
+  box-shadow: 2px 2px 2px #000;
   cursor: pointer;
   border: 1px solid #777;
 }
@@ -235,7 +234,7 @@ a {cursor:pointer;}
   border-top-right-radius:3px; 
   text-decoration:none;
   outline:none;
-
+  white-space: nowrap;
 }
 
 #tabs li a.inactive{

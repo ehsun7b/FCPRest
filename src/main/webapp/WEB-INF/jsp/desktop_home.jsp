@@ -31,6 +31,7 @@
           <li><a id="tab3">محل بازی بعدی</a></li>
           <li><a id="tab4">بازی قبلی</a></li>
           <li><a id="tab5">جدول لیگ برتر</a></li>
+          <li><a id="tab9">تبلیغات</a></li>
         </ul>
       </div>
 
@@ -64,6 +65,21 @@
         <!-- RANKING -->
         <div id="ranking"></div>
       </div>      
+      <div class="tab_container" id="tab9C">
+        <!-- Google adsense -->
+        <div style="text-align: center">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- FCPersepolisDesktopTopTabs -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:728px;height:90px"
+               data-ad-client="ca-pub-1305937802991389"
+               data-ad-slot="3807537997"></ins>
+          <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        <!-- -------------- -->
+      </div>
 
       <!-- OFFICIAL -->
       <div class="news_group" id="official_new_group">

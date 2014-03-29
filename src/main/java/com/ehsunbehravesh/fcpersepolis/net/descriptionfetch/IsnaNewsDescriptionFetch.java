@@ -19,12 +19,22 @@ class IsnaNewsDescriptionFetch extends NewsDescriptionFetch {
 
   @Override
   public String loadDescription() throws Exception {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    if (doc == null) {
+      doc = Jsoup.connect(newsUrl).get();
+    }
+    
+    String html = doc.select("div.body").html();
+    return html;
   }
 
   @Override
   public String loadDate() throws Exception {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    if (doc == null) {
+      doc = Jsoup.connect(newsUrl).get();
+    }
+    
+    String date = doc.select("div.newsPubDate").get(0).text();
+    return date;
   }
 
   @Override
@@ -44,6 +54,18 @@ class IsnaNewsDescriptionFetch extends NewsDescriptionFetch {
     }
 
     return result;
+  }
+
+  @Override
+  public String loadTitle() throws Exception {
+    if (doc == null) {
+      doc = Jsoup.connect(newsUrl).get();
+    }
+
+    Element titr = doc.select("div.titr").get(0);
+    Element h1 = titr.select("h1").get(0);
+    String title = h1.text();
+    return title;
   }
 
 }

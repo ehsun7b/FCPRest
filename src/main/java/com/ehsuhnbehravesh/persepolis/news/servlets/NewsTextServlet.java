@@ -53,6 +53,7 @@ public class NewsTextServlet extends HttpServlet {
         String description = fetch.loadDescription();        
         String date = fetch.loadDate();
         String image = fetch.loadImage();
+        title = fetch.loadTitle();
         log.log(Level.INFO, "fetch content: {0} url: {1}", new Object[]{description, url});
         news = new News();
         news.setDescription(description);
