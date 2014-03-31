@@ -1,30 +1,8 @@
-$(function() {
-  makeTabs();
+$(function() {  
   showRanking("ranking");
   //showMatchInfo("results");
-  showMatchInfoTabs("tab2C", "tab4C");
+  showMatchInfoTabs("tab2", "tab4");
 });
-
-function makeTabs() {
-  $("#tabs li a:not(:first)").addClass("inactive");
-  $(".tab_container").hide();
-  $(".tab_container:first").show();
-
-  $("#tabs li a").click(function() {
-    var t = $(this).attr("id");
-
-    if ($(this).hasClass("inactive")) {
-      $("#tabs li a").addClass("inactive");
-      $(this).removeClass("inactive");
-      $(".tab_container").hide();
-      $("#" + t + "C").fadeIn("slow");
-    }
-
-    if (t === "tab3") {      
-      mapInitialize();
-    }
-  });
-}
 
 function showRanking(id) {
   getRanking(function(data) {

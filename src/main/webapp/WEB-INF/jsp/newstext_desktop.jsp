@@ -15,11 +15,45 @@
     <script type="text/javascript" src="/js/newsboard.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="js/stadium_map.js"></script>
+    <style type="text/css">
+      div.news {
+        padding: 20px;
+      }
+
+      div.image-news {
+        float: left;        
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+      div.title-news {
+        font: normal bold 20px "times new roman";
+        text-shadow: 2px 2px 1px #AAA;
+        padding-bottom: 10px;
+      }
+
+      div.date-news {
+        font: normal normal 10px tahoma;
+        color: #777;
+        padding-bottom: 5px;
+        float: left;
+      }
+
+      div.text-news {
+        text-align: justify;
+      }
+
+      div.image-news img {
+        border: 1px solid #000;
+        box-shadow: 2px 2px 2px #999;
+      }
+    </style>
   </head>
   <body>    
     <div id="main_container">
       <div id="header">
-        <div id="logo"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></div>
+        <div id="logo"><a href="/"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></a></div>
         <div id="newspaper">
           <a id="newspaper_thumbnail" href="/rest/newspaper/pdf"></a>
         </div>
@@ -79,7 +113,31 @@
         </div>        
       </div>
 
-      <br/><br/>
+      <div class="news">
+        <div class="date-news">${news.publishDate}</div>
+        <div class="title-news">${news.title}</div>
+        <c:if test="${news.image != null}">
+          <div class="image-news">
+            <img src="/rest/image/thumbnail/400/300?url=${news.image}" />
+          </div>
+        </c:if>
+        <div class="text-news">${news.description}</div>
+      </div>
+      <div style="clear: both"></div>
+
+      <!-- Google adsense -->
+      <div style="text-align: center; padding: 30px 0px">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- FCPersepolisDesktopTopTabs -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:90px"
+             data-ad-client="ca-pub-1305937802991389"
+             data-ad-slot="3807537997"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      <!-- -------------- -->
 
       <div class="tabs-wrapper">
         <div class="tabs-link">

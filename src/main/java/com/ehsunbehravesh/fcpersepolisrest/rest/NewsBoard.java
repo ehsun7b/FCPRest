@@ -29,10 +29,10 @@ public class NewsBoard {
     ArrayList<News> list = new ArrayList<>();
 
     News news1 = new News();
-    news1.setTitle("محسن بنگر بهترین بازیکن مسابقه پرسپولیس برابر داماش شد");
-    news1.setDescription("مدافع تیم فوتبال پرسپولیس به عنوان بهترین بازیکن مسابقه پرسپولیس و داماش معرفی شد");
-    news1.setImage("http://fcpersepolis.info/rest/image/thumbnail/200/200?url=http://www.fc-perspolis.com/image/getthumbnail/id/15346/size/middle");
-    news1.setLink("http://www.fc-perspolis.com/news_content/main/newsId:20823");
+    news1.setTitle("جلسه 4 ساعته دايي با منتقمي و پنجعلي");
+    news1.setDescription("علي دايي ظهر امروز به باشگاه پرسپوليس رفت و در جلسه‌اي 4 ساعته با منتقمي و پنجعلي نقطه‌نظرات خود را اعلام کرد.");
+    news1.setImage("http://fcpersepolis.info/rest/image/thumbnail/200/200?url=http://www.varzesh3.com/files/Picture/00946547.jpg");
+    news1.setLink("http://www.varzesh3.com/news.do?itemid=1060864&title=%D8%AC%D9%84%D8%B3%D9%87_4_%D8%B3%D8%A7%D8%B9%D8%AA%D9%87_%D8%AF%D8%A7%D9%8A%D9%8A_%D8%A8%D8%A7_%D9%85%D9%86%D8%AA%D9%82%D9%85%D9%8A_%D9%88_%D9%BE%D9%86%D8%AC%D8%B9%D9%84%D9%8A");
     list.add(news1);
 
     News news2 = new News();

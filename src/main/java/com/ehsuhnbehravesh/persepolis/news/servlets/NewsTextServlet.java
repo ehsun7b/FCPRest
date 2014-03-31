@@ -32,8 +32,13 @@ public class NewsTextServlet extends HttpServlet {
 
     req.setCharacterEncoding("UTF-8");
     
-    String url = req.getParameter("url");
-    String title = req.getParameter("title");
+    String url = req.getParameter("url");    
+    String template = "newstext.jsp";
+    String temp = req.getParameter("temp");
+    if (temp != null) {
+      template = temp.concat(".jsp");
+    }
+    
 
     CacheNode node = null;
     synchronized (cacheLock) {
@@ -53,7 +58,7 @@ public class NewsTextServlet extends HttpServlet {
         String description = fetch.loadDescription();        
         String date = fetch.loadDate();
         String image = fetch.loadImage();
-        title = fetch.loadTitle();
+        String title = fetch.loadTitle();
         log.log(Level.INFO, "fetch content: {0} url: {1}", new Object[]{description, url});
         news = new News();
         news.setDescription(description);
@@ -80,7 +85,7 @@ public class NewsTextServlet extends HttpServlet {
     }
 
     req.setAttribute("news", news);
-    RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/jsp/newstext.jsp");
+    RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/jsp/" + template);
     rd.forward(req, resp);    
   }
 
