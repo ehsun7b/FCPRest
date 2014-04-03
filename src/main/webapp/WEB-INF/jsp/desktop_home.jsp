@@ -3,18 +3,21 @@
 <html>
   <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>FC PERSEPOLIS INFORMATION</title>    
+    <title>پایگاه خبری پرسپولیس</title>    
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/desktop.css"/>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
+    <!--
     <script type="text/javascript" src="/js/news.js"></script>
     <script type="text/javascript" src="/js/desktop_news.js"></script>
     <script type="text/javascript" src="/js/results.js"></script>
     <script type="text/javascript" src="/js/newspaper.js"></script>
-    <script type="text/javascript" src="/js/newsboard.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="/js/newsboard.js"></script>    
     <script src="js/stadium_map.js"></script>
+    -->
+    <script src="js/all_compressed.js"></script>
   </head>
   <body>    
     <div id="main_container">
@@ -44,7 +47,7 @@
                   "size": {"width": 850, "height": 100},
                   "newsList": data,
                   "maxTextWidth": 90,
-                  "imageSize": {width: 130, height: 80},
+                  "imageSize": {width: 130, height: 100},
                   "interval": 10000
                 });
               });
@@ -127,6 +130,16 @@
             $(this).addClass("active");
             var tab = $(this).attr("data-content");
             $("#" + tab).addClass("active");
+            
+            if (tab === 'tab_artesh_new_group' && $("#artesh_news_content").html() === '') {
+              showArteshNews();              
+            } else if (tab === 'tab_khabaronline_new_group' && $("#khabaronline_news_content").html() === '') {
+              showKhabarOnlineNews();
+            } else if (tab === 'tab_varzesh3_new_group' && $("#varzesh3_news_content").html() === '') {
+              showVarzesh3News();
+            } else if (tab === 'tab_isna_new_group' && $("#isna_news_content").html() === '') {
+              showIsnaNews();
+            }
           });
         </script>
       </div>

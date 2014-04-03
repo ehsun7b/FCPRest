@@ -287,3 +287,205 @@ function NewsBoard(config) {
   }
 }
 
+
+function NewsBoard2(config) {
+  try {
+    var container = config.container;
+    var newsList = config.newsList;
+    var maxTextWidth = config.maxTextWidth;
+    var interval = config.interval;
+    var size = config.size;
+    var imageSize = config.imageSize;
+
+    var loadedImages = 0;
+    var groups = [];
+    var index = 0;
+    var timer = null;
+
+    if (Kinetic === undefined) {
+      alert("kineticJS is not loaded!");
+      return;
+    }
+
+    var stage = new Kinetic.Stage({
+      container: container,
+      width: size.width,
+      height: size.height
+    });
+
+    var layer1 = new Kinetic.Layer();
+
+    _showLoading();
+
+    stage.add(layer1);
+    layer1.draw();
+
+    _loadImages(function() {
+      _makeGroups();
+      layer1.removeChildren();
+      _showNextGroup();
+      setInterval(function() {
+        _showNextGroup();
+      }, interval);
+    });
+  } catch (e) {
+    console.log("Error! " + e);
+  }
+
+  function _showNextGroup() {    
+    groups[index].visible(true);
+    layer1.drawScene();
+    console.log("length " + groups.length);
+    if (index < groups.length - 1) {
+      index++;
+      console.log("increment index: " + index);
+    } else {
+      index = 0;
+      console.log("index become 0: " + index);
+    }
+  }
+
+  function _showLoading() {
+    var rect = new Kinetic.Rect({
+      x: stage.width() / 2 - 35,
+      y: stage.height() / 2 - 10,
+      width: 70,
+      height: 20,
+      fill: '#AAA'
+    });
+    layer1.add(rect);
+
+    var loading = new Kinetic.Text({
+      x: stage.width() / 2 - 20,
+      y: stage.height() / 2 - 4,
+      text: 'LOADING',
+      fontSize: 8,
+      fontFamily: 'arial',
+      fontStyle: 'bold',
+      fill: 'white',
+      align: 'center'
+    });
+    layer1.add(loading);
+
+    layer1.drawScene();
+  }
+
+  function _loadImages(callback) {
+    var l = newsList.length;
+    for (var i = 0; i < l; ++i) {
+      var img = new Image();
+      newsList[i].imageInfo = {loaded: false, img: img};
+      newsList[i].imageInfo.img.onload = (function(j) {
+        return function() {
+          newsList[j].imageInfo.loaded = true;
+          loadedImages++;
+          console.log("image of board loaded: " + j + " src: " + newsList[j].imageInfo.img.src);
+          if (loadedImages === newsList.length) {
+            callback();
+          }
+        };
+      })(i);
+      newsList[i].imageInfo.img.src = newsList[i].image;
+    }
+  }
+
+  function _makeGroups() {
+    var l = newsList.length;
+    for (var i = 0; i < l; ++i) {
+      var news = newsList[i];
+
+      var group = new Kinetic.Group({
+        x: 0,
+        y: 0,
+        width: stage.width(),
+        height: stage.height(),
+        visible: false
+      });
+
+      var rect = new Kinetic.Rect({
+        x: group.x(),
+        y: group.y(),
+        width: group.width(),
+        height: group.height(),
+        fill: _randomLightColor(),
+        stroke: "#aaa",
+        strokeWidth: 1
+      });
+
+      group.add(rect);
+
+      var title = new Kinetic.Text({
+        x: stage.width() / 2 - 20,
+        y: stage.height() / 2 - 4,
+        text: _fixText(news.title),
+        fontSize: 12,
+        fontFamily: 'tahoma',
+        fontStyle: 'normal',
+        fill: 'blue',
+        align: 'right'
+      });
+      
+      title.x(group.width() - title.width() - 10);
+
+      group.add(title);
+
+      groups[i] = group;
+      layer1.add(group);
+    }
+  }
+
+  function _randomLightColor() {
+    return "#aaa";
+  }
+
+
+  function _breakText(text, width) {
+    var result = "";
+    var len = text.length;
+    var count = 0;
+    for (var i = 0; i < len; ++i) {
+      if (count >= width && text[i] === ' ') {
+        result += "\n";
+        count = 0;
+      }
+
+      result += text[i];
+      count++;
+    }
+
+    return result;
+  }
+
+  function _fixText(text) {
+    try {
+      var len = text.length;
+      if (text[len - 1] === '.' || text[len - 1] === '!' || text[len - 1] === '?') {
+        return text.substr(0, len - 1);
+      }
+    } catch (e) {
+      console.log("Error in fixText: " + e);
+    }
+    return text;
+  }
+
+  function _calculateSize(image) {
+    var size = null;
+    if (image.width <= imageSize.width && image.height <= imageSize.height) {
+      return imageSize;
+    } else {
+      if (image.width > imageSize.width) {
+        var ratio = imageSize.width / image.width;
+        var size = {width: imageSize.width, height: image.height * ratio};
+      }
+
+      if (image.height > imageSize.height || size.height > imageSize.height) {
+        var ratio = imageSize.height / image.height;
+        var size = {height: imageSize.height, width: image.width * ratio};
+      }
+    }
+
+    return size;
+  }
+
+}
+

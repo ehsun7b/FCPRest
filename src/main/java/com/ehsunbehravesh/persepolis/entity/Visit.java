@@ -3,7 +3,7 @@ package com.ehsunbehravesh.persepolis.entity;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.ehsuhnbehravesh.persepolis.utils.Utils;
+import com.ehsuhnbehravesh.fcpersepolis.utils.Utils;
 
 public class Visit {
 /*

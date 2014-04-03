@@ -1,6 +1,6 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
-import com.ehsuhnbehravesh.persepolis.news.News;
+import com.ehsunbehravesh.persepolis.entity.News;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -43,10 +43,10 @@ public class NewsBoard {
     list.add(news2);
 
     News news3 = new News();
-    news3.setTitle("عباس زاده و پولادی زیر نظر کادر پزشکی");
-    news3.setDescription("محمد عباس زاده و مهرداد پولادی دو بازیکنی بودند که در بازی با داماش دچار آسیب دیدگی شدند.");
-    news3.setImage("http://fcpersepolis.info/rest/image/thumbnail/200/200?url=http://www.fc-perspolis.com/image/getthumbnail/id/20841/size/middle");
-    news3.setLink("http://www.fc-perspolis.com/news_content/main/newsId:20878");
+    news3.setTitle("پیام صادقیان:مگر خوش تیپی جرم است؟/عاشق پرسپولیس نبودم اما حالا یک پرسپولیسی شش آتشه شده ام");
+    news3.setDescription("سال 92 را با حاشیه های زیادی به اتمام رساند.یک روز به موهایش گیر دادند و روز دیگر به بازی فیزیکی اش در زمین.یک روز چون پیام صادق بود و واقعا از درآمد و خرجی که در ماه می کند حرف زد برایش حاشیه درست کردند و یک روز دیگر او را مقابل جواد نکونام قرار دادند...");
+    news3.setImage("http://fcpersepolis.info/rest/image/thumbnail/200/200?url=http://images.khabaronline.ir/images/2014/3/position50/13-12-21-185033sadeghian.jpg");
+    news3.setLink("http://www.fcpersepolis.info/newstext?url=http%3A%2F%2Fwww.khabaronline.ir%2Fdetail%2F346837");
     list.add(news3);
 
     News news4 = new News();

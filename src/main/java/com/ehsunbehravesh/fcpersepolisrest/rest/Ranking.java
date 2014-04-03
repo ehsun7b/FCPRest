@@ -1,6 +1,6 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
-import com.ehsuhnbehravesh.persepolis.net.RankingFetch;
+import com.ehsuhnbehravesh.fcpersepolis.net.RankingFetch;
 import com.google.gson.Gson;
 import java.util.Date;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ public class Ranking {
 
   public static final long CACHE_MAX_AGE = 10 * 60 * 1000; // milliseconds // //
   // first is minutes
-  private static com.ehsuhnbehravesh.persepolis.news.Ranking ranking;
+  private static com.ehsuhnbehravesh.fcpersepolis.news.Ranking ranking;
   private static Date loadDate;
 
   @Path("json")
@@ -63,7 +63,7 @@ public class Ranking {
       loadDate = new Date();
     } catch (Exception ex) {
       log.log(Level.SEVERE, "Error in loading ranking table: {0}", ex.getMessage());
-      ranking = new com.ehsuhnbehravesh.persepolis.news.Ranking();
+      ranking = new com.ehsuhnbehravesh.fcpersepolis.news.Ranking();
     }
   }
 

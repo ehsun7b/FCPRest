@@ -146,7 +146,7 @@ public class Image {
       NewsDescriptionFetch fetch = NewsDescriptionFetchFactory.generateNewsDescriptionFetch(newsUrl);
       result = fetch.loadImage();
     } catch (Exception ex) {
-      log.log(Level.SEVERE, "Finding image of news failed. {0} {1}", new Object[]{newsUrl, ex.getMessage()});      
+      log.log(Level.WARNING, "Finding image of news failed. {0} {1}", new Object[]{newsUrl, ex.getMessage()});      
     }
     return result;
   }

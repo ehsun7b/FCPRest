@@ -1,7 +1,7 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
-import com.ehsuhnbehravesh.persepolis.news.News;
-import com.ehsuhnbehravesh.persepolis.news.PersepolisNewsMatcher;
+import com.ehsunbehravesh.persepolis.entity.News;
+import com.ehsuhnbehravesh.fcpersepolis.news.PersepolisNewsMatcher;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;

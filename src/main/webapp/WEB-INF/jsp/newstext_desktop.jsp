@@ -1,20 +1,24 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>FC PERSEPOLIS INFORMATION</title>    
+    <title>${news.title}</title>    
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/desktop.css"/>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <!--
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
     <script type="text/javascript" src="/js/news.js"></script>
     <script type="text/javascript" src="/js/desktop_news.js"></script>
     <script type="text/javascript" src="/js/results.js"></script>
     <script type="text/javascript" src="/js/newspaper.js"></script>
-    <script type="text/javascript" src="/js/newsboard.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="/js/newsboard.js"></script>    
     <script src="js/stadium_map.js"></script>
+    -->
+    <script src="js/all_compressed.js"></script>
     <style type="text/css">
       div.news {
         padding: 20px;
@@ -29,7 +33,7 @@
 
       div.title-news {
         font: normal bold 20px "times new roman";
-        text-shadow: 2px 2px 1px #AAA;
+        text-shadow: 2px 2px 1px #CCC;
         padding-bottom: 10px;
       }
 
@@ -42,11 +46,22 @@
 
       div.text-news {
         text-align: justify;
+        font: normal normal 12px tahoma;
+        line-height: 1.6em;
+      }
+
+      div.text-news strong {
+        display: block;
       }
 
       div.image-news img {
         border: 1px solid #000;
         box-shadow: 2px 2px 2px #999;
+      }
+
+      div.link-news a {
+        text-decoration: none;
+        font: normal normal 10px tahoma;
       }
     </style>
   </head>
@@ -122,11 +137,13 @@
           </div>
         </c:if>
         <div class="text-news">${news.description}</div>
+        <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
       </div>
       <div style="clear: both"></div>
 
       <!-- Google adsense -->
-      <div style="text-align: center; padding: 30px 0px">
+      <div id="showAdvert1" style="visibility: hidden">SHOW</div>
+      <div style="text-align: center; padding: 30px 0px" id="advert1">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- FCPersepolisDesktopTopTabs -->
         <ins class="adsbygoogle"
@@ -137,60 +154,26 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      <!-- -------------- -->
+      <script>
 
-      <div class="tabs-wrapper">
-        <div class="tabs-link">
-          <span class="tab-link active" data-tab="newsTab" data-content="tab_official_new_group">اخبار سایت رسمی باشگاه</span>
-          <span class="tab-link" data-tab="newsTab" data-content="tab_artesh_new_group">اخبار سایت ارتش سرخ</span>
-          <span class="tab-link" data-tab="newsTab" data-content="tab_khabaronline_new_group">اخبار خبرآنلاین</span>
-          <span class="tab-link" data-tab="newsTab" data-content="tab_varzesh3_new_group">اخبار سایت ورزش۳</span>
-          <span class="tab-link" data-tab="newsTab" data-content="tab_isna_new_group">اخبار ایسنا</span>
-        </div>
-        <div class="tabs-content">
-          <div class="tab-content active" data-tab="newsTab" id="tab_official_new_group">
-            <!-- OFFICIAL -->
-            <div class="news_group" id="official_new_group">              
-              <div class="news_group_content" id="official_news_content"></div>
-            </div>   
-          </div>
-          <div class="tab-content" data-tab="newsTab" id="tab_artesh_new_group">
-            <!-- ARTESH -->
-            <div class="news_group" id="artesh_new_group">              
-              <div class="news_group_content" id="artesh_news_content"></div>
-            </div>
-          </div>
-          <div class="tab-content" data-tab="newsTab" id="tab_khabaronline_new_group">
-            <!-- KHABAR ONLINE -->
-            <div class="news_group" id="khabaronline_new_group">              
-              <div class="news_group_content" id="khabaronline_news_content"></div>
-            </div>
-          </div>
-          <div class="tab-content" data-tab="newsTab" id="tab_varzesh3_new_group">
-            <!-- VARZESH3 -->
-            <div class="news_group" id="varzesh3_new_group">              
-              <div class="news_group_content" id="varzesh3_news_content"></div>
-            </div>      
-          </div>
-          <div class="tab-content" data-tab="newsTab" id="tab_isna_new_group">
-            <!-- ISNA -->
-            <div class="news_group" id="isna_new_group">        
-              <div class="news_group_content" id="isna_news_content"></div>
-            </div>
-          </div>
-        </div>
-        <script>
-          $("span.tab-link[data-tab='newsTab']").click(function() {
-            $("[data-tab='newsTab']").removeClass("active");
-            $(this).addClass("active");
-            var tab = $(this).attr("data-content");
-            $("#" + tab).addClass("active");
-          });
-        </script>
-      </div>
-      <br/>
-      <br/>
-    </div>
+        document.onload = function() {
+          /*
+          var advert1 = $("#adver1");
+          if (advert1 !== undefined) {
+            advert1.css({visibility: "hidden"});
+          }
+          
+          var showAdvert1 = $("#showAdver1");
+          if (showAdvert1 !== undefined) {
+            showAdvert1.css({visibility: "visible"});
+            showAdvert1.click(function() {
+              advert1.css({visibility: "visible"});
+            });
+          }*/
+        };
+
+      </script>
+      <!-- -------------- -->
   </body>
 
   <!-- GOOGLE ANALYTICS -->

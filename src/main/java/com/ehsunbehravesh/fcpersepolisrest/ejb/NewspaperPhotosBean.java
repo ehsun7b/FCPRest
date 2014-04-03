@@ -1,8 +1,8 @@
 package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
+import com.ehsunbehravesh.persepolis.entity.Newspaper;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -31,16 +31,15 @@ public class NewspaperPhotosBean {
   private static final Object lock = new Object();
 
   @PostConstruct
-  public void init() {
-    log.info("post construct");
+  public void init() {    
     fetchPhotos();
   }
 
-  @Schedule(minute = "*/15", persistent = false)
+  @Schedule(minute = "*/15", hour = "*", persistent = false)
   public void fetchPhotos() {
     try {
       List<Newspaper> newPhotoURLs = new ArrayList<>();
-      log.log(Level.INFO, "fetching photos ... {0}", new Date());
+      log.log(Level.INFO, "fetching photos ...");
       Document doc = Jsoup.connect(url).get();
       Element divGalleryBox = doc.select("div.gallery-box").get(0);
       Element divShowImage = divGalleryBox.select("div#showImage").get(0);
@@ -89,8 +88,13 @@ public class NewspaperPhotosBean {
 
   public String randomPhoto() {
     Random random = new Random(System.currentTimeMillis());
-    int index = random.nextInt(getNewspapers().size());
-    return getNewspapers().get(index).getPhotoURL();    
+    List<Newspaper> newspapers = getNewspapers();
+    if (newspapers.size() > 0) {
+      int index = random.nextInt(newspapers.size());
+      return newspapers.get(index).getPhotoURL();
+    } else {
+      return "";
+    }
   }
 
   private String findPhotoURL(String url) throws IOException {

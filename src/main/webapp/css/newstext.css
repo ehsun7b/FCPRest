@@ -1,41 +1,46 @@
 body {
-	direction: rtl;
+  direction: rtl;
 }
 
 div.text-news {
-	direction: rtl;
+  direction: rtl;
+}
+
+div.text-news img {
+  max-width: 90%;
 }
 
 div.date-news {
-	float: left;
-	font-size: 10px;
-	color: gray;
+  float: left;
+  font-size: 10px;
+  color: gray;
 }
 
 div.title-news {
-	font-size: 20px;
-	padding: 10px;
+  font-size: 20px;
+  padding: 10px;
 }
 
 div.image-news {
-	padding: 1px 20px 20px 1px;
-	
-	float: left;	
+  padding: 1px 20px 20px 1px;	
+  float: left;	
+  text-align: left;
 }
 
 div.image-news img {
-	box-shadow: 5px 5px 3px 0px #AAA;
+  box-shadow: 5px 5px 3px 0px #AAA;
+  max-width: 60%;
 }
 
 div.donation {
-	border-top: 1px solid black;
-	padding: 30px;
-	background-color: #CFCFCF;
-	text-align: center;
+  border-top: 1px solid black;
+  padding: 30px;
+  background-color: #CFCFCF;
+  text-align: center;
 }
 
 div.donation form {
-	text-align: center;
+  text-align: center;
 }
 
 div.facebook {

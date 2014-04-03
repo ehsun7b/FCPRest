@@ -1,7 +1,7 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
-import com.ehsuhnbehravesh.persepolis.net.OfficialWebsiteNewsFetch;
-import com.ehsuhnbehravesh.persepolis.news.News;
+import com.ehsuhnbehravesh.fcpersepolis.net.OfficialWebsiteNewsFetch;
+import com.ehsunbehravesh.persepolis.entity.News;
 import com.google.gson.Gson;
 import java.awt.Dimension;
 import java.io.IOException;

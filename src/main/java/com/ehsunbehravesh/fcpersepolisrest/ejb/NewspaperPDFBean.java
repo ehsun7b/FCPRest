@@ -1,10 +1,10 @@
 package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
+import com.ehsunbehravesh.persepolis.entity.Newspaper;
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;

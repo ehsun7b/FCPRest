@@ -216,6 +216,7 @@ div.tabs-link span.tab-link {
   border-bottom-right-radius: 0px; 
   text-shadow: 1px 1px 1px #AAA;
   background-color: #DDD;
+  white-space: nowrap;
 }
 
 div.tabs-link span.tab-link:hover {

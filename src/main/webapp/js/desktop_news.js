@@ -3,11 +3,11 @@ var IMAGE_SIZE = {width: 80, height: 80};
 
 $(function() {
   showOfficialNews();
-  showVarzesh3News();
-  showArteshNews();
-  showIsnaNews();
+  //showVarzesh3News();
+  //showArteshNews();
+  //showIsnaNews();
   //showIrnaNews();
-  showKhabarOnlineNews();
+  //showKhabarOnlineNews();
 });
 
 function showGeneralNews(data, board) {
@@ -18,11 +18,12 @@ function showGeneralNews(data, board) {
     var news = data[i];
     var image = news.image !== undefined ? $("<img/>", {src: "rest/image/thumbnail/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.image)})
             : $("<img/>", {src: "rest/image/link/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.link)});
-    board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: "/newstext?temp=newstext_desktop&url=" + encodeURIComponent(news.link)}).append(news.title)).append(image));
+    board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: "/newstext?url=" + encodeURIComponent(news.link)}).append(news.title)).append(image));
   }
 }
 
 function showOfficialNews() {
+  $("#official_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadOfficialNews(function(data) {
     console.log("show official news")
     showGeneralNews(data, $("#official_news_content"));
@@ -30,18 +31,21 @@ function showOfficialNews() {
 }
 
 function showArteshNews() {
+  $("#artesh_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadArteshNews(function(data) {
     showGeneralNews(data, $("#artesh_news_content"));
   });
 }
 
 function showVarzesh3News() {
+  $("#varzesh3_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadVarzesh3News(function(data) {
     showGeneralNews(data, $("#varzesh3_news_content"));
   });
 }
 
 function showIsnaNews() {
+  $("#isna_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadIsnaNews(function(data) {
     showGeneralNews(data, $("#isna_news_content"));
   });
@@ -54,6 +58,7 @@ function showIsnaNews() {
  }*/
 
 function showKhabarOnlineNews() {
+  $("#khabaronline_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadKhabarOnlineNews(function(data) {
     showGeneralNews(data, $("#khabaronline_news_content"));
   });

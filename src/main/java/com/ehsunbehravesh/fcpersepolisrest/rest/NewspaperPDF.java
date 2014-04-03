@@ -1,6 +1,6 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
-import com.ehsunbehravesh.fcpersepolisrest.ejb.Newspaper;
+import com.ehsunbehravesh.persepolis.entity.Newspaper;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperPDFBean;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperPhotosBean;
 import com.google.gson.Gson;

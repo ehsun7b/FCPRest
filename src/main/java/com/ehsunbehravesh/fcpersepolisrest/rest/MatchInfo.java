@@ -1,7 +1,7 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
-import com.ehsuhnbehravesh.persepolis.net.PreviousAndNextMatchFetch;
-import com.ehsuhnbehravesh.persepolis.news.PreviousNextMatchInfo;
+import com.ehsuhnbehravesh.fcpersepolis.net.PreviousAndNextMatchFetch;
+import com.ehsuhnbehravesh.fcpersepolis.news.PreviousNextMatchInfo;
 import com.google.gson.Gson;
 import java.util.Date;
 import java.util.logging.Logger;
