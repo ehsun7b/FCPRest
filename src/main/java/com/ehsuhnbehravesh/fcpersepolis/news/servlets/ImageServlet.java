@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
-@WebServlet(urlPatterns = {"/image"})
+@WebServlet(name = "ImageServlet", urlPatterns = {"/image"})
 @SuppressWarnings("serial")
 public class ImageServlet extends HttpServlet {
 

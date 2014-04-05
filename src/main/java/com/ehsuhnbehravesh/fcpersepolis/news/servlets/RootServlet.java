@@ -18,7 +18,7 @@ import net.sf.uadetector.service.UADetectorServiceFactory;
  *
  * @author ehsun7b
  */
-@WebServlet(urlPatterns = {""})
+@WebServlet(name = "RootServlet", urlPatterns = {""})
 public class RootServlet extends HttpServlet {
 
   private static final Logger log = Logger.getLogger(RootServlet.class.getName());

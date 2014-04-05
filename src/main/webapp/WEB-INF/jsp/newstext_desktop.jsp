@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/desktop.css"/>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <!--
+    
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
     <script type="text/javascript" src="/js/news.js"></script>
@@ -16,9 +16,10 @@
     <script type="text/javascript" src="/js/results.js"></script>
     <script type="text/javascript" src="/js/newspaper.js"></script>
     <script type="text/javascript" src="/js/newsboard.js"></script>    
-    <script src="js/stadium_map.js"></script>
-    -->
+    <script type="text/javascript" src="/js/stadium_map.js"></script>
+    <!--
     <script src="js/all_compressed.js"></script>
+    -->
     <style type="text/css">
       div.news {
         padding: 20px;
@@ -136,7 +137,7 @@
             <img src="/rest/image/thumbnail/400/300?url=${news.image}" />
           </div>
         </c:if>
-        <div class="text-news">${news.description}</div>
+        <div class="text-news">${news.content}</div>
         <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
       </div>
       <div style="clear: both"></div>

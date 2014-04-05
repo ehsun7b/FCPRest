@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(urlPatterns = {"/mobile"})
+@WebServlet(name = "MobileHomeServlet", urlPatterns = {"/mobile"})
 public class MobileHomeServlet extends PageServlet {
 
   private static final Logger log = Logger.getLogger(MobileHomeServlet.class.getName());

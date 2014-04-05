@@ -2,7 +2,7 @@ var SIZE = 10;
 var IMAGE_SIZE = {width: 80, height: 80};
 
 $(function() {
-  showOfficialNews();
+  //showOfficialNews();
   //showVarzesh3News();
   //showArteshNews();
   //showIsnaNews();
@@ -16,16 +16,15 @@ function showGeneralNews(data, board) {
   var len = Math.min(data.length, SIZE);
   for (var i = 0; i < len; ++i) {
     var news = data[i];
-    var image = news.image !== undefined ? $("<img/>", {src: "rest/image/thumbnail/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.image)})
-            : $("<img/>", {src: "rest/image/link/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.link)});
-    board.append($("<div/>", {"class": "news"}).append($("<a/>", {target: "_blank", href: "/newstext?url=" + encodeURIComponent(news.link)}).append(news.title)).append(image));
+    var image = $("<img/>", {src: "rest/image/news/" + news.uniqueKey + "/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height});
+    board.append($("<div/>", {"class": "news"}).append($("<a/>", {href: "/news/" + news.uniqueKey}).append(news.title)).append(image));
   }
 }
 
 function showOfficialNews() {
   $("#official_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadOfficialNews(function(data) {
-    console.log("show official news")
+    console.log("show official news");
     showGeneralNews(data, $("#official_news_content"));
   });
 }

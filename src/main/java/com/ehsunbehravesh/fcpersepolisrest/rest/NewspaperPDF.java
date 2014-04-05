@@ -46,14 +46,14 @@ public class NewspaperPDF {
   @GET
   @Produces("text/plain")
   public String randomPhoto() {
-    return photos.randomPhoto();
+    return "";
   }
   
   @Path("photos")
   @GET
   @Produces("application/json; charset=UTF-8")
   public String photos() {
-    List<Newspaper> photoURLs = photos.getNewspapers();
+    List<Newspaper> photoURLs = new ArrayList<>();//photos.getNewspapers();
     List<String> result = new ArrayList<>();
     
     for (Newspaper n : photoURLs) {

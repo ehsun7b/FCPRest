@@ -5,26 +5,42 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class News implements Serializable {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @Column(nullable = false, unique = true)
   private String uniqueKey;
   @Column(nullable = false)
   private String title;
   @Column(nullable = false)
-  private String link;
-  @Column(length = 5000)
+  private String link;  
   private String description;
   private String publishDate;
   private String image;
   private String website;
+  @XmlTransient
+  @Column(length = 5000)
+  private String content;
 
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+  
   public String getImage() {
     return image;
   }

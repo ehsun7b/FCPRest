@@ -2,6 +2,8 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetch;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetchFactory;
+import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsCacheBean;
+import com.ehsunbehravesh.persepolis.entity.News;
 import com.ehsunbehravesh.utils.image.ThumbnailUtils;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -12,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,10 +29,15 @@ import org.apache.commons.io.IOUtils;
  *
  * @author ehsun7b
  */
+@Stateless
 @Path("image")
 public class Image {
 
   private static final Logger log = Logger.getLogger(Image.class.getName());
+
+  @Inject
+  private NewsCacheBean newsCache;
+
   private static final int CACHE_SIZE = 50;
   private static final Map<String, BufferedImage> cache = new HashMap<>();
 
@@ -63,7 +72,7 @@ public class Image {
           @PathParam("width") int width,
           @PathParam("height") int height) {
     try {
-      String key = url + width + "-" + height;      
+      String key = url + width + "-" + height;
       BufferedImage cachedContent = fromCache(key);
       if (cachedContent == null) {
         key = url;
@@ -99,10 +108,12 @@ public class Image {
 
       if (url != null) {
         String key = url.concat(width + "").concat(height + "");
-        BufferedImage cachedContent = null; fromCache(key);
+        BufferedImage cachedContent = null;
+        fromCache(key);
         if (cachedContent == null) {
           key = url;
-          cachedContent = null; fromCache(key);
+          cachedContent = null;
+          fromCache(key);
           if (cachedContent == null) {
             BufferedImage image = ThumbnailUtils.fetchImage(url);
             BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
@@ -125,11 +136,34 @@ public class Image {
     }
   }
 
+  @GET
+  @Path("news/{uniqueKey}/{width}/{height}")
+  @Produces("image/png")
+  public byte[] fromNews(@PathParam(value = "uniqueKey") String uniqueKey,
+          @PathParam("width") int width,
+          @PathParam("height") int height) {
+
+    News news = newsCache.findOne(uniqueKey);
+
+    try {
+      if (news != null && news.getImage() != null) {
+        BufferedImage image = ThumbnailUtils.fetchImage(news.getImage());
+        BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
+        return ThumbnailUtils.toByteArray(newContent, "png");
+      }
+    } catch (IOException | URISyntaxException ex) {
+      log.log(Level.SEVERE, "Error in sending thumbnail to client. {0}", ex.getMessage());
+      return null;
+    }
+
+    return emptyImage();
+  }
+
   private BufferedImage fromCache(String key) {
     //if (cache.containsKey(key)) {
-      //return cache.get(key);
+    //return cache.get(key);
     //} else {
-      return null;
+    return null;
     //}
   }
 
@@ -146,12 +180,12 @@ public class Image {
       NewsDescriptionFetch fetch = NewsDescriptionFetchFactory.generateNewsDescriptionFetch(newsUrl);
       result = fetch.loadImage();
     } catch (Exception ex) {
-      log.log(Level.WARNING, "Finding image of news failed. {0} {1}", new Object[]{newsUrl, ex.getMessage()});      
+      log.log(Level.WARNING, "Finding image of news failed. {0} {1}", new Object[]{newsUrl, ex.getMessage()});
     }
     return result;
   }
-  
-  private byte[] emptyImage() {    
+
+  private byte[] emptyImage() {
     try {
       InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("1x1-transparent.png");
       return IOUtils.toByteArray(is);

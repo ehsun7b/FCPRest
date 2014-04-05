@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +51,7 @@ public class NewspaperPDFBean {
       doc.add(anchor);
       //doc.add(new Paragraph("روزنامه های ورزشی ایران", new Font(Font.FontFamily.valueOf("tahoma"))));
 
-      List<Newspaper> photoURLs = photos.getNewspapers();
+      List<Newspaper> photoURLs = new ArrayList<>();//photos.getNewspapers();
 
       int i = 0;
       if (photoURLs.size() > 0) {

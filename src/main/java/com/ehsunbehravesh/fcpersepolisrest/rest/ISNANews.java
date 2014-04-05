@@ -2,37 +2,37 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsunbehravesh.persepolis.entity.News;
 import com.ehsuhnbehravesh.fcpersepolis.news.PersepolisNewsMatcher;
+import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
+import static com.ehsunbehravesh.fcpersepolisrest.ejb.NewsFetchBean.ISNA_WEBSITE;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
  *
  * @author ehsun7b
  */
+@Stateless
 @Path("isna")
 public class ISNANews {
   
   private static final Logger log = Logger.getLogger(ISNANews.class.getName());
-  public static final String RSS_URL = "http://www.isna.ir/fa/Sports/feed";
+  
+  @Inject
+  private NewsBean newsBean;
+  
   public static List<News> cache = new ArrayList<>();
   public static Date cacheDate;
   public static final Object cacheLock = new Object();
@@ -85,35 +85,10 @@ public class ISNANews {
 
   private void load() throws ParserConfigurationException, MalformedURLException, SAXException, IOException {
     synchronized (cacheLock) {
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      DocumentBuilder db = dbf.newDocumentBuilder();
-      Document doc = db.parse(new URL(RSS_URL).openStream());
-
-      NodeList items = doc.getElementsByTagName("item");
-      if (items.getLength() > 0) {
+      List<News> news = newsBean.readTop(ISNA_WEBSITE, MAX_ITEMS);
+      if (news.size() > 0) {
         cache.clear();
-      }
-      
-      for (int i = 0; i < items.getLength(); i++) {
-        try {
-          Element item = (Element) items.item(i);
-          Element title = (Element) item.getElementsByTagName("title").item(0);
-          Element description = (Element) item.getElementsByTagName("description").item(0);
-          Element pubDate = (Element) item.getElementsByTagName("pubDate").item(0);
-          Element link = (Element) item.getElementsByTagName("link").item(0);
-
-          News news = new News();
-          news.setTitle(title.getTextContent());
-          news.setDescription(description.getTextContent());
-          news.setLink(link.getTextContent());
-          news.setPublishDate(pubDate.getTextContent());
-
-          if (isPersepolisNews(news) && cache.size() < MAX_ITEMS) {
-            cache.add(news);
-          }
-        } catch (DOMException ex) {
-          log.log(Level.SEVERE, "Error in loading RSS: " + RSS_URL + " {0}", ex.getMessage());
-        }
+        cache = news;
       }
       cacheDate = new Date();
     }

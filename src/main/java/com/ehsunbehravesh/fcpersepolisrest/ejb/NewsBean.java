@@ -36,6 +36,11 @@ public class NewsBean {
     query.setMaxResults(size);
     return query.getResultList();
   }
+  
+  public List<News> readNewsWithoutContent() {
+    TypedQuery<News> query = em.createQuery("Select news FROM News news WHERE news.content is null", News.class);
+    return query.getResultList();
+  }
 
   public News findOne(String uniqueKey) {
     TypedQuery<News> query = em.createQuery("Select news FROM News news WHERE news.uniqueKey = :key", News.class);
