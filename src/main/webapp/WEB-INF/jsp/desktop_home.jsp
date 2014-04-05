@@ -10,16 +10,16 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
-
+    <!--
     <script type="text/javascript" src="/js/news.js"></script>
     <script type="text/javascript" src="/js/desktop_news.js"></script>
     <script type="text/javascript" src="/js/results.js"></script>
     <script type="text/javascript" src="/js/newspaper.js"></script>
     <script type="text/javascript" src="/js/newsboard.js"></script>    
     <script type="text/javascript" src="/js/stadium_map.js"></script>
-    <!--
-    <script src="js/all_compressed.js"></script>
     -->
+    <script src="js/all_compressed.js"></script>
+    
   </head>
   <body>    
     <div id="main_container">

@@ -31,7 +31,7 @@ public class NewspaperPhotosBean {
 
   private final String url = "http://varzesh3.com";
 
-  @Schedule(minute = "*/1", hour = "*", persistent = false)
+  @Schedule(minute = "*/10", hour = "*", persistent = false)
   public void check() {
     log.info("Checking for newspapers ...");
     NewspaperSet lastSet = setBean.findLast();

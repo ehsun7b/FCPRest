@@ -14,18 +14,18 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
     <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCRYiaS1SawMg6ybt0-39FFqUbHMtEtzsU&sensor=false"></script>-->
-    <link rel="stylesheet" href="js/rtl.jquery.mobile-1.4.0/css/themes/default/rtl.jquery.mobile-1.4.0.css" />    
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <script src="js/rtl.jquery.mobile-1.4.0/js/rtl.jquery.mobile-1.4.0.js"></script>
-    <!--
-    <script src="js/mobile.js"></script>
-    <script src="js/mobile_results.js"></script>
-    <script src="js/mobile_stadium_map.js"></script>
-    <script src="js/news.js"></script>
-    <script src="js/mobile_news.js"></script>
+    <link rel="stylesheet" href="/js/rtl.jquery.mobile-1.4.0/css/themes/default/rtl.jquery.mobile-1.4.0.css" />    
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/rtl.jquery.mobile-1.4.0/js/rtl.jquery.mobile-1.4.0.js"></script>
+    <!--s
+    <script src="/js/mobile.js"></script>
+    <script src="/js/mobile_results.js"></script>
+    <script src="/js/mobile_stadium_map.js"></script>
+    <script src="/js/news.js"></script>
+    <script src="/js/mobile_news.js"></script>
     -->
     <script src="js/mobile_compressed.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/mobile.css"/>    
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css"/>    
     <title>FC Persepolis</title>
   </head>
   <body>

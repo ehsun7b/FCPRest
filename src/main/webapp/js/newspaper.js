@@ -4,17 +4,8 @@ var img, pdf, layer;
 var index = 0;
 
 $(function() {
-  showRandomNewspaperPhoto("newspaper_thumbnail", NEWSPAPER_THUMBNAIL_SIZE);  
+  showAllNewspaperThumbnails("newspaper", NEWSPAPERS_THUMBNAIL_SIZE); 
 });
-
-function getRandomNewspaperPhoto(callback) {
-  $.ajax({
-    url: "/rest/newspaper/randomphoto",
-    type: "GET"
-  }).done(function(data) {
-    callback(data);
-  });
-}
 
 function getNewspaperPhotos(callback) {
   $.ajax({
@@ -22,20 +13,6 @@ function getNewspaperPhotos(callback) {
     type: "GET"
   }).done(function(data) {
     callback(data);
-  });
-}
-
-function showRandomNewspaperPhoto(board, size) {
-  getRandomNewspaperPhoto(function(url) {
-    console.log("random photo: " + url);
-    $("#newspaper").css({"visibility": "visible"});
-    $("#" + board).html($("<img/>", {
-      src: "/rest/image/thumbnail/" + size.width + "/" + size.height + "?url=" + encodeURIComponent(url),
-      alt: "Download Newspaper PDF",
-      title: "روزنامه‌های ورزشی"
-    }));
-
-    showAllNewspaperThumbnails("newspaper", NEWSPAPERS_THUMBNAIL_SIZE);
   });
 }
 
@@ -70,6 +47,7 @@ function showAllNewspaperThumbnails(board, size) {
     }
 
     showAnimatedNewspapers("newspaper_thumbnail", data, NEWSPAPER_THUMBNAIL_SIZE);
+    $("#newspaper").css({visibility: "visible"});
   });
 }
 

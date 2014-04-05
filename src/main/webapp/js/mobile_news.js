@@ -33,7 +33,8 @@ function showMobileGeneralNews(data, board) {
   var len = Math.min(data.length, SIZE);
   for (var i = 0; i < len; ++i) {
     var news = data[i];    
-    board.append($("<li/>", {"class": "news", "data-icon": "false"}).append($("<a/>", {target: "_blank", href: "newstext?url=" + news.link + "&title=" + news.title}).append(news.title).append(news.image !== undefined ? $("<img/>", {src: "rest/image/thumbnail/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.image)}) : $("<img/>", {src: "rest/image/link/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "?url=" + encodeURIComponent(news.link)}))));
+    var image = $("<img/>", {src: "/rest/image/news/" + news.uniqueKey + "/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height});
+    board.append($("<li/>", {"class": "news", "data-icon": "false"}).append($("<a/>", {target: "_blank", href: "/news/" + news.uniqueKey}).append(news.title).append(image)));
     board.listview('refresh', true);
   }
 }
