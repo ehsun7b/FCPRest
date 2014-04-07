@@ -1,6 +1,7 @@
 var map;
 //var point = {"latitude": 37.2643579, "longitude": 49.5886078}; // عضدی رشت
-var point = {"latitude": 35.7245193, "longitude": 51.2716583}; // آزادی
+//var point = {"latitude": 35.7245193, "longitude": 51.2716583}; // آزادی
+var point = {"latitude": 31.383482, "longitude": 48.635129}; // غدیر اهواز
 
 $(function() {
   $("#btnDistance").click(function() {
@@ -19,9 +20,14 @@ function mapInitialize() {
    var statiumTitle = "ورزشگاه عضدی"; // azodi rasht
    var link = "https://www.google.com/maps/place/Dr+Azody+Stadium/@37.2643579,49.5886078,16z/data=!4m7!1m4!3m3!1s0x3ff56225138d9bc9:0x41c268061848bd54!2zQXpvZGkgKNi52LbYr9uMKQ!3b1!3m1!1s0x0:0x52581d3a3ffa0f28";
    */
+  /*
+   var statiumTitle = "ورزشگاه آزادی"; // azadi
+   var link = "https://www.google.com/maps/place/Azadi+Stadium/@35.7245193,51.2716583,17z/data=!4m6!1m3!3m2!1s0x3f8dfc859879296d:0xc0312cba0be26197!2sAzadi+Sport+Complex!3m1!1s0x0:0x14589609944afeba";
+   */
 
-  var statiumTitle = "ورزشگاه آزادی"; // azadi
-  var link = "https://www.google.com/maps/place/Azadi+Stadium/@35.7245193,51.2716583,17z/data=!4m6!1m3!3m2!1s0x3f8dfc859879296d:0xc0312cba0be26197!2sAzadi+Sport+Complex!3m1!1s0x0:0x14589609944afeba";
+  var statiumTitle = "ورزشگاه غدیر اهواز"; // azadi
+  var link = "https://www.google.com/maps/place/Ghadir+Stadium/@31.383482,48.635129,17z/data=!3m1!4b1!4m2!3m1!1s0x3fc3dbd70a2f0291:0xe977f0decbaaaf9e";
+
 
   var stadium = new google.maps.LatLng(point.latitude, point.longitude);
 

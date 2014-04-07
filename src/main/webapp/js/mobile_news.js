@@ -18,10 +18,6 @@ $(function() {
     showMobileIsnaNews();
   });
 
-  $("#pageIrnaNews").on("pageshow", function(event) {
-    showMobileIrnaNews();
-  });
-
   $("#pageKhabarOnlineNews").on("pageshow", function(event) {
     showMobileKhabarOnlineNews();
   });
@@ -68,14 +64,6 @@ function showMobileIsnaNews() {
   loadIsnaNews(function(data) {
     $.mobile.loading('hide');
     showMobileGeneralNews(data, $("#isna_news_content"));
-  });
-}
-
-function showMobileIrnaNews() {
-  $.mobile.loading('show');
-  loadIrnaNews(function(data) {
-    $.mobile.loading('hide');
-    showMobileGeneralNews(data, $("#irna_news_content"));
   });
 }
 

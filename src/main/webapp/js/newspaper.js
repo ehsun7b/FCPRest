@@ -9,7 +9,7 @@ $(function() {
 
 function getNewspaperPhotos(callback) {
   $.ajax({
-    url: "/rest/newspaper/photos",
+    url: "/rest/newspaper/newspapers",
     type: "GET"
   }).done(function(data) {
     callback(data);
@@ -18,6 +18,7 @@ function getNewspaperPhotos(callback) {
 
 function showAllNewspaperThumbnails(board, size) {
   getNewspaperPhotos(function(data) {
+    var newspaperPhotos = [];
     var len = data.length;
     if (len > 0) {
       var div = $("<div/>", {"id": "newspapers-thumbnails"});
@@ -25,11 +26,12 @@ function showAllNewspaperThumbnails(board, size) {
       $(div).hide();
 
       for (var i = 0; i < len; ++i) {
-        var url = data[i];
+        var url = data[i].photoURL;
+        newspaperPhotos.push(url);
         var img = $("<img/>", {
           "src": "/rest/image/thumbnail/" + size.width + "/" + size.height + "?url=" + url,
           "width": size.width, "height": size.height,
-          "onclick": "showNewspaper('" + data[i] + "')"
+          "onclick": "showNewspaper('" + data[i].id + "')"
         });
         div.append(img);
       }
@@ -46,14 +48,14 @@ function showAllNewspaperThumbnails(board, size) {
       });
     }
 
-    showAnimatedNewspapers("newspaper_thumbnail", data, NEWSPAPER_THUMBNAIL_SIZE);
+    showAnimatedNewspapers("newspaper_thumbnail", newspaperPhotos, NEWSPAPER_THUMBNAIL_SIZE);
     $("#newspaper").css({visibility: "visible"});
   });
 }
 
 
-function showNewspaper(url) {
-  window.open("/rest/image/?url=" + encodeURIComponent(url), '_blank');
+function showNewspaper(id) {
+  window.open("/newspapers/" + id, '_blank');
 }
 
 function showAnimatedNewspapers(board, photos, size) {
@@ -62,7 +64,7 @@ function showAnimatedNewspapers(board, photos, size) {
   for (var i = 0; i < len; ++i) {
     var img = new Image();
     images.push(img);
-    photos[i] = "/rest/image/thumbnail/" + size.width + "/" + size.height + "?url=" + encodeURIComponent(photos[i])
+    photos[i] = "/rest/image/thumbnail/" + size.width + "/" + size.height + "?url=" + encodeURIComponent(photos[i]);
   }
 
   var stage = new Kinetic.Stage({
@@ -110,12 +112,12 @@ function showAnimatedNewspapers(board, photos, size) {
   }
 
   pdf = new Kinetic.Text({
-    x: 30,
+    x: 36,
     y: 26,
-    text: 'PDF',
+    text: 'روزنامه\nورزشی',
     stroke: "#000",
-    strokeWidth: 2,
-    fontSize: 40,
+    strokeWidth: 1,
+    fontSize: 20,
     fontFamily: 'Times New Roman',
     fontStyle: 'bold',
     fill: '#f00',

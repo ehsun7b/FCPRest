@@ -17,11 +17,9 @@ import javax.servlet.http.HttpSession;
  */
 public class PageServlet extends HttpServlet {
 
-  public static final String templateDirectory = "/WEB-INF/jsp/";
-  private String template;
-  private HashMap<String, Object> attributes = new HashMap<>();
-
-  ;
+  protected static final String templateDirectory = "/WEB-INF/jsp/";
+  protected String template;
+  protected HashMap<String, Object> attributes = new HashMap<>(); 
 
   public PageServlet(String template) {
     this.template = template;

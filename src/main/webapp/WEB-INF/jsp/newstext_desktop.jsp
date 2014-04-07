@@ -11,15 +11,9 @@
     
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
-    <script type="text/javascript" src="/js/news.js"></script>
-    <script type="text/javascript" src="/js/desktop_news.js"></script>
-    <script type="text/javascript" src="/js/results.js"></script>
-    <script type="text/javascript" src="/js/newspaper.js"></script>
-    <script type="text/javascript" src="/js/newsboard.js"></script>    
-    <script type="text/javascript" src="/js/stadium_map.js"></script>
-    <!--
-    <script src="js/all_compressed.js"></script>
-    -->
+        
+    <script type="text/javascript" src="/js/single-min.js"></script>
+    
     <style type="text/css">
       div.news {
         padding: 20px;
@@ -71,7 +65,7 @@
       <div id="header">
         <div id="logo"><a href="/"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></a></div>
         <div id="newspaper">
-          <a id="newspaper_thumbnail" href="/rest/newspaper/pdf"></a>
+          <a id="newspaper_thumbnail" href="/newspapers/0"></a>
         </div>
       </div>
       <div class="tabs-wrapper">
@@ -87,7 +81,7 @@
             <div id="newsBoard"></div>
             <script>
               $.ajax({
-                url: "/rest/newsboard/json"
+                url: "/rest/hotnews/json"
               }).done(function(data) {
                 var newsBoard = new NewsBoard({
                   "container": "newsBoard",
@@ -154,26 +148,7 @@
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-      </div>
-      <script>
-
-        document.onload = function() {
-          /*
-          var advert1 = $("#adver1");
-          if (advert1 !== undefined) {
-            advert1.css({visibility: "hidden"});
-          }
-          
-          var showAdvert1 = $("#showAdver1");
-          if (showAdvert1 !== undefined) {
-            showAdvert1.css({visibility: "visible"});
-            showAdvert1.click(function() {
-              advert1.css({visibility: "visible"});
-            });
-          }*/
-        };
-
-      </script>
+      </div>      
       <!-- -------------- -->
   </body>
 

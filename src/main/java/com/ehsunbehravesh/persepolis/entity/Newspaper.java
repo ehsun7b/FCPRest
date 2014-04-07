@@ -1,7 +1,6 @@
 package com.ehsunbehravesh.persepolis.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,6 +26,7 @@ public class Newspaper implements Serializable {
 
   @ManyToOne  
   @JoinColumn(nullable = false)
+  @XmlTransient
   private NewspaperSet set;
   
   public String getTitle() {

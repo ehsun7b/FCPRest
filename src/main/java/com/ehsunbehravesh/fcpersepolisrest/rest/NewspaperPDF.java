@@ -47,6 +47,7 @@ public class NewspaperPDF {
     return response.build();
   }
 
+  @Deprecated
   @Path("photos")
   @GET
   @Produces("application/json; charset=UTF-8")
@@ -68,5 +69,20 @@ public class NewspaperPDF {
     } else {
       return "[]";
     }
+  }
+
+  @Path("newspapers")
+  @GET
+  @Produces("application/json; charset=UTF-8")
+  public List<Newspaper> newspaper() {
+    NewspaperSet set = nsBean.findLast();
+    List<Newspaper> result;
+    if (set == null) {
+      result = new ArrayList<>();              
+    } else {
+      result = set.getNewspapers();
+    }
+    
+    return result;
   }
 }

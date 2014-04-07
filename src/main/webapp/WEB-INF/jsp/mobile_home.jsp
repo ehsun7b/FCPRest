@@ -17,14 +17,13 @@
     <link rel="stylesheet" href="/js/rtl.jquery.mobile-1.4.0/css/themes/default/rtl.jquery.mobile-1.4.0.css" />    
     <script src="/js/jquery-1.10.2.min.js"></script>
     <script src="/js/rtl.jquery.mobile-1.4.0/js/rtl.jquery.mobile-1.4.0.js"></script>
-    <!--s
-    <script src="/js/mobile.js"></script>
-    <script src="/js/mobile_results.js"></script>
-    <script src="/js/mobile_stadium_map.js"></script>
-    <script src="/js/news.js"></script>
-    <script src="/js/mobile_news.js"></script>
-    -->
-    <script src="js/mobile_compressed.js"></script>
+    
+    <script src="/js/mobile-min.js"></script>
+    <script src="/js/mobile_results-min.js"></script>
+    <script src="/js/mobile_stadium_map-min.js"></script>
+    <script src="/js/news-min.js"></script>
+    <script src="/js/mobile_news-min.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="/css/mobile.css"/>    
     <title>FC Persepolis</title>
   </head>
@@ -128,8 +127,7 @@
           <a data-role="button" data-theme="b" href="#pageOfficialNews">اخبار سایت رسمی باشگاه</a>
           <a data-role="button" data-theme="b" href="#pageArteshNews">اخبار سایت ارتش سرخ</a>
           <a data-role="button" data-theme="b" href="#pageVarzesh3News">اخبار سایت ورزش۳</a>
-          <a data-role="button" data-theme="b" href="#pageIsnaNews">اخبار سایت ایسنا</a>
-          <a data-role="button" data-theme="b" href="#pageIrnaNews">اخبار سایت ایرنا</a>
+          <a data-role="button" data-theme="b" href="#pageIsnaNews">اخبار سایت ایسنا</a>          
           <a data-role="button" data-theme="b" href="#pageKhabarOnlineNews">اخبار سایت خبرآنلاین</a>
         </div>
       </div>
@@ -230,29 +228,7 @@
         </div>        
       </div>
       <!-- footer -->
-    </div> 
-
-    <div id="pageIrnaNews" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>سایت ایرنا</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <ul data-role="listview" id="irna_news_content"></ul>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
-            <li><a data-rol="button" data-rel="back">اخبار</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>
+    </div>    
 
     <div id="pageKhabarOnlineNews" data-role="page">
       <!-- header -->

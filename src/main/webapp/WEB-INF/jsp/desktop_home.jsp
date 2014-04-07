@@ -10,23 +10,16 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
-    <!--
-    <script type="text/javascript" src="/js/news.js"></script>
-    <script type="text/javascript" src="/js/desktop_news.js"></script>
-    <script type="text/javascript" src="/js/results.js"></script>
-    <script type="text/javascript" src="/js/newspaper.js"></script>
-    <script type="text/javascript" src="/js/newsboard.js"></script>    
-    <script type="text/javascript" src="/js/stadium_map.js"></script>
-    -->
-    <script src="js/all_compressed.js"></script>
-    
+
+    <script type="text/javascript" src="/js/single-min.js"></script>
+
   </head>
   <body>    
     <div id="main_container">
       <div id="header">
         <div id="logo"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></div>
         <div id="newspaper">
-          <a id="newspaper_thumbnail" href="/rest/newspaper/pdf"></a>
+          <a id="newspaper_thumbnail" href="/newspapers/0"></a>
         </div>
       </div>
       <div class="tabs-wrapper">
@@ -42,7 +35,7 @@
             <div id="newsBoard"></div>
             <script>
               $.ajax({
-                url: "/rest/newsboard/json"
+                url: "/rest/hotnews/json"
               }).done(function(data) {
                 var newsBoard = new NewsBoard({
                   "container": "newsBoard",

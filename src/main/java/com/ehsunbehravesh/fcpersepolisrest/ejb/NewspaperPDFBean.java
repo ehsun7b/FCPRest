@@ -1,6 +1,7 @@
 package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
 import com.ehsunbehravesh.persepolis.entity.Newspaper;
+import com.ehsunbehravesh.persepolis.entity.NewspaperSet;
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -32,7 +33,7 @@ public class NewspaperPDFBean {
   private static final Logger log = Logger.getLogger(NewspaperPDFBean.class.getName());
 
   @Inject
-  private NewspaperPhotosBean photos;
+  private NewspaperSetBean setBean;
 
   public File newspapersPDF() {
     try {
@@ -50,8 +51,8 @@ public class NewspaperPDFBean {
       anchor.setReference("http://www.fcpersepolis.info");
       doc.add(anchor);
       //doc.add(new Paragraph("روزنامه های ورزشی ایران", new Font(Font.FontFamily.valueOf("tahoma"))));
-
-      List<Newspaper> photoURLs = new ArrayList<>();//photos.getNewspapers();
+      NewspaperSet set = setBean.findLast();
+      List<Newspaper> photoURLs = set.getNewspapers();
 
       int i = 0;
       if (photoURLs.size() > 0) {

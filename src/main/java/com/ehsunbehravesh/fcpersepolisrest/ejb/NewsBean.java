@@ -1,6 +1,8 @@
 package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
+import com.ehsunbehravesh.persepolis.entity.HotNews;
 import com.ehsunbehravesh.persepolis.entity.News;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -49,6 +51,18 @@ public class NewsBean {
       return query.getSingleResult();
     } catch (NoResultException ex) {
       return null;
+    }
+  }
+  
+  public List<News> currentHotNews() {
+    TypedQuery<HotNews> query = em.createQuery("Select hotnews FROM HotNews hotnews order by hotnews.id DESC", HotNews.class);        
+    List<HotNews> list = query.getResultList();
+    
+    if (list.isEmpty()) {
+      return new ArrayList<>();
+    } else {
+      HotNews hotNews = list.get(0);
+      return hotNews.getNewsList();
     }
   }
 }
