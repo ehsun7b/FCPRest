@@ -28,9 +28,9 @@ public class NewsBoard {
   public List<News> json() {
     List<News> result;
 
-    //result = newsBean.currentHotNews();
+    result = newsBean.currentHotNews();
     
-    result = newsBean.readTop(NewsFetchBean.OFFICIAL_WEBSITE, 10);
+    //result = newsBean.readTop(NewsFetchBean.OFFICIAL_WEBSITE, 10);
 
     return result;
   }

@@ -1,0 +1,15 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="header">
+  <div class="status">
+    <a href="/admin/logout">Sign Out</a>
+    |
+    <a href="/admin/profile">${admin.username}</a>
+  </div>
+  <div class="banner">FC PERSEPOLIS INFO</div>
+
+  <div class="nav">
+    <a href="/admin/hotnews">Hot News</a>  
+  </div>
+
+</div>

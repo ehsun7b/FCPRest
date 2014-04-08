@@ -65,4 +65,24 @@ public class NewsBean {
       return hotNews.getNewsList();
     }
   }
+  
+  public List<HotNews> readTop(int size) {
+    TypedQuery<HotNews> query = em.createQuery("Select hnews FROM HotNews hnews order by hnews.id DESC", HotNews.class);
+    query.setMaxResults(size);
+    return query.getResultList();
+  }
+
+  public void newHotNews(String[] newsKeys) {
+    HotNews hotNews = new HotNews();
+    List<News> newsList = new ArrayList<>();
+    
+    for (String key: newsKeys) {
+      News news = findOne(key);
+      newsList.add(news);
+    }
+    
+    hotNews.setNewsList(newsList);
+    
+    em.persist(hotNews);
+  }
 }

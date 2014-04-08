@@ -3,22 +3,19 @@ package com.ehsuhnbehravesh.fcpersepolis.news.servlets;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperSetBean;
 import com.ehsunbehravesh.persepolis.entity.Newspaper;
 import com.ehsunbehravesh.persepolis.entity.NewspaperSet;
-import com.ehsunbehravesh.utils.web.CachedUserAgentParser;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.uadetector.ReadableUserAgent;
-import net.sf.uadetector.UserAgentType;
 
 /**
  *
  * @author ehsun7b
  */
 @WebServlet(name = "NewspapersServlet", urlPatterns = "/newspapers/*")
-public class NewspapersServlet extends PageServlet {
+public class NewspapersServlet extends MultiDevicePageServlet {
 
   @Inject
   private NewspaperSetBean setBean;
@@ -30,18 +27,7 @@ public class NewspapersServlet extends PageServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     NewspaperSet set = setBean.findLast();
-    Newspaper newspaper = null;
-
-    CachedUserAgentParser parser = new CachedUserAgentParser();
-
-    String strAgent = req.getHeader("User-Agent");
-    ReadableUserAgent agent = parser.parse(strAgent);
-
-    if (agent.getType().equals(UserAgentType.MOBILE_BROWSER)) {
-      setTemplate("mobile_newspapers.jsp");
-    } else {
-      setTemplate("desktop_newspapers.jsp");
-    }
+    Newspaper newspaper = null;    
     
     if (set != null) {
       String strNewspaperId = req.getPathInfo();
@@ -74,6 +60,7 @@ public class NewspapersServlet extends PageServlet {
 
     setAttr("set", set);
     setAttr("newspaper", newspaper);
+    setAttr("count", set.getNewspapers().size());
     setAttr("newspapers", set.getNewspapers());
     
     showTemplate(req, resp);

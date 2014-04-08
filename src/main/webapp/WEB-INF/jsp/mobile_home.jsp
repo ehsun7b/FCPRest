@@ -41,6 +41,7 @@
           <a data-role="button" data-theme="a" data-icon="" href="#pageMatchInfo">برنامه بازی‌ها</a>
           <a data-role="button" data-theme="a" data-icon="" href="#pageRanking">جدول لیگ برتر</a>
           <a data-role="button" data-theme="a" data-icon="" href="#pageNews">اخبار</a>
+          <a data-role="button" data-theme="a" data-icon="" href="/newspapers/0">روزنامه‌های ورزشی</a>
         </div>
       </div>
 
