@@ -9,7 +9,8 @@
   <div class="banner">FC PERSEPOLIS INFO</div>
 
   <div class="nav">
-    <a href="/admin/hotnews">Hot News</a>  
+    <a href="/admin/hotnews">Hot News</a>
+    <a href="/admin/news">News</a>
   </div>
 
 </div>

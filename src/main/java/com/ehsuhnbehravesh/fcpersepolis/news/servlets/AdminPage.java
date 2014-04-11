@@ -17,10 +17,10 @@ public class AdminPage extends PageServlet {
 
   @Inject
   protected AdminBean adminBean;
-  
+
   protected static final String LOGIN_PAGE = "/admin/login";
   protected Administrator admin;
-  
+
   public AdminPage(String template) {
     super(template);
   }
@@ -29,7 +29,7 @@ public class AdminPage extends PageServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     admin = checkLogin(req.getSession());
     if (admin == null) {
-      resp.sendRedirect(LOGIN_PAGE);      
+      resp.sendRedirect(LOGIN_PAGE);
     } else {
       setAttr("admin", admin);
     }
@@ -39,7 +39,27 @@ public class AdminPage extends PageServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     admin = checkLogin(req.getSession());
     if (admin == null) {
-      resp.sendRedirect(LOGIN_PAGE);      
+      resp.sendRedirect(LOGIN_PAGE);
+    } else {
+      setAttr("admin", admin);
+    }
+  }
+
+  @Override
+  protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    admin = checkLogin(req.getSession());
+    if (admin == null) {
+      resp.sendRedirect(LOGIN_PAGE);
+    } else {
+      setAttr("admin", admin);
+    }
+  }
+
+  @Override
+  protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    admin = checkLogin(req.getSession());
+    if (admin == null) {
+      resp.sendRedirect(LOGIN_PAGE);
     } else {
       setAttr("admin", admin);
     }

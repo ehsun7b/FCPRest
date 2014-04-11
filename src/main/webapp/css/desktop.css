@@ -1,3 +1,5 @@
+@import url("fonts.css");
+
 body {
   direction: rtl;
   background-color: #FFF;
@@ -17,6 +19,7 @@ div#main_container {
 div#header {
   height: 200px;  
   background: linear-gradient(#EEE, transparent);  
+  overflow: hidden;
 }
 
 div#logo {  
@@ -117,17 +120,17 @@ div.news_group_content {
 
 div.news_group_content div.news {  
   padding: 5px;
-  margin: 5px 1px;
+  margin: 8px 1px;
   background-color: #FFF;
-  border: 1px solid #DDD;
-  border-radius: 3px;
-  box-shadow: 1px 1px 1px #DDD;
+  border: 1px dashed #D99;
+  border-radius: 0px;  
   min-height: 50px;
+  background-color: #f5e7c9;
 }
 
 div.news img {
-  display: block;
-  margin-right: auto;    
+  float: left;
+  border-radius: 5px;
 }
 
 div.news_group_content a {
@@ -135,9 +138,9 @@ div.news_group_content a {
   max-width: 600px;
   float: right;  
   text-decoration: none;  
-  text-shadow: 1px 1px 1px #bbb;
+  text-shadow: 1px 1px 1px #FFF;
   color: red;
-  font: normal bold 12px tahoma;
+  font: normal bold 12px Yas, tahoma;
 }
 
 div.news_group_content a:visited {
@@ -159,12 +162,9 @@ div.next_match_location div#map-canvas {
 }
 
 div#newspaper {
-  float: left;
+  float: left;    
   margin: 30px;
   position: relative;
-}
-
-div#newspaper {
   border: 1px solid #777;  
   width: 138px;
   height: 100px;
@@ -186,6 +186,74 @@ div#newspapers-thumbnails img {
   box-shadow: 2px 2px 2px #000;
   cursor: pointer;
   border: 1px solid #777;
+}
+
+div#nav {    
+  margin: 100px 155px 0px 180px;  
+}
+
+div#nav a {
+  font: normal normal 24px Yas, "times new roman";
+  text-decoration: none;
+  color: black;
+  text-shadow: 1px 1px 1px #AAA;
+  display: inline-block;
+  margin: 0px 10px 0px 20px;
+}
+
+div#nav a:hover {
+  text-shadow: 1px 1px 1px #666;
+}
+
+#newsBoard {
+  background-color: #dbf9ac;
+  border: 1px solid #c7e991;
+}
+
+/* HOT NEWS */
+
+div.hotNews {
+  
+}
+
+div.hotNews {
+  clear: both;
+  padding: 10px;
+  margin: 5px;  
+  min-height: 200px;
+}
+
+.displayNone {
+  display: none;
+}
+
+div.hotNews a {
+  text-decoration: none;
+}
+
+div.hotNewsPhoto {
+  float: right;
+  padding-left: 10px;
+}
+
+div.hotNewsPhoto img {
+  max-width: 250px;
+  max-height: 200px;
+  box-shadow: 1px 1px 1px #666;
+}
+
+div.hotNewsTitle {
+  padding-bottom: 15px;
+  font: normal bold 16px Yas, "times new roman";
+  color: #299119;
+  text-shadow: 1px 1px 1px #AAA;  
+}
+
+div.hotNewsDescription {
+  color: black;
+  font: normal normal 14px Yas, "times new roman";
+  line-height: 1.7em;
+  text-shadow: 1px 1px 1px #AAA
 }
 
 /* TABS */

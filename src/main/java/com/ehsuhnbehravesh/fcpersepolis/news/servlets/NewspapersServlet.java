@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "NewspapersServlet", urlPatterns = "/newspapers/*")
+@WebServlet(name = "NewspapersServlet", urlPatterns = {"/newspapers/*", "/newspapers"})
 public class NewspapersServlet extends MultiDevicePageServlet {
 
   @Inject
@@ -27,23 +27,28 @@ public class NewspapersServlet extends MultiDevicePageServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     NewspaperSet set = setBean.findLast();
-    Newspaper newspaper = null;    
-    
+    Newspaper newspaper = null;
+
     if (set != null) {
       String strNewspaperId = req.getPathInfo();
       Long newspaperId = null;
 
-      if (strNewspaperId != null && strNewspaperId.startsWith("/")) {
+      if (strNewspaperId != null && strNewspaperId.startsWith("/")
+              && strNewspaperId.length() > 1) {
         strNewspaperId = strNewspaperId.substring(1);
-        
+
         int slashIndex = strNewspaperId.indexOf("/");
         if (slashIndex > 0) {
           strNewspaperId = strNewspaperId.substring(0, slashIndex);
         }
-        
-        newspaperId = Long.parseLong(strNewspaperId);
+
+        try {
+          newspaperId = Long.parseLong(strNewspaperId);
+        } catch (NumberFormatException ex) {
+          newspaperId = null;
+        }
       }
-      
+
       if (newspaperId != null && set.getNewspapers() != null) {
         for (Newspaper n : set.getNewspapers()) {
           if (n.getId().equals(newspaperId)) {
@@ -51,10 +56,10 @@ public class NewspapersServlet extends MultiDevicePageServlet {
             break;
           }
         }
+      }
 
-        if (newspaper == null) {
-          newspaper = set.getNewspapers().get(0);
-        }
+      if (newspaper == null) {
+        newspaper = set.getNewspapers().get(0);
       }
     }
 
@@ -62,7 +67,7 @@ public class NewspapersServlet extends MultiDevicePageServlet {
     setAttr("newspaper", newspaper);
     setAttr("count", set.getNewspapers().size());
     setAttr("newspapers", set.getNewspapers());
-    
+
     showTemplate(req, resp);
   }
 

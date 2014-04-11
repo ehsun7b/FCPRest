@@ -33,12 +33,22 @@ public class NewsBean {
   }
 
   public List<News> readTop(String website, int size) {
-    TypedQuery<News> query = em.createQuery("Select news FROM News news WHERE news.website = :website order by news.id DESC", News.class);
-    query.setParameter("website", website);
+    TypedQuery<News> query = null;
+
+    if (website != null) {
+      query = em.createQuery("Select n FROM News n WHERE n.website = :website order by n.id DESC", News.class);
+    } else {
+      query = em.createQuery("Select n FROM News n order by n.id DESC", News.class);
+    }
+
+    if (website != null) {
+      query.setParameter("website", website);
+    }
+    
     query.setMaxResults(size);
     return query.getResultList();
   }
-  
+
   public List<News> readNewsWithoutContent() {
     TypedQuery<News> query = em.createQuery("Select news FROM News news WHERE news.content is null", News.class);
     return query.getResultList();
@@ -53,11 +63,11 @@ public class NewsBean {
       return null;
     }
   }
-  
+
   public List<News> currentHotNews() {
-    TypedQuery<HotNews> query = em.createQuery("Select hotnews FROM HotNews hotnews order by hotnews.id DESC", HotNews.class);        
+    TypedQuery<HotNews> query = em.createQuery("Select hotnews FROM HotNews hotnews order by hotnews.id DESC", HotNews.class);
     List<HotNews> list = query.getResultList();
-    
+
     if (list.isEmpty()) {
       return new ArrayList<>();
     } else {
@@ -65,7 +75,7 @@ public class NewsBean {
       return hotNews.getNewsList();
     }
   }
-  
+
   public List<HotNews> readTop(int size) {
     TypedQuery<HotNews> query = em.createQuery("Select hnews FROM HotNews hnews order by hnews.id DESC", HotNews.class);
     query.setMaxResults(size);
@@ -75,14 +85,14 @@ public class NewsBean {
   public void newHotNews(String[] newsKeys) {
     HotNews hotNews = new HotNews();
     List<News> newsList = new ArrayList<>();
-    
-    for (String key: newsKeys) {
+
+    for (String key : newsKeys) {
       News news = findOne(key);
       newsList.add(news);
     }
-    
+
     hotNews.setNewsList(newsList);
-    
+
     em.persist(hotNews);
   }
 }

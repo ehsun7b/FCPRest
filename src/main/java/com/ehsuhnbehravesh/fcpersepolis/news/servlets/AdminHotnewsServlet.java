@@ -3,7 +3,6 @@ package com.ehsuhnbehravesh.fcpersepolis.news.servlets;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
 import com.ehsunbehravesh.persepolis.entity.HotNews;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;

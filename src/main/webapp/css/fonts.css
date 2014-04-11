@@ -1,0 +1,53 @@
+/*
+@font-face {
+  font-family: Khoramshahr;
+  src: url('font/XB Khoramshahr.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: Khoramshahr;
+  src: url('font/XB KhoramshahrBd.ttf') format('truetype');
+  font-weight: bold;
+}
+
+
+@font-face {
+  font-family: Khoramshahr;
+  src: url('font/XB KhoramshahrBdIt.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Khoramshahr;
+  src: url('font/XB KhoramshahrIt.ttf') format('truetype');  
+  font-style: italic;
+}
+*/
+
+/* ------------------ */
+
+@font-face {
+  font-family: Yas;
+  src: url('font/XB Yas.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: Yas;
+  src: url('font/XB YasBd.ttf') format('truetype');
+  font-weight: bold;
+}
+
+
+@font-face {
+  font-family: Yas;
+  src: url('font/XB YasBdIt.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Yas;
+  src: url('font/XB YasIt.ttf') format('truetype');  
+  font-style: italic;
+}

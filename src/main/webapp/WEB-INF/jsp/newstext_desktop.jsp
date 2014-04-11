@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -27,8 +27,8 @@
       }
 
       div.title-news {
-        font: normal bold 20px "times new roman";
-        text-shadow: 2px 2px 1px #CCC;
+        font: normal bold 20px Yas, "times new roman";
+        text-shadow: 1px 1px 2px #CCC;
         padding-bottom: 10px;
       }
 
@@ -52,6 +52,7 @@
       div.image-news img {
         border: 1px solid #000;
         box-shadow: 2px 2px 2px #999;
+        border-radius: 0px;
       }
 
       div.link-news a {
@@ -63,66 +64,8 @@
   <body>    
     <div id="main_container">
       <div id="header">
-        <div id="logo"><a href="/"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></a></div>
-        <div id="newspaper">
-          <a id="newspaper_thumbnail" href="/newspapers/0"></a>
-        </div>
+        <%@include file="jspf/header.jspf" %>
       </div>
-      <div class="tabs-wrapper">
-        <div class="tabs-link">
-          <span class="tab-link active" data-tab="topTab" data-content="tab1">سرخط خبرها</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab2">بازی بعدی</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab3">محل بازی بعدی</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab4">بازی قبلی</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab5">جدول لیگ برتر</span>          
-        </div>
-        <div class="tabs-content">
-          <div class="tab-content active" data-tab="topTab" id="tab1">
-            <div id="newsBoard"></div>
-            <script>
-              $.ajax({
-                url: "/rest/hotnews/json"
-              }).done(function(data) {
-                var newsBoard = new NewsBoard({
-                  "container": "newsBoard",
-                  "size": {"width": 850, "height": 100},
-                  "newsList": data,
-                  "maxTextWidth": 90,
-                  "imageSize": {width: 130, height: 80},
-                  "interval": 10000
-                });
-              });
-            </script>
-          </div>
-          <div class="tab-content" data-tab="topTab" id="tab2"></div>
-          <div class="tab-content" data-tab="topTab" id="tab3">
-            <!-- MAP OF NEXT MATCH -->
-            <div class="next_match_location">
-              محل برگزاری بازی بعدی<br/><br/>
-              <div id="map-canvas"></div>
-            </div> 
-          </div>
-          <div class="tab-content" data-tab="topTab" id="tab4"></div>
-          <div class="tab-content" data-tab="topTab" id="tab5">
-            <!-- RANKING -->
-            <div id="ranking"></div>
-          </div>          
-
-          <script>
-            $("span.tab-link[data-tab='topTab']").click(function() {
-              $("[data-tab='topTab']").removeClass("active");
-              $(this).addClass("active");
-              var tab = $(this).attr("data-content");
-              $("#" + tab).addClass("active");
-
-              if (tab === "tab3") {
-                mapInitialize();
-              }
-            });
-          </script>
-        </div>        
-      </div>
-
       <div class="news">
         <div class="date-news">${news.publishDate}</div>
         <div class="title-news">${news.title}</div>

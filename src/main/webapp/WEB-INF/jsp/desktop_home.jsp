@@ -10,6 +10,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.flip.min.js"></script>
 
     <script type="text/javascript" src="/js/single-min.js"></script>
 
@@ -17,11 +19,8 @@
   <body>    
     <div id="main_container">
       <div id="header">
-        <div id="logo"><img src="/img/main_title.png" alt="پایگاه خبری پرسپولیس" /></div>
-        <div id="newspaper">
-          <a id="newspaper_thumbnail" href="/newspapers/0"></a>
-        </div>
-      </div>
+        <%@include file="jspf/header.jspf" %>
+      </div>            
       <div class="tabs-wrapper">
         <div class="tabs-link">
           <span class="tab-link active" data-tab="topTab" data-content="tab1">سرخط خبرها</span>
@@ -32,19 +31,35 @@
         </div>
         <div class="tabs-content">
           <div class="tab-content active" data-tab="topTab" id="tab1">
-            <div id="newsBoard"></div>
+            <div id="newsBoard">
+              <c:forEach items="${hotNewsList}" var="hotNews" varStatus="loop">
+                <div class="hotNews <c:if test="${loop.index > 0}">displayNone</c:if>">
+                  <a href="/news/${hotNews.uniqueKey}">
+                    <div class="hotNewsPhoto"><img src="/rest/image/news/${hotNews.uniqueKey}/250/200"/></div>
+                    <div class="hotNewsTitle">${hotNews.title}</div>
+                    <div class="hotNewsDescription">${hotNews.description}</div>
+                  </a>
+                </div>
+              </c:forEach>
+            </div>            
             <script>
-              $.ajax({
-                url: "/rest/hotnews/json"
-              }).done(function(data) {
-                var newsBoard = new NewsBoard({
-                  "container": "newsBoard",
-                  "size": {"width": 850, "height": 100},
-                  "newsList": data,
-                  "maxTextWidth": 90,
-                  "imageSize": {width: 130, height: 100},
-                  "interval": 10000
-                });
+              $(function() {                
+                hotNewsList = $("#newsBoard div.hotNews");
+                hotNewsIndex = 0;                
+                scrollInterval = setInterval(function() {                  
+                  if (hotNewsIndex < hotNewsList.length - 1) {
+                    hotNewsIndex++;
+                  } else {
+                    hotNewsIndex = 0;
+                  }
+                  
+                  $("#newsBoard").flip({
+                    direction: 'lr',
+                    content: "<div class='hotNews'>" + $(hotNewsList[hotNewsIndex]).html() + "</div>",
+                    color: $("#newsBoard").css("background-color"),
+                    speed: 300
+                  });
+                }, 12000);
               });
             </script>
           </div>
@@ -96,7 +111,7 @@
                   <div class="news">
                     <a href="/news/${news.uniqueKey}">${news.title}</a>
                     <c:if test="${news.image != null}">
-                      <img src="/rest/image/news/${news.uniqueKey}/80/80"/>
+                      <img src="/rest/image/news/${news.uniqueKey}/80/50"/>
                     </c:if>
                   </div>
                 </c:forEach>

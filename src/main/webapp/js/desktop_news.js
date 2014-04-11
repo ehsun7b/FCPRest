@@ -1,5 +1,5 @@
 var SIZE = 10;
-var IMAGE_SIZE = {width: 80, height: 80};
+var IMAGE_SIZE = {width: 80, height: 50};
 
 $(function() {
   //showOfficialNews();
