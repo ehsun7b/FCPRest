@@ -11,6 +11,7 @@
   <div class="nav">
     <a href="/admin/hotnews">Hot News</a>
     <a href="/admin/news">News</a>
+    <a href="/admin/video">Video</a>
   </div>
 
 </div>

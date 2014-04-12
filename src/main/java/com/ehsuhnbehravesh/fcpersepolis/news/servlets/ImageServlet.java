@@ -23,8 +23,7 @@ import javax.servlet.http.HttpServlet;
 @SuppressWarnings("serial")
 public class ImageServlet extends HttpServlet {
 
-  private static final Logger log = Logger.getLogger(ImageServlet.class
-          .getName());
+  private static final Logger log = Logger.getLogger(ImageServlet.class.getName());
 
   private static final int BUFFER_SIZE = 4096;
   private static final int CACHE_SIZE = 10;

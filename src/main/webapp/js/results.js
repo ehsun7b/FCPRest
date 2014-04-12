@@ -1,7 +1,7 @@
 $(function() {  
   showRanking("ranking");
   //showMatchInfo("results");
-  showMatchInfoTabs("tab2", "tab4");
+  //showMatchInfoTabs("tab2", "tab4");
 });
 
 function showRanking(id) {

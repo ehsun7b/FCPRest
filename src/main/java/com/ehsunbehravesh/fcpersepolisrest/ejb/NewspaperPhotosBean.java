@@ -37,68 +37,96 @@ public class NewspaperPhotosBean {
     NewspaperSet lastSet = setBean.findLast();
 
     if (lastSet == null) {
-      fetchPhotos(null);
+      List<Newspaper> newspapers = fetchPhotos();
+      saveNewspaperSet(null, newspapers);
     } else {
       String currentDate = fetchCurrentDate();
 
-      if (currentDate != null && !currentDate.equals(lastSet.getPublishDate())) {
-        fetchPhotos(currentDate);
+      if (currentDate != null) {
+        if (!currentDate.equals(lastSet.getPublishDate())) {
+          List<Newspaper> newspapers = fetchPhotos();
+          saveNewspaperSet(currentDate, newspapers);
+        } else {
+          boolean lastSetIsInvalid;
+          List<Newspaper> newspapers = fetchPhotos();
+
+          lastSetIsInvalid = !isEqual(newspapers, lastSet.getNewspapers());
+
+          if (lastSetIsInvalid) {
+            log.log(Level.INFO, "Newspaper set is invalid. updatings newspapers.");
+            lastSet.setNewspapers(newspapers);
+
+            for (Newspaper newspaper : newspapers) {
+              newspaper.setSet(lastSet);
+            }
+
+            setBean.save(lastSet);
+          }
+        }
       }
     }
   }
 
-  private void fetchPhotos(String date) {
-    log.info("Fetching newspapers ...");
-
+  private void saveNewspaperSet(String date, List<Newspaper> newspapers) {
     if (date == null) {
       date = fetchCurrentDate();
     }
 
     if (date != null) {
       NewspaperSet newspaperSet = new NewspaperSet(date);
-      try {
-        List<Newspaper> newPhotoURLs = new ArrayList<>();
-        Document doc = Jsoup.connect(url).get();
-        Element divGalleryBox = doc.select("div.gallery-box").get(0);
-        Element divShowImage = divGalleryBox.select("div#showImage").get(0);
-        Element ul = divShowImage.select("ul").get(0);
-        Elements lis = ul.select("li");
+      newspaperSet.setNewspapers(newspapers);
 
-        for (Element li : lis) {
-          Element a = li.select("a").get(0);
-          String src = a.attr("abs:href");
+      for (Newspaper newspaper : newspapers) {
+        newspaper.setSet(newspaperSet);
+      }
 
-          Element p = li.select("p").get(0);
-          String ownText = p.text();
-          Newspaper newspaper = new Newspaper();
-          newspaper.setSet(newspaperSet);
+      setBean.save(newspaperSet);
+    } else {
+      log.log(Level.SEVERE, "Can not fetch the current date of newspaper!");
+    }
+  }
 
-          String photoUrl = null;
+  private List<Newspaper> fetchPhotos() {
+    log.info("Fetching newspapers ...");
+    List<Newspaper> newPhotoURLs = new ArrayList<>();
 
-          try {
-            if (src != null && src.length() > 0) {
-              photoUrl = findPhotoURL(src);
-            }
-          } catch (Exception ex) {
-            log.log(Level.SEVERE, "Error in finding real newspaper photo url. {0}", ex.getMessage());
+    try {
+      Document doc = Jsoup.connect(url).get();
+      Element divGalleryBox = doc.select("div.gallery-box").get(0);
+      Element divShowImage = divGalleryBox.select("div#showImage").get(0);
+      Element ul = divShowImage.select("ul").get(0);
+      Elements lis = ul.select("li");
+
+      for (Element li : lis) {
+        Element a = li.select("a").get(0);
+        String src = a.attr("abs:href");
+
+        Element p = li.select("p").get(0);
+        String ownText = p.text();
+        Newspaper newspaper = new Newspaper();
+
+        String photoUrl = null;
+
+        try {
+          if (src != null && src.length() > 0) {
+            photoUrl = findPhotoURL(src);
           }
-
-          if (photoUrl != null) {
-            newspaper.setPhotoURL(photoUrl);
-            newspaper.setTitle(ownText.trim());
-            newPhotoURLs.add(newspaper);
-          }
+        } catch (IOException ex) {
+          log.log(Level.SEVERE, "Error in finding real newspaper photo url. {0}", ex.getMessage());
         }
 
-        newspaperSet.setNewspapers(newPhotoURLs);
-        
-        setBean.save(newspaperSet);
-      } catch (IOException ex) {
-        log.log(Level.SEVERE, "Error in fetching newspaper photos. {0}", ex.getMessage());
+        if (photoUrl != null) {
+          newspaper.setPhotoURL(photoUrl);
+          newspaper.setTitle(ownText.trim());
+          newPhotoURLs.add(newspaper);
+        }
       }
-    } else {
-      log.log(Level.SEVERE, "Can not fetch newspaper dates.");
+
+    } catch (IOException ex) {
+      log.log(Level.SEVERE, "Error in fetching newspaper photos. {0}", ex.getMessage());
     }
+
+    return newPhotoURLs;
   }
 
   private String findPhotoURL(String url) throws IOException {
@@ -141,5 +169,22 @@ public class NewspaperPhotosBean {
     }
 
     return result;
+  }
+
+  private boolean isEqual(List<Newspaper> newspapers, List<Newspaper> newspapers0) {
+    if (newspapers.size() != newspapers0.size()) {
+      return false;
+    } else {
+      for (int i = 0; i < newspapers.size(); i++) {
+        Newspaper n1 = newspapers.get(i);
+        Newspaper n2 = newspapers0.get(i);
+
+        if (!n1.getTitle().equals(n2.getTitle())) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }

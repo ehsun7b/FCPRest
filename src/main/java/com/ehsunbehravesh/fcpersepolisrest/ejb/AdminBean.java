@@ -28,23 +28,17 @@ public class AdminBean {
     em.persist(admin);
   }
 
+  public void saveNewPassword(Administrator admin) throws Exception {
+    admin.setPassword(hashPassword(admin.getPassword(), admin.getSalt()));
+    em.merge(admin);
+  }
+  
   public void saveNew(String username, String password) throws Exception {
     Administrator admin = new Administrator();
     admin.setUsername(username);
     admin.setSalt(HashUtils.generateSalt(10));
-    try {
-      String hashedPassword = HashUtils.SHA256(password.concat(admin.getSalt()));
+    admin.setPassword(hashPassword(password, admin.getSalt()));
 
-      for (int i = 0; i < 300; i++) {
-        hashedPassword = HashUtils.SHA256(hashedPassword);
-      }
-      
-      admin.setPassword(hashedPassword);
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-      log.log(Level.SEVERE, "Error in hashing password {0}", ex.getMessage());
-      throw new Exception("Saving new admin failed.");
-    }
-    
     em.persist(admin);
   }
 
@@ -94,4 +88,13 @@ public class AdminBean {
     return result;
   }
 
+  private String hashPassword(String password, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    String hashedPassword = HashUtils.SHA256(password.concat(salt));
+
+    for (int i = 0; i < 300; i++) {
+      hashedPassword = HashUtils.SHA256(hashedPassword);
+    }
+
+    return hashedPassword;
+  }
 }

@@ -21,9 +21,7 @@
             <tr>
               <td>${hotNews.id}</td>
               <td>
-                <c:forEach items="${hotNews.newsList}" var="news">
-                  <div class="news"><a href="/news/${news.uniqueKey}">${news.title}</a></div>
-                  </c:forEach>
+                <c:forEach items="${hotNews.newsList}" var="news">${news.uniqueKey},</c:forEach>
               </td>
             </tr>
           </c:forEach>

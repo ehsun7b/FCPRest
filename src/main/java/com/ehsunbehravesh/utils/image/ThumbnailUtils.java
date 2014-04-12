@@ -25,6 +25,11 @@ public class ThumbnailUtils {
     BufferedImage image = ImageIO.read(url);
     return image;
   }
+  
+  public static BufferedImage fetchImage(File file) throws IOException, URISyntaxException {
+    BufferedImage image = ImageIO.read(file);
+    return image;
+  }
 
   public static BufferedImage thumbnail(BufferedImage image, Dimension size) throws IOException {
     File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + System.nanoTime() + ".png");

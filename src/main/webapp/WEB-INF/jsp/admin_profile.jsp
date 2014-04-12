@@ -5,6 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Admin - News</title>
+    <script src="/js/jquery-1.10.2.min.js"></script>
   </head>
   <body>
     <%@include file="admin-jspf/header.jspf" %>
@@ -12,22 +13,24 @@
     <div class="content">
 
       <div class="form">
+        <div class="warning">${warning}</div>
+        <div class="info">${info}</div>
         <form method="post">
           <table class="form">
             <tr>
-              <td class="caption"><label for="oldPassword" />OldPassword:</td>
+              <td class="caption"><label for="oldPassword" />Old password:</td>
               <td class="data">
                 <input type="password" id="oldPassword" name="oldPassword"/>
               </td>
             </tr>
             <tr>
-              <td class="caption"><label for="newPassword" />newPassword:</td>
+              <td class="caption"><label for="newPassword" />New password:</td>
               <td class="data">
                 <input type="password" id="newPassword" name="newPassword"/>
               </td>
             </tr>
             <tr>
-              <td class="caption"><label for="confirmPassword" />confirmPassword:</td>
+              <td class="caption"><label for="confirmPassword" />Confirm password:</td>
               <td class="data">
                 <input type="password" id="confirmPassword" name="confirmPassword"/>
               </td>
@@ -38,7 +41,7 @@
               </td>              
             </tr>
           </table>
-          <script>
+          <script>                        
             $("#oldPassword").focus();
           </script>
         </form>

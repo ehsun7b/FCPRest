@@ -24,9 +24,9 @@
       <div class="tabs-wrapper">
         <div class="tabs-link">
           <span class="tab-link active" data-tab="topTab" data-content="tab1">سرخط خبرها</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab2">بازی بعدی</span>
+          <!--<span class="tab-link" data-tab="topTab" data-content="tab2">بازی بعدی</span>
           <span class="tab-link" data-tab="topTab" data-content="tab3">محل بازی بعدی</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab4">بازی قبلی</span>
+          <span class="tab-link" data-tab="topTab" data-content="tab4">بازی قبلی</span>-->
           <span class="tab-link" data-tab="topTab" data-content="tab5">جدول لیگ برتر</span>          
         </div>
         <div class="tabs-content">
@@ -63,15 +63,15 @@
               });
             </script>
           </div>
-          <div class="tab-content" data-tab="topTab" id="tab2"></div>
+          <!--<div class="tab-content" data-tab="topTab" id="tab2"></div>
           <div class="tab-content" data-tab="topTab" id="tab3">
-            <!-- MAP OF NEXT MATCH -->
+            <!-- MAP OF NEXT MATCH --><!--
             <div class="next_match_location">
               محل برگزاری بازی بعدی<br/><br/>
               <div id="map-canvas"></div>
             </div> 
           </div>
-          <div class="tab-content" data-tab="topTab" id="tab4"></div>
+          <div class="tab-content" data-tab="topTab" id="tab4"></div>-->
           <div class="tab-content" data-tab="topTab" id="tab5">
             <!-- RANKING -->
             <div id="ranking"></div>
