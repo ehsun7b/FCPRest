@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -32,6 +33,23 @@ public class NewsBean {
     em.remove(news);
   }
 
+  public Long count() {
+    Query q = em.createQuery("SELECT count(n) FROM NEWS n");
+    Object singleResult = q.getSingleResult();
+    return (Long) singleResult;
+  }
+  
+  public void deleteAllHotNewsExceptLast() {
+    Query q = em.createQuery("DELETE FROM HotNews n WHERE n.id < (SELECT max(n1.id) FROM HotNews n1)");    
+    q.executeUpdate();
+  }
+  
+  public void deleteAllExceptTop(int size) {    
+    Query q = em.createQuery("DELETE FROM News n WHERE n.id < ((SELECT max(n1.id) FROM News n1) - :size)");
+    q.setParameter("size", size);
+    q.executeUpdate();    
+  }
+
   public List<News> readTop(String website, int size) {
     TypedQuery<News> query = null;
 
@@ -44,13 +62,14 @@ public class NewsBean {
     if (website != null) {
       query.setParameter("website", website);
     }
-    
+
     query.setMaxResults(size);
     return query.getResultList();
   }
 
-  public List<News> readNewsWithoutContent() {
-    TypedQuery<News> query = em.createQuery("Select news FROM News news WHERE news.content is null", News.class);
+  public List<News> readNewsWithoutContent(int size) {
+    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE n.content is null order by n.id DESC", News.class);
+    query.setMaxResults(size);
     return query.getResultList();
   }
 

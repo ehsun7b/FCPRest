@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -46,7 +47,7 @@ public class NewsFetchBean {
 
   @Inject
   private NewsBean newsBean;
-
+  
   @Schedule(minute = "*/5", hour = "*", persistent = false)
   public void fetchOfficialNews() {
     log.log(Level.INFO, "Fetching official news ...");
@@ -199,7 +200,7 @@ public class NewsFetchBean {
   @Schedule(minute = "4/5", hour = "*", persistent = false)
   public void fetchNewsText() {
     log.info("Fetching news content ...");
-    List<News> newsList = newsBean.readNewsWithoutContent();
+    List<News> newsList = newsBean.readNewsWithoutContent(20);
     log.log(Level.INFO, "News without content {0}", newsList.size());
 
     for (News news : newsList) {
@@ -225,4 +226,17 @@ public class NewsFetchBean {
     PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();
     return matcher.match(news);
   }
+
+  @Schedule(minute = "0", hour = "4", persistent = false)
+  private void cleanupHotNews() {
+    log.log(Level.INFO, "Cleaning hot news table.");
+    newsBean.deleteAllHotNewsExceptLast();    
+  }
+  
+  @Schedule(minute = "*", hour = "5", persistent = false)
+  private void cleanupNews() {
+    log.log(Level.INFO, "Cleaning news table.");
+    newsBean.deleteAllExceptTop(2000);
+  }
+  
 }

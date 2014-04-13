@@ -5,12 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Admin Login</title>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css"/>
   </head>
   <body>
     <div class="login">
       <div class="message">${message}</div>
       <form method="post">
-        <table class="loginForm">
+        <table class="form" style="width: 40%;">
           <tr>
             <td>
               <label for="username">Username:</label>
@@ -28,7 +29,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colspan="2" class="buttons">
               <input type="submit" name="ok" value="Sign In"/>
             </td>
           </tr>

@@ -239,6 +239,8 @@ div.video span.videoTitle {
   display: block;
   text-align: center; 
   font-size: 14px;
+  width: 120px;
+  overflow: hidden;
 }
 
 div.video span.videoCategory {
@@ -251,6 +253,8 @@ div.video span.videoCategory {
   padding: 1px;
   border-radius: 2px;
   text-shadow: 1px 1px 1px #AAA;
+  width: 120px;
+  overflow: hidden;
 }
 
 /* HOT NEWS */
