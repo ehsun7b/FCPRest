@@ -18,7 +18,7 @@ import org.apache.commons.io.IOUtils;
 public class Video {
 
   private static final Logger log = Logger.getLogger(Video.class.getName());
-  private static final String VIDEO_IMAGE_PATH = "/home/ehsun7b/video/image";
+  private static final String VIDEO_IMAGE_PATH = "/root/video/image";
 
   @GET
   @Path("image/{file}")

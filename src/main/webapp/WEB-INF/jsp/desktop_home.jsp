@@ -27,7 +27,9 @@
           <!--<span class="tab-link" data-tab="topTab" data-content="tab2">بازی بعدی</span>
           <span class="tab-link" data-tab="topTab" data-content="tab3">محل بازی بعدی</span>
           <span class="tab-link" data-tab="topTab" data-content="tab4">بازی قبلی</span>-->
-          <span class="tab-link" data-tab="topTab" data-content="tab5">جدول لیگ برتر</span>          
+          <span class="tab-link" data-tab="topTab" data-content="tab6">ویدئو‌های برگزیده</span>
+          <span class="tab-link" data-tab="topTab" data-content="tab5">جدول لیگ برتر</span>
+          <span class="tab-link" data-tab="topTab" data-content="tab7">جام جهانی</span>
         </div>
         <div class="tabs-content">
           <div class="tab-content active" data-tab="topTab" id="tab1">
@@ -37,22 +39,22 @@
                   <a href="/news/${hotNews.uniqueKey}">
                     <div class="hotNewsPhoto"><img src="/rest/image/news/${hotNews.uniqueKey}/250/200"/></div>
                     <div class="hotNewsTitle">${hotNews.title}</div>
-                    <div class="hotNewsDescription">${hotNews.description}</div>
+                    <div class="hotNewsDescription">${hotNews.description}...</div>
                   </a>
                 </div>
               </c:forEach>
             </div>            
             <script>
-              $(function() {                
+              $(function() {
                 hotNewsList = $("#newsBoard div.hotNews");
-                hotNewsIndex = 0;                
-                scrollInterval = setInterval(function() {                  
+                hotNewsIndex = 0;
+                scrollInterval = setInterval(function() {
                   if (hotNewsIndex < hotNewsList.length - 1) {
                     hotNewsIndex++;
                   } else {
                     hotNewsIndex = 0;
                   }
-                  
+
                   $("#newsBoard").flip({
                     direction: 'lr',
                     content: "<div class='hotNews'>" + $(hotNewsList[hotNewsIndex]).html() + "</div>",
@@ -65,17 +67,31 @@
           </div>
           <!--<div class="tab-content" data-tab="topTab" id="tab2"></div>
           <div class="tab-content" data-tab="topTab" id="tab3">
-            <!-- MAP OF NEXT MATCH --><!--
-            <div class="next_match_location">
-              محل برگزاری بازی بعدی<br/><br/>
-              <div id="map-canvas"></div>
-            </div> 
+          <!-- MAP OF NEXT MATCH --><!--
+          <div class="next_match_location">
+            محل برگزاری بازی بعدی<br/><br/>
+            <div id="map-canvas"></div>
+          </div> 
+        </div>
+        <div class="tab-content" data-tab="topTab" id="tab4"></div>-->
+          <div class="tab-content" data-tab="topTab" id="tab6">
+            <c:forEach items="${videos}" var="video">
+              <div class="video">
+                <a href="/video/${video.id}">
+                  <img class="videoImage" src="/rest/video/image/${video.image}"/>
+                  <span class="videoTitle">${video.title}</span>
+                  <span class="videoCategory">${video.category.title}</span>
+                </a>
+              </div>
+            </c:forEach>
           </div>
-          <div class="tab-content" data-tab="topTab" id="tab4"></div>-->
           <div class="tab-content" data-tab="topTab" id="tab5">
             <!-- RANKING -->
             <div id="ranking"></div>
           </div>          
+          <div class="tab-content" data-tab="topTab" id="tab7">
+            <img src="http://edmdjmixshow.com/wp-content/uploads/2013/02/Coming-Soon-BIG.jpg" style="max-width: 200px; display: block; margin: 0px auto"/>
+          </div>
 
           <script>
             $("span.tab-link[data-tab='topTab']").click(function() {

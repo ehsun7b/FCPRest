@@ -2,7 +2,9 @@ package com.ehsuhnbehravesh.fcpersepolis.news.servlets;
 
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
 import static com.ehsunbehravesh.fcpersepolisrest.ejb.NewsFetchBean.OFFICIAL_WEBSITE;
+import com.ehsunbehravesh.fcpersepolisrest.ejb.VideoBean;
 import com.ehsunbehravesh.persepolis.entity.News;
+import com.ehsunbehravesh.persepolis.entity.Video;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,6 +24,9 @@ public class DesktopHomeServlet extends PageServlet {
   @Inject
   private NewsBean newsBean;
   
+  @Inject
+  private VideoBean videoBean;
+  
   private static final Logger log = Logger.getLogger(DesktopHomeServlet.class.getName());
 
   public DesktopHomeServlet() {
@@ -32,8 +37,11 @@ public class DesktopHomeServlet extends PageServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     
     List<News> officialNewsList = newsBean.readTop(OFFICIAL_WEBSITE, 10);
+    List<Video> videos = videoBean.readTop(4);
     setAttr("officialNewsList", officialNewsList);
+    setAttr("videos", videos);
     setAttr("hotNewsList", newsBean.currentHotNews());
+    
     
     showTemplate(req, resp);
   }

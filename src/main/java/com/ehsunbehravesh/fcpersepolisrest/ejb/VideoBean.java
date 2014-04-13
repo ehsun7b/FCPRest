@@ -45,4 +45,8 @@ public class VideoBean {
   public void save(VideoCategory category) {
     em.persist(category);
   }
+
+  public Video find(Long id) {
+    return em.find(Video.class, id);
+  }
 }

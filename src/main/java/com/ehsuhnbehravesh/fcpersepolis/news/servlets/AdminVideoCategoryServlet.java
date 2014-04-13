@@ -30,8 +30,8 @@ public class AdminVideoCategoryServlet extends AdminPage {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     super.doPost(req, resp);
             
-    if (admin != null) {
-      String title = req.getParameter("title");
+    if (admin != null) {      
+      String title = getUTF8Parameter(req, "title");
       String strCode = req.getParameter("code");
       VideoCategory category = new VideoCategory();
       category.setTitle(title);      

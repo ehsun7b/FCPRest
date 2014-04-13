@@ -20,7 +20,7 @@ import javax.servlet.http.Part;
  * @author ehsun7b
  */
 @WebServlet(name = "AdminVideoServlet", urlPatterns = {"/admin/video"})
-@MultipartConfig(location = "/home/ehsun7b/video/image", fileSizeThreshold = 1024 * 1024,
+@MultipartConfig(location = "/root/video/image", fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class AdminVideoServlet extends AdminPage {
 
@@ -36,6 +36,7 @@ public class AdminVideoServlet extends AdminPage {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     super.doGet(req, resp);
+    
     if (admin != null) {
       List<Video> videos = videoBean.readTop(10);
       List<VideoCategory> categories = videoBean.readCategories();
@@ -64,7 +65,7 @@ public class AdminVideoServlet extends AdminPage {
       }
       
       if (fileName != null) {
-        String title = req.getParameter("title");
+        String title = getUTF8Parameter(req, "title");
         String embedCode = req.getParameter("embedCode");
         String strCategoryCode = req.getParameter("category");
         
