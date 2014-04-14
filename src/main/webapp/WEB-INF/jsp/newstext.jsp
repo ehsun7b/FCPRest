@@ -13,7 +13,7 @@
     <script src="/js/jquery.mobile-1.3.2/jquery-1.9.1.min.js"></script>
     <script src="/js/jquery.mobile-1.3.2/jquery.mobile-1.3.2.min.js"></script>
     <!-- /JQM -->
-    <link rel="stylesheet" href="/css/newstext.css" />
+    <link rel="stylesheet" href="/css/newstext-min.css" />
     <title>FC Persepolis</title>
   </head>
   <body>
