@@ -39,4 +39,20 @@ public class HotNews implements Serializable {
   public void setNewsList(List<News> newsList) {
     this.newsList = newsList;
   }
+  
+  public String getNewsKeys() {
+    int size = newsList.size();
+    StringBuilder result = new StringBuilder();
+    if (size > 0) {
+      for (int i = 0; i < size; i++) {
+        result.append(newsList.get(i).getUniqueKey());
+        if (i < size - 1) {
+          result.append(",");
+        }
+      }
+      return result.toString();
+    } else {
+      return "";
+    }
+  }
 }
