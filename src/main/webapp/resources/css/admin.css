@@ -72,3 +72,41 @@ a:link:hover, a:visited:hover  {
   font-weight : bold;
   text-decoration : underline;
 }
+
+
+/* ............................  */
+
+table.grid {
+  border-spacing: 5px;
+  background-color: white;
+  margin: 10px;
+  padding: 10px; 
+  border-radius: 5px;
+  min-width: 50%;
+}
+
+table.grid td, table.grid th {
+  padding: 4px;
+  font: normal normal 12px tahoma;
+  border-radius: 2px;
+  border: 1px dotted transparent;
+}
+
+table.grid th.grid-header {
+  background-color: #ead5f3;
+  font-weight: bold;
+}
+
+table.grid tr.grid-even td {
+  background-color: #f3d5ef;
+  font-weight: normal;  
+}
+
+table.grid tr.grid-odd td {
+  background-color: #edbee7;
+  font-weight: normal;
+}
+
+table.grid tr:hover td {
+  border: 1px dotted black;
+}

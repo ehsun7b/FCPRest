@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <body>
+
+    <ui:composition template="./../template/admin/main.xhtml">
+
+      <ui:define name="pageTitle">:: #{adm.hotNews}</ui:define>
+
+      <ui:define name="right">
+        <ui:include src="../template/admin/right_hotnews.xhtml"/>
+      </ui:define>
+
+      <ui:define name="content">
+        <h1>
+          <h:outputText rendered="#{newsWeb.hotNews.id eq null}" value="#{adm.new}"/>
+          <h:outputText rendered="#{newsWeb.hotNews.id ne null}" value="#{adm.edit}"/>
+        </h1>
+        <h:form>
+          <h:panelGrid columns="2">
+            <h:outputLabel for="keys" value="#{adm.newsUniqueKeys}:"/>
+            <h:inputText style="width: 400px;" value="#{newsWeb.hotNewsKeys}" id="keys"/>
+
+
+            <h:panelGroup layout="span"/>
+            <h:panelGroup>
+            <h:commandButton action="#{newsWeb.saveHotNews}" value="#{adm.save}"/>            
+            <h:messages errorClass="error" infoClass="info" warnClass="warning"/>
+            </h:panelGroup>
+          </h:panelGrid>                    
+        </h:form>
+        
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

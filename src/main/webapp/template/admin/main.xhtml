@@ -6,26 +6,43 @@
 
   <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <h:outputStylesheet name="admin-min.css" library="css"/>    
+    <h:outputStylesheet name="admin.css" library="css"/>    
+    <h:outputScript name="jquery-1.10.2.min.js" library="js"/>
     <title>#{adm.mainTitle} <ui:insert name="pageTitle"/></title>
+    <script>
+      $(function() {
+        var input = $(":input:visible:enabled:first");
+        if (input !== null &amp; &amp; input !== undefined) {
+          $(input).focus();
+        }
+      })
+    </script>
   </h:head>
 
   <h:body>
-    <div id="top" class="top">
-      <ui:insert name="top">
-        <div class="nav">
-          <h:link value="#{adm.hotNews}" outcome="hotnews"/>
+    <ui:fragment rendered="#{adminWeb.admin ne null}">
+      <div id="top" class="top">
+        <ui:insert name="top">
+
+          <div class="nav">
+            <h:link value="#{adm.hotNews}" outcome="hotnews"/>
+          </div>                
+        </ui:insert>
+      </div>
+      <div>
+        <div id="right">
+          <ui:insert name="right">RIGHT</ui:insert>
         </div>
-      </ui:insert>
-    </div>
-    <div>
-      <div id="right">
-        <ui:insert name="right">RIGHT</ui:insert>
+        <div id="content" class="right_content">
+          <ui:insert name="content">Content</ui:insert>
+        </div>
       </div>
-      <div id="content" class="right_content">
-        <ui:insert name="content">Content</ui:insert>
-      </div>
-    </div>
+    </ui:fragment>
+    <ui:fragment rendered="#{adminWeb.admin eq null}">
+      <h:outputScript>
+        document.location = "/page/admin/login.xhtml";
+      </h:outputScript>
+    </ui:fragment>
   </h:body>
 
 </html>

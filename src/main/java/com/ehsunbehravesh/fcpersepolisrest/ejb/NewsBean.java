@@ -29,6 +29,14 @@ public class NewsBean {
     em.persist(news);
   }
 
+  public void save(HotNews news) {
+    if (news.getId() != null) {
+      em.merge(news);
+    } else {
+      em.persist(news);
+    }
+  }
+
   public void delete(News news) {
     em.remove(news);
   }
@@ -38,16 +46,16 @@ public class NewsBean {
     Object singleResult = q.getSingleResult();
     return (Long) singleResult;
   }
-  
+
   public void deleteAllHotNewsExceptLast() {
-    Query q = em.createQuery("DELETE FROM HotNews n WHERE n.id < (SELECT max(n1.id) FROM HotNews n1)");    
+    Query q = em.createQuery("DELETE FROM HotNews n WHERE n.id < (SELECT max(n1.id) FROM HotNews n1)");
     q.executeUpdate();
   }
-  
-  public void deleteAllExceptTop(int size) {    
+
+  public void deleteAllExceptTop(int size) {
     Query q = em.createQuery("DELETE FROM News n WHERE n.id < ((SELECT max(n1.id) FROM News n1) - :size)");
     q.setParameter("size", size);
-    q.executeUpdate();    
+    q.executeUpdate();
   }
 
   public List<News> readTop(String website, int size) {

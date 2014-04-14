@@ -1,6 +1,7 @@
 package com.ehsunbehravesh.persepolis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,10 @@ public class HotNews implements Serializable {
   @OneToMany  
   private List<News> newsList;
 
+  public HotNews() {
+    newsList = new ArrayList<>();
+  }  
+  
   public Long getId() {
     return id;
   }
