@@ -140,7 +140,7 @@ div.news_group_content a {
   text-decoration: none;  
   text-shadow: 1px 1px 1px #FFF;
   color: red;
-  font: normal bold 12px Yas, tahoma;
+  font: normal normal 14px Nazanin, tahoma;
 }
 
 div.news_group_content a:visited {
@@ -193,7 +193,7 @@ div#nav {
 }
 
 div#nav a {
-  font: normal normal 24px Yas, "times new roman";
+  font: normal normal 24px Nazanin, "times new roman";
   text-decoration: none;
   color: black;
   text-shadow: 1px 1px 1px #AAA;
@@ -291,16 +291,16 @@ div.hotNewsPhoto img {
 
 div.hotNewsTitle {
   padding-bottom: 15px;
-  font: normal bold 16px Yas, "times new roman";
+  font: normal normal 18px Nazanin, "times new roman";
   color: #299119;
-  text-shadow: 1px 1px 1px #AAA;  
+  /*text-shadow: 1px 1px 1px #AAA;*/  
 }
 
 div.hotNewsDescription {
   color: black;
-  font: normal normal 14px Yas, "times new roman";
+  font: normal normal 16px Nazanin, "times new roman";
   line-height: 1.7em;
-  text-shadow: 1px 1px 1px #AAA
+  /*text-shadow: 1px 1px 1px #AAA*/
 }
 
 /* TABS */

@@ -43,9 +43,9 @@
                   </a>
                 </div>
               </c:forEach>
-            </div>            
+            </div>
             <script>
-              $(function() {
+              $(function() {                               
                 hotNewsList = $("#newsBoard div.hotNews");
                 hotNewsIndex = 0;
                 scrollInterval = setInterval(function() {
@@ -55,11 +55,18 @@
                     hotNewsIndex = 0;
                   }
 
+                  var color = colors[Math.floor((Math.random() * colors.length))];
                   $("#newsBoard").flip({
                     direction: 'lr',
                     content: "<div class='hotNews'>" + $(hotNewsList[hotNewsIndex]).html() + "</div>",
                     color: $("#newsBoard").css("background-color"),
-                    speed: 300
+                    speed: 300,
+                    onBefore: function() {
+                      
+                    },
+                    onEnd: function() {
+                      
+                    }
                   });
                 }, 12000);
               });
@@ -180,6 +187,7 @@
       </div>
       <br/>
       <br/>
+      <%@include file="jspf/footer.jspf" %>
     </div>
   </body>
 

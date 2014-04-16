@@ -27,7 +27,7 @@
       }
 
       div.title-news {
-        font: normal bold 20px Yas, "times new roman";
+        font: normal bold 20px Nazanin, "times new roman";
         text-shadow: 1px 1px 2px #CCC;
         padding-bottom: 10px;
       }
