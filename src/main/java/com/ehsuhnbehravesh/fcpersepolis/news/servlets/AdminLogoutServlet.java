@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "ADminLogoutServlet", urlPatterns = "/admin/logout")
+@WebServlet(name = "ADminLogoutServlet", urlPatterns = "/admin2/logout")
 public class AdminLogoutServlet extends HttpServlet {
 
-  private static final String ADMIN_HOME = "/admin";
+  private static final String ADMIN_HOME = "/admin2";
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

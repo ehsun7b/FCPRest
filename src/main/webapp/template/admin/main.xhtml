@@ -9,25 +9,26 @@
     <h:outputStylesheet name="admin.css" library="css"/>    
     <h:outputScript name="jquery-1.10.2.min.js" library="js"/>
     <title>#{adm.mainTitle} <ui:insert name="pageTitle"/></title>
-    <script>
-      $(function() {
-        var input = $(":input:visible:enabled:first");
-        if (input !== null &amp; &amp; input !== undefined) {
-          $(input).focus();
-        }
-      })
-    </script>
+    <h:outputScript library="js" name="main.js"/>
   </h:head>
 
   <h:body>
     <ui:fragment rendered="#{adminWeb.admin ne null}">
       <div id="top" class="top">
+        <h:panelGroup class="profile" layout="block">
+          <h:link outcome="profile" value="#{adminWeb.admin.username}"/>
+          |
+          <h:form style="display: inline">
+            <h:commandLink value="#{adm.logout}" action="#{adminWeb.logout}"/>
+          </h:form>
+        </h:panelGroup>        
         <ui:insert name="top">
-
           <div class="nav">
             <h:link value="#{adm.hotNews}" outcome="hotnews"/>
+            |
+            <h:link value="#{adm.video}" outcome="video"/>
           </div>                
-        </ui:insert>
+        </ui:insert>        
       </div>
       <div>
         <div id="right">
@@ -40,7 +41,7 @@
     </ui:fragment>
     <ui:fragment rendered="#{adminWeb.admin eq null}">
       <h:outputScript>
-        document.location = "/page/admin/login.xhtml";
+        document.location = "login.xhtml";
       </h:outputScript>
     </ui:fragment>
   </h:body>

@@ -20,7 +20,7 @@
       }
       
       div.videoShow div.videoTitle {
-        font: normal bold 20px Nazanin, "Times New Roman";
+        font: normal bold 20px "times new roman", times, serif;
         margin-bottom: 10px; 
       }
       

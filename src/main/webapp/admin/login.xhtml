@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <title>#{adm.login}</title>
+    <h:outputStylesheet library="css" name="admin-min.css"/>
+    <h:outputStylesheet library="css" name="login-min.css"/>
+    <h:outputScript library="js" name="jquery-1.10.2.min.js"/>
+  </h:head>
+  <h:body>
+    <h:form id="frmLogin">
+      <h:panelGrid styleClass="form loginForm" captionClass="formCaption" columns="2" columnClasses="data,caption">
+        <f:facet name="header">
+          <h:outputText value="#{adm.login}"/>
+        </f:facet>
+
+        <h:outputLabel for="username" value="#{adm.username}:"/>
+        <h:inputText styleClass="ltr" id="username" value="#{adminWeb.username}"/>
+
+        <h:outputLabel for="password" value="#{adm.password}:"/>
+        <h:inputSecret id="password" styleClass="ltr" value="#{adminWeb.password}"/>
+
+        <h:outputText value=""/>
+        <h:commandButton value="#{adm.login}" action="#{adminWeb.login}"/>
+        
+        <h:outputText value=""/>
+        <h:messages errorClass="error" infoClass="info" warnClass="warning"/>
+      </h:panelGrid>
+    </h:form>
+    <h:outputScript target="body">      
+      $(document.getElementById("frmLogin:username")).focus();
+    </h:outputScript>
+  </h:body>
+</html>
+

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../template/admin/main.xhtml">
+
+      <ui:define name="pageTitle">#{adm.video}</ui:define>
+
+      <ui:define name="right">
+        <ui:include src="../template/admin/right_video.xhtml"/>
+      </ui:define>
+
+      <ui:define name="content">
+        <h1>#{adm.video}</h1>
+        <h:dataTable binding="#{table}" value="#{videoWeb.videoList}" var="video"
+                     styleClass="grid"
+                     headerClass="grid-header"
+                     rowClasses="grid-odd,grid-even">
+          <h:column>
+            <f:facet name="header">#{adm.row}</f:facet>
+            #{table.rowIndex + 1}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.id}</f:facet>
+            #{video.id}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.title}</f:facet>
+            #{video.title}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.category}</f:facet>
+            #{video.category.title}
+          </h:column>
+        </h:dataTable>
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

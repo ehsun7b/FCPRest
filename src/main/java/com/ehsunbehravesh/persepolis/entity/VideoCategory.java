@@ -2,6 +2,7 @@ package com.ehsunbehravesh.persepolis.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -46,4 +47,28 @@ public class VideoCategory implements Serializable {
     this.videos = videos;
   }
 
+  @Override
+  public String toString() {
+    return title;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof VideoCategory) {
+      VideoCategory vc = (VideoCategory) obj;
+      return code.equals(vc.code);
+    }
+    
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 37 * hash + Objects.hashCode(this.code);
+    return hash;
+  }
+
+  
+  
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "AdminLoginServlet", urlPatterns = {"/admin/login"})
+@WebServlet(name = "AdminLoginServlet", urlPatterns = {"/admin2/login"})
 public class AdminLoginServlet extends PageServlet {
 
   @Inject

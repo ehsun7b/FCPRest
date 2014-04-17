@@ -19,7 +19,7 @@ import javax.servlet.http.Part;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "AdminVideoServlet", urlPatterns = {"/admin/video"})
+@WebServlet(name = "AdminVideoServlet", urlPatterns = {"/admins/video"})
 @MultipartConfig(location = "/root/video/image", fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class AdminVideoServlet extends AdminPage {

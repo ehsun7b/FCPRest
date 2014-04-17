@@ -7,6 +7,13 @@
     <resource-bundle>
       <base-name>admin</base-name>
       <var>adm</var>
-    </resource-bundle>
+    </resource-bundle>        
+    <message-bundle>messages</message-bundle>
   </application>
+
+  <managed-bean>
+    <managed-bean-name>videoCategoryConverter</managed-bean-name>
+    <managed-bean-class>com.ehsuhnbehravesh.fcpersepolis.converter.VideoCategoryConverter</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
 </faces-config>

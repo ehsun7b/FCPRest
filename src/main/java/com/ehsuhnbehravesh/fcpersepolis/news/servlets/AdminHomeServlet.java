@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "AdminHomeServlet", urlPatterns = {"/admin", "/admin/"})
+@WebServlet(name = "AdminHomeServlet", urlPatterns = {"/admin2", "/admin/"})
 public class AdminHomeServlet extends AdminPage {
 
   public AdminHomeServlet() {

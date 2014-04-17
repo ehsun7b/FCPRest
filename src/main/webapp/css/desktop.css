@@ -3,7 +3,7 @@
 body {
   direction: rtl;
   background-color: #FFF;
-  background-image: url(/img/honey_im_subtle.png);
+  background-image: url(/img/honey_im_subtle-dark.png);
   background-attachment: fixed;
   margin: 6px;
 }
@@ -122,7 +122,7 @@ div.news_group_content div.news {
   padding: 5px;
   margin: 8px 1px;
   background-color: #FFF;
-  border: 1px dashed #D99;
+  border: 1px solid #D99;
   border-radius: 0px;  
   min-height: 50px;
   background-color: #f5e7c9;
@@ -140,7 +140,7 @@ div.news_group_content a {
   text-decoration: none;  
   text-shadow: 1px 1px 1px #FFF;
   color: red;
-  font: normal normal 14px Nazanin, tahoma;
+  font: normal normal 12px tahoma;
 }
 
 div.news_group_content a:visited {
@@ -193,7 +193,7 @@ div#nav {
 }
 
 div#nav a {
-  font: normal normal 24px Nazanin, "times new roman";
+  font: normal normal 24px "times new roman", times, serif;
   text-decoration: none;
   color: black;
   text-shadow: 1px 1px 1px #AAA;
@@ -291,14 +291,14 @@ div.hotNewsPhoto img {
 
 div.hotNewsTitle {
   padding-bottom: 15px;
-  font: normal normal 18px Nazanin, "times new roman";
+  font: normal normal 18px "times new roman", times, serif;
   color: #299119;
   /*text-shadow: 1px 1px 1px #AAA;*/  
 }
 
 div.hotNewsDescription {
   color: black;
-  font: normal normal 16px Nazanin, "times new roman";
+  font: normal normal 16px "times new roman", times, serif;
   line-height: 1.7em;
   /*text-shadow: 1px 1px 1px #AAA*/
 }

@@ -1,4 +1,16 @@
+/* FORM */
+table.form {
+  border-radius: 5px;
+  margin: 10px;
+  background-color: transparent;
+  padding: 10px;
+  border: 1px solid #fafed5;
+}
+
 /* layout */
+div.profile {
+  float: left;
+}
 
 #top {
   position: relative;
@@ -41,6 +53,22 @@
 }
 
 /* ------ */
+
+.ltr {
+  direction: ltr;
+}
+
+.error {
+  color: red;
+}
+
+.warning {
+  color: #ea9538;  
+}
+
+.info {
+  color: green;
+}
 
 body {
   direction: rtl;

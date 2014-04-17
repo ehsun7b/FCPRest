@@ -28,6 +28,17 @@
 /* ------------------ */
 
 @font-face {
+  font-family: Traffic;
+  src: url('font/BTraffic.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: Traffic;
+  src: url('font/BTrafcBd.ttf') format('truetype'); 
+  font-weight: bold;
+}
+
+@font-face {
   font-family: Nazanin;
   src: url('font/BNazanin.ttf') format('truetype'); 
 }

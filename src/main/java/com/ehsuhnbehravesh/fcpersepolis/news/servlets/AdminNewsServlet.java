@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "AdminNewsServlet", urlPatterns = {"/admin/news"})
+@WebServlet(name = "AdminNewsServlet", urlPatterns = {"/admin2/news"})
 public class AdminNewsServlet extends AdminPage {
 
   @Inject

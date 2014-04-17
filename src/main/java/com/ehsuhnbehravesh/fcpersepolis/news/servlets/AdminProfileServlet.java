@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "AdminProfileServlet", urlPatterns = {"/admin/profile"})
+@WebServlet(name = "AdminProfileServlet", urlPatterns = {"/admin2/profile"})
 public final class AdminProfileServlet extends AdminPage {
   
   private static final Logger log = Logger.getLogger(AdminProfileServlet.class.getName());

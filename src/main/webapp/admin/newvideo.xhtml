@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../template/admin/main.xhtml">
+
+      <ui:define name="pageTitle">#{adm.video} :: #{adm.new}</ui:define>
+
+      <ui:define name="right">
+        <ui:include src="../template/admin/right_video.xhtml"/>
+      </ui:define>
+
+      <ui:define name="content">
+        <h1>
+          <h:outputText rendered="#{videoWeb.video.id eq null}" value="#{adm.new}"/>
+          <h:outputText rendered="#{videoWeb.video.id ne null}" value="#{adm.edit}"/>
+        </h1>
+        <h:form id="frmVideo" enctype="multipart/form-data">
+          <h:panelGrid columns="2" class="form">
+            <h:outputLabel for="title" value="#{adm.title}:"/>
+            <h:inputText value="#{videoWeb.video.title}" style="width: 300px;" id="title" required="true" label="#{adm.title}" />
+
+            <h:outputLabel for="category" value="#{adm.category}:"/>
+            <h:selectOneMenu id="category" value="#{videoWeb.video.category}" converter="#{videoCategoryConverter}">
+              <f:selectItems value="#{videoWeb.categories}" var="category" itemValue="#{category}" itemLabel="#{category.title}"/>
+            </h:selectOneMenu> 
+
+            <h:outputLabel for="image" value="#{adm.image}:"/>
+            <h:inputFile value="#{videoWeb.image}" id="image" label="#{adm.image}" required="true"/>
+
+            <h:outputLabel for="embedCode" value="#{adm.code}:"/>
+            <h:inputTextarea style="width: 300px; height: 150px" value="#{videoWeb.video.embedCode}" id="embedCode" label="#{adm.code}" required="true"/>
+
+
+            <h:panelGroup layout="span"/>
+            <h:panelGroup>
+              <h:commandButton action="#{videoWeb.save}" value="#{adm.save}"/>            
+              <h:messages errorClass="error" infoClass="info" warnClass="warning"/>
+            </h:panelGroup>
+          </h:panelGrid>                    
+        </h:form>
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

@@ -8,7 +8,7 @@
 
     <ui:composition template="./../template/admin/main.xhtml">
 
-      <ui:define name="pageTitle">:: #{adm.hotNews}</ui:define>
+      <ui:define name="pageTitle">:: #{adm.hotNews} :: #{adm.new}</ui:define>
 
       <ui:define name="right">
         <ui:include src="../template/admin/right_hotnews.xhtml"/>
@@ -20,10 +20,9 @@
           <h:outputText rendered="#{newsWeb.hotNews.id ne null}" value="#{adm.edit}"/>
         </h1>
         <h:form>
-          <h:panelGrid columns="2">
+          <h:panelGrid columns="2" class="form">
             <h:outputLabel for="keys" value="#{adm.newsUniqueKeys}:"/>
             <h:inputText style="width: 400px;" value="#{newsWeb.hotNewsKeys}" id="keys"/>
-
 
             <h:panelGroup layout="span"/>
             <h:panelGroup>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "AdminVideoCategoryServlet", urlPatterns = {"/admin/videocategory"})
+@WebServlet(name = "AdminVideoCategoryServlet", urlPatterns = {"/admin2/videocategory"})
 public class AdminVideoCategoryServlet extends AdminPage {
 
   private static final Logger log = Logger.getLogger(AdminVideoCategoryServlet.class.getName());
