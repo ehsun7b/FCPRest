@@ -223,20 +223,21 @@ public class NewsFetchBean {
   }
 
   private boolean isPersepolisNews(News news) {
+    return true; /*
     PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();
-    return matcher.match(news);
+    return matcher.match(news);*/
   }
 
-  @Schedule(minute = "0", hour = "4", persistent = false)
+  @Schedule(minute = "0", hour = "4", dayOfWeek = "1", persistent = false)
   private void cleanupHotNews() {
     log.log(Level.INFO, "Cleaning hot news table.");
     newsBean.deleteAllHotNewsExceptLast();    
   }
   
-  @Schedule(minute = "*", hour = "5", persistent = false)
+  @Schedule(minute = "*", hour = "5", dayOfWeek = "1", persistent = false)
   private void cleanupNews() {
     log.log(Level.INFO, "Cleaning news table.");
-    newsBean.deleteAllExceptTop(2000);
+    newsBean.deleteAllExceptTop(10000);
   }
   
 }

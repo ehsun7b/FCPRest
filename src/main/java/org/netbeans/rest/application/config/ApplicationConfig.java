@@ -37,6 +37,7 @@ public class ApplicationConfig extends Application {
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Ranking.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Varzesh3News.class);
     resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.Video.class);
+    resources.add(com.ehsunbehravesh.fcpersepolisrest.rest.WorldCupNews.class);
   }
   
 }

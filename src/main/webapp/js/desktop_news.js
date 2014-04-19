@@ -12,6 +12,14 @@ function showGeneralNews(data, board) {
   }
 }
 
+function showWorldCupNews() {
+  $("#worldcup_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
+  loadWorldCupNews(function(data) {
+    console.log("show worldcup news");
+    showGeneralNews(data, $("#worldcup_news_content"));
+  });
+}
+
 function showOfficialNews() {
   $("#official_news_content").html("<div style='padding: 40px;text-align: center'>LOADING</div>");
   loadOfficialNews(function(data) {

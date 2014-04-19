@@ -8,12 +8,12 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/desktop.css"/>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    
+
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
-        
+
     <script type="text/javascript" src="/js/single-min.js"></script>
-    
+
     <style type="text/css">
       div.news {
         padding: 20px;
@@ -55,9 +55,17 @@
         border-radius: 0px;
       }
 
-      div.link-news a {
+      div.link-news {
+        display: inline-block;
+      }
+      
+      div.link-news a {        
         text-decoration: none;
         font: normal normal 10px tahoma;
+      }
+
+      div.buttons-news {
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -74,13 +82,29 @@
             <img src="/rest/image/thumbnail/400/300?url=${news.image}" />
           </div>
         </c:if>
-        <div class="text-news">${news.content}</div>
-        <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
+        <div class="text-news">${news.content}</div>                
+        <div class="buttons-news">
+          <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
+          
+          <!-- Place this tag where you want the +1 button to render. -->
+          <div class="g-plusone"></div>
+
+          <!-- Place this tag after the last +1 button tag. -->
+          <script type="text/javascript">
+            (function() {
+              var po = document.createElement('script');
+              po.type = 'text/javascript';
+              po.async = true;
+              po.src = 'https://apis.google.com/js/platform.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(po, s);
+            })();
+          </script>
+        </div>
       </div>
       <div style="clear: both"></div>
 
-      <!-- Google adsense -->
-      <div id="showAdvert1" style="visibility: hidden">SHOW</div>
+      <!-- Google adsense -->      
       <div style="text-align: center; padding: 30px 0px" id="advert1">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- FCPersepolisDesktopTopTabs -->

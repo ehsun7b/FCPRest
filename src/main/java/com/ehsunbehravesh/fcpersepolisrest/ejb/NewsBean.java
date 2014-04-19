@@ -82,7 +82,7 @@ public class NewsBean {
   }
 
   public News findOne(String uniqueKey) {
-    TypedQuery<News> query = em.createQuery("Select news FROM News news WHERE news.uniqueKey = :key", News.class);
+    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE n.uniqueKey = :key", News.class);
     query.setParameter("key", uniqueKey);
     try {
       return query.getSingleResult();
@@ -92,7 +92,7 @@ public class NewsBean {
   }
 
   public List<News> currentHotNews() {
-    TypedQuery<HotNews> query = em.createQuery("Select hotnews FROM HotNews hotnews order by hotnews.id DESC", HotNews.class);
+    TypedQuery<HotNews> query = em.createQuery("Select h FROM HotNews h order by h.id DESC", HotNews.class);
     List<HotNews> list = query.getResultList();
 
     if (list.isEmpty()) {
@@ -121,5 +121,31 @@ public class NewsBean {
     hotNews.setNewsList(newsList);
 
     em.persist(hotNews);
+  }
+  
+  public List<News> findKeyword(List<String> keywords, int size) {
+    StringBuilder jpaq = new StringBuilder("Select n FROM News n where ");
+    
+    int i = 0;
+    for (String keyword : keywords) {
+      jpaq.append("n.content like :p").append(i++);
+      
+      if (i < keywords.size()) {
+        jpaq.append(" or ");
+      }
+    }
+    
+    //System.out.println(jpaq);
+    
+    TypedQuery<News> query = em.createQuery(jpaq.toString(), News.class);
+    
+    i = 0;
+    for (String keyword : keywords) {
+      query.setParameter("p" + i++, "%" + keyword + "%");
+      //System.out.println(keyword);
+    }
+    
+    query.setMaxResults(size);
+    return query.getResultList();
   }
 }

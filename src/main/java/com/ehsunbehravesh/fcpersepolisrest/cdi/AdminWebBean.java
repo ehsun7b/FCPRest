@@ -5,16 +5,20 @@ import com.ehsunbehravesh.persepolis.entity.Administrator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -25,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminWebBean implements Serializable {
 
   private static final Logger log = Logger.getLogger(AdminWebBean.class.getName());
-  
+
   @Inject
   private AdminBean adminBean;
 
@@ -33,15 +37,15 @@ public class AdminWebBean implements Serializable {
 
   private String username;
   private String password;
+  private String oldPassword;
 
   public void login() {
     Administrator loggedAdmin = adminBean.login(username, password);
     FacesContext context = FacesContext.getCurrentInstance();
     Properties p = loadProperties();
-    
+
     if (loggedAdmin != null && loggedAdmin.getId() > 0) {
-      admin = loggedAdmin;
-      //context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,p.getProperty("successfulLogin"), ""));
+      admin = loggedAdmin;      
       ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
       try {
         ec.redirect("index.xhtml");
@@ -49,10 +53,10 @@ public class AdminWebBean implements Serializable {
         log.log(Level.SEVERE, "Can not redirect to admin home.", ex);
       }
     } else {
-      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,p.getProperty("failedLogin"), ""));      
+      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, p.getProperty("failedLogin"), ""));
     }
   }
-  
+
   public String logout() {
     admin = null;
     return "/";
@@ -94,4 +98,53 @@ public class AdminWebBean implements Serializable {
     }
   }
 
+  public void changePassword() {
+    FacesContext fc = FacesContext.getCurrentInstance();
+    Properties p = loadProperties();
+
+    try {
+      if (!admin.getPassword().equals(adminBean.hashPassword(oldPassword, admin.getSalt()))) {
+        fc.addMessage("conPassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, p.getProperty("wrongPassword"), ""));
+      } else {
+        password = adminBean.hashPassword(password, admin.getSalt());
+        admin.setPassword(password);
+        adminBean.save(admin);
+        fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, p.getProperty("passwordChangeSuccessfull"),""));
+      }
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+      fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, p.getProperty("serverError"), ex.getMessage()));
+    }
+  }
+  
+  public void validatePassword(ComponentSystemEvent event) {
+    FacesContext fc = FacesContext.getCurrentInstance();
+    Properties p = loadProperties();
+
+    UIComponent components = event.getComponent();
+
+    UIInput uiInputPassword = (UIInput) components.findComponent("password");
+    String passwordValue = uiInputPassword.getLocalValue() == null ? ""
+            : uiInputPassword.getLocalValue().toString();
+    String passwordId = uiInputPassword.getClientId();
+
+    UIInput uiInputConPassword = (UIInput) components.findComponent("conPassword");
+    String conPasswordValue = uiInputConPassword.getLocalValue() == null ? ""
+            : uiInputConPassword.getLocalValue().toString();
+
+    if (!passwordValue.isEmpty() && !conPasswordValue.isEmpty()) {
+      if (!passwordValue.equals(conPasswordValue)) {
+        fc.addMessage("conPassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, p.getProperty("conPasswordDoesNotMatch"), ""));
+        fc.renderResponse();
+      }
+    }
+
+  }
+
+  public String getOldPassword() {
+    return oldPassword;
+  }
+
+  public void setOldPassword(String oldPassword) {
+    this.oldPassword = oldPassword;
+  }
 }

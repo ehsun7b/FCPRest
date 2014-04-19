@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
   <body>
 
@@ -10,7 +12,28 @@
       <ui:define name="pageTitle">#{adm.welcome} #{adminWeb.admin.username}</ui:define>
 
       <ui:define name="content">
-        content
+        <h>#{adm.changePassword}</h>
+        <h:form id="frmChangePassword">
+          <f:event listener="#{adminWeb.validatePassword}" type="postValidate"/>
+          <h:panelGrid columns="2" class="form">
+            <h:outputLabel for="oldPassword" value="#{adm.oldPassword}:"/>
+            <h:inputSecret style="direction: ltr" value="#{adminWeb.oldPassword}" id="oldPassword" autocomplete="" required="true" label="#{adm.oldPassword}" />
+
+            <h:outputLabel for="password" value="#{adm.newPassword}:"/>
+            <h:inputSecret style="direction: ltr" value="#{adminWeb.password}" id="password" required="true" label="#{adm.newPassword}">
+              <f:validateLength minimum="6"/>
+            </h:inputSecret>
+            
+            <h:outputLabel for="conPassword" value="#{adm.conPassword}:"/>
+            <h:inputSecret style="direction: ltr" id="conPassword" required="true" label="#{adm.conPassword}" />
+            
+            <h:panelGroup layout="span"/>
+            <h:panelGroup>
+              <h:commandButton action="#{adminWeb.changePassword}" value="#{adm.save}"/>            
+              <h:messages errorClass="error" infoClass="info" warnClass="warning"/>
+            </h:panelGroup>
+          </h:panelGrid>
+        </h:form>
       </ui:define>
 
     </ui:composition>

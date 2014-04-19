@@ -1,4 +1,8 @@
 /* FORM */
+form {
+  display: inline; padding: 0px; margin: 0px;
+}
+
 table.form {
   border-radius: 5px;
   margin: 10px;
@@ -137,4 +141,8 @@ table.grid tr.grid-odd td {
 
 table.grid tr:hover td {
   border: 1px dotted black;
+}
+
+div#right a {
+  display: block;
 }

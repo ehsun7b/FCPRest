@@ -19,10 +19,11 @@
           <h:outputText rendered="#{newsWeb.hotNews.id eq null}" value="#{adm.new}"/>
           <h:outputText rendered="#{newsWeb.hotNews.id ne null}" value="#{adm.edit}"/>
         </h1>
+        <h:messages infoClass="info" errorClass="error" warnClass="warning"/>
         <h:form>
           <h:panelGrid columns="2" class="form">
             <h:outputLabel for="keys" value="#{adm.newsUniqueKeys}:"/>
-            <h:inputText style="width: 400px;" value="#{newsWeb.hotNewsKeys}" id="keys"/>
+            <h:inputText style="width: 400px; direction: ltr;" value="#{newsWeb.hotNewsKeys}" id="keys"/>
 
             <h:panelGroup layout="span"/>
             <h:panelGroup>

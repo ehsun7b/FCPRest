@@ -45,7 +45,7 @@
               </c:forEach>
             </div>
             <script>
-              $(function() {                               
+              $(function() {
                 hotNewsList = $("#newsBoard div.hotNews");
                 hotNewsIndex = 0;
                 scrollInterval = setInterval(function() {
@@ -55,17 +55,16 @@
                     hotNewsIndex = 0;
                   }
 
-                  var color = colors[Math.floor((Math.random() * colors.length))];
                   $("#newsBoard").flip({
                     direction: 'lr',
                     content: "<div class='hotNews'>" + $(hotNewsList[hotNewsIndex]).html() + "</div>",
                     color: $("#newsBoard").css("background-color"),
                     speed: 300,
                     onBefore: function() {
-                      
+
                     },
                     onEnd: function() {
-                      
+
                     }
                   });
                 }, 12000);
@@ -97,7 +96,10 @@
             <div id="ranking"></div>
           </div>          
           <div class="tab-content" data-tab="topTab" id="tab7">
-            <img src="http://edmdjmixshow.com/wp-content/uploads/2013/02/Coming-Soon-BIG.jpg" style="max-width: 200px; display: block; margin: 0px auto"/>
+            <!-- WORLDCUP -->
+            <div class="news_group" id="worldcup_new_group">              
+              <div class="news_group_content" id="worldcup_news_content"></div>
+            </div>            
           </div>
 
           <script>
@@ -109,6 +111,8 @@
 
               if (tab === "tab3") {
                 mapInitialize();
+              } else if (tab === "tab7") {
+                showWorldCupNews();
               }
             });
           </script>

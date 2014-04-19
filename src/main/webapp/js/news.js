@@ -12,6 +12,10 @@ function loadOfficialNews(callback) {
   loadGeneralNews("/rest/news/json", callback);
 }
 
+function loadWorldCupNews(callback) {
+  loadGeneralNews("/rest/worldcup/json", callback);
+}
+
 function loadArteshNews(callback) {
   loadGeneralNews("/rest/artesh/json", callback);
 }

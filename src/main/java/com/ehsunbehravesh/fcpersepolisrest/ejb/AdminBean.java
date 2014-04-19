@@ -25,10 +25,15 @@ public class AdminBean {
   private EntityManager em;
 
   public void save(Administrator admin) {
-    em.persist(admin);
+    if (em.contains(admin)) {
+      em.persist(admin);
+    } else {
+      em.merge(admin);
+    }    
   }
 
-  public void saveNewPassword(Administrator admin) throws Exception {
+  @Deprecated
+  public void saveNewPassword(Administrator admin) throws NoSuchAlgorithmException, UnsupportedEncodingException {
     admin.setPassword(hashPassword(admin.getPassword(), admin.getSalt()));
     em.merge(admin);
   }
@@ -88,7 +93,7 @@ public class AdminBean {
     return result;
   }
 
-  private String hashPassword(String password, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+  public String hashPassword(String password, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
     String hashedPassword = HashUtils.SHA256(password.concat(salt));
 
     for (int i = 0; i < 300; i++) {
