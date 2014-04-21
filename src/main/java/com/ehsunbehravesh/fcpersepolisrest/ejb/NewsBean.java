@@ -2,6 +2,7 @@ package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
 import com.ehsunbehravesh.persepolis.entity.HotNews;
 import com.ehsunbehravesh.persepolis.entity.News;
+import com.ehsunbehravesh.persepolis.entity.WorldCupNews;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -29,6 +30,10 @@ public class NewsBean {
     em.persist(news);
   }
 
+  public void save(WorldCupNews news) {
+    em.persist(news);
+  }
+
   public void save(HotNews news) {
     if (news.getId() != null) {
       em.merge(news);
@@ -38,11 +43,15 @@ public class NewsBean {
   }
 
   public void delete(News news) {
+    if (!em.contains(news)) {
+      news = em.merge(news);
+    }
     em.remove(news);
   }
 
   public Long count() {
-    Query q = em.createQuery("SELECT count(n) FROM NEWS n");
+    Query q = em.createQuery("SELECT count(n) FROM NEWS n WHERE TYPE(n) = :type");
+    q.setParameter("type", News.class);
     Object singleResult = q.getSingleResult();
     return (Long) singleResult;
   }
@@ -53,7 +62,8 @@ public class NewsBean {
   }
 
   public void deleteAllExceptTop(int size) {
-    Query q = em.createQuery("DELETE FROM News n WHERE n.id < ((SELECT max(n1.id) FROM News n1) - :size)");
+    Query q = em.createQuery("DELETE FROM News n WHERE TYPE(n) = :type and n.id < ((SELECT max(n1.id) FROM News n1) - :size)");
+    q.setParameter("type", News.class);
     q.setParameter("size", size);
     q.executeUpdate();
   }
@@ -62,11 +72,13 @@ public class NewsBean {
     TypedQuery<News> query = null;
 
     if (website != null) {
-      query = em.createQuery("Select n FROM News n WHERE n.website = :website order by n.id DESC", News.class);
+      query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.website = :website order by n.id DESC", News.class);
     } else {
-      query = em.createQuery("Select n FROM News n order by n.id DESC", News.class);
+      query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type order by n.id DESC", News.class);
     }
 
+    query.setParameter("type", News.class);
+    
     if (website != null) {
       query.setParameter("website", website);
     }
@@ -76,14 +88,16 @@ public class NewsBean {
   }
 
   public List<News> readNewsWithoutContent(int size) {
-    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE n.content is null order by n.id DESC", News.class);
+    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.content is null order by n.id DESC", News.class);
+    query.setParameter("type", News.class);
     query.setMaxResults(size);
     return query.getResultList();
   }
 
   public News findOne(String uniqueKey) {
-    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE n.uniqueKey = :key", News.class);
+    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.uniqueKey = :key", News.class);
     query.setParameter("key", uniqueKey);
+    query.setParameter("type", News.class);
     try {
       return query.getSingleResult();
     } catch (NoResultException ex) {
@@ -122,29 +136,46 @@ public class NewsBean {
 
     em.persist(hotNews);
   }
-  
+
+  @Deprecated
   public List<News> findKeyword(List<String> keywords, int size) {
     StringBuilder jpaq = new StringBuilder("Select n FROM News n where ");
-    
+
     int i = 0;
     for (String keyword : keywords) {
       jpaq.append("n.content like :p").append(i++);
-      
+
       if (i < keywords.size()) {
         jpaq.append(" or ");
       }
     }
-    
+
     //System.out.println(jpaq);
-    
     TypedQuery<News> query = em.createQuery(jpaq.toString(), News.class);
-    
+
     i = 0;
     for (String keyword : keywords) {
       query.setParameter("p" + i++, "%" + keyword + "%");
       //System.out.println(keyword);
     }
-    
+
+    query.setMaxResults(size);
+    return query.getResultList();
+  }
+
+  public WorldCupNews findWorldCupNews(String uniqueKey) {
+    TypedQuery<WorldCupNews> query = em.createQuery("Select n FROM WorldCupNews n WHERE n.uniqueKey = :key", WorldCupNews.class);
+    query.setParameter("key", uniqueKey);
+    try {
+      return query.getSingleResult();
+    } catch (NoResultException ex) {
+      return null;
+    }
+  }
+
+  public List<WorldCupNews> readTopWorldCup(int size) {
+    TypedQuery<WorldCupNews> query = null;
+    query = em.createQuery("Select n FROM WorldCupNews n order by n.id DESC", WorldCupNews.class);
     query.setMaxResults(size);
     return query.getResultList();
   }

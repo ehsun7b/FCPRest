@@ -3,6 +3,7 @@ package com.ehsunbehravesh.fcpersepolisrest.cdi;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
 import com.ehsunbehravesh.persepolis.entity.HotNews;
 import com.ehsunbehravesh.persepolis.entity.News;
+import com.ehsunbehravesh.persepolis.entity.WorldCupNews;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -32,10 +33,14 @@ public class NewsWebBean {
   private HotNews hotNews;
   private String hotNewsKeys;
   private List<HotNews> hotNewsList;
+  private List<News> newsList;
+  private List<WorldCupNews> worldCupNewsList;
 
   @PostConstruct
   public void init() {
     hotNews = new HotNews();
+    newsList = newsBean.readTop(null, 20);
+    worldCupNewsList = newsBean.readTopWorldCup(20);
   }
 
   public List<HotNews> getHotNewsList() {
@@ -78,6 +83,12 @@ public class NewsWebBean {
       return null;
     }
   }
+  
+  public void delete(News news) {
+    newsBean.delete(news);
+    newsList = newsBean.readTop(null, 20);
+    worldCupNewsList = newsBean.readTopWorldCup(20);
+  }
 
   public HotNews getHotNews() {
     return hotNews;
@@ -103,4 +114,19 @@ public class NewsWebBean {
     this.hotNewsKeys = hotNewsKeys;
   }
 
+  public List<News> getNewsList() {
+    return newsList;
+  }
+
+  public void setNewsList(List<News> newsList) {
+    this.newsList = newsList;
+  }
+
+  public List<WorldCupNews> getWorldCupNewsList() {
+    return worldCupNewsList;
+  }
+
+  public void setWorldCupNewsList(List<WorldCupNews> worldcupNewsList) {
+    this.worldCupNewsList = worldcupNewsList;
+  } 
 }

@@ -1,17 +1,28 @@
 package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
 import com.ehsuhnbehravesh.fcpersepolis.net.OfficialWebsiteNewsFetch;
-import com.ehsuhnbehravesh.fcpersepolis.news.PersepolisNewsMatcher;
+import com.ehsuhnbehravesh.fcpersepolis.news.Keyword;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.ContentKeywordCondition;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.MatchException;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.NewsFilter;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.NewsMatch;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.Rule;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.RuleSeperator;
+import com.ehsuhnbehravesh.fcpersepolis.news.filter.TitleKeywordCondition;
 import com.ehsuhnbehravesh.fcpersepolis.utils.Utils;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetch;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetchFactory;
+import com.ehsunbehravesh.persepolis.entity.WorldCupNews;
 import com.ehsunbehravesh.persepolis.entity.News;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -45,9 +56,26 @@ public class NewsFetchBean {
   public static final String ISNA_WEBSITE_URL = "http://www.isna.ir/fa/Sports/feed";
   public static final String ISNA_WEBSITE = "isna.ir";
 
+  private static final List<String> worldcupKeywords;
+
+  static {
+    worldcupKeywords = new ArrayList<>();
+    try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("worldcup_keywords.txt")) {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+      String line;
+      while ((line = reader.readLine()) != null) {
+        if (line.trim().length() > 0) {
+          worldcupKeywords.add(line.trim());
+        }
+      }
+    } catch (IOException ex) {
+      log.log(Level.SEVERE, "Error in reading worldcup_keywords.txt. {0}", ex.getMessage());
+    }
+  }
+
   @Inject
   private NewsBean newsBean;
-  
+
   @Schedule(minute = "*/5", hour = "*", persistent = false)
   public void fetchOfficialNews() {
     log.log(Level.INFO, "Fetching official news ...");
@@ -217,27 +245,84 @@ public class NewsFetchBean {
 
         newsBean.save(news);
       } catch (Exception ex) {
-        log.log(Level.WARNING, "Fetchign news failed. {0} {1} - {2}", new Object[]{news.getId(), news.getUniqueKey(), ex.getMessage()});        
+        log.log(Level.WARNING, "Fetchign news failed. {0} {1} - {2}", new Object[]{news.getId(), news.getUniqueKey(), ex.getMessage()});
       }
     }
   }
 
   private boolean isPersepolisNews(News news) {
     return true; /*
-    PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();
-    return matcher.match(news);*/
+     PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();
+     return matcher.match(news);*/
+
   }
 
   @Schedule(minute = "0", hour = "4", dayOfWeek = "1", persistent = false)
   private void cleanupHotNews() {
     log.log(Level.INFO, "Cleaning hot news table.");
-    newsBean.deleteAllHotNewsExceptLast();    
+    newsBean.deleteAllHotNewsExceptLast();
   }
-  
+
   @Schedule(minute = "*", hour = "5", dayOfWeek = "1", persistent = false)
   private void cleanupNews() {
     log.log(Level.INFO, "Cleaning news table.");
     newsBean.deleteAllExceptTop(10000);
   }
-  
+
+  @Schedule(minute = "5/15", hour = "*", persistent = false)
+  public void findAndSaveWorldCupNews() {
+    log.log(Level.INFO, "finding worldcup news.");
+    List<News> newsList = newsBean.readTop(null, 100);
+
+    List<Rule> rules = new ArrayList<>();
+    List<RuleSeperator> seperators = new ArrayList();
+    
+    int i = 0;
+    for (String word : worldcupKeywords) {
+      TitleKeywordCondition titleCondition = new TitleKeywordCondition(new Keyword(word));
+      ContentKeywordCondition contentCondition = new ContentKeywordCondition(2, new Keyword(word));
+
+      Rule rule1 = new Rule();
+      rule1.addCondition(titleCondition);
+
+      Rule rule2 = new Rule();
+      rule2.addCondition(contentCondition);
+
+      rules.add(rule1);
+      rules.add(rule2);
+
+      seperators.add(RuleSeperator.OR);
+      
+      if (++i < worldcupKeywords.size()) {
+        seperators.add(RuleSeperator.OR);
+      }
+    }
+
+    NewsMatch newsMatch = new NewsMatch(rules, seperators);
+    NewsFilter filter = new NewsFilter(newsMatch);
+
+    List<News> worldCupRelatedNews = null;
+
+    try {
+      worldCupRelatedNews = filter.filter(newsList);
+    } catch (MatchException ex) {
+      log.log(Level.SEVERE, null, ex);
+    }
+
+    if (worldCupRelatedNews != null && worldCupRelatedNews.size() > 0) {
+      List<WorldCupNews> worldCupNewsList = new ArrayList<>(worldCupRelatedNews.size());
+
+      for (News news : worldCupRelatedNews) {
+        WorldCupNews worldCupNews = new WorldCupNews(news);
+        worldCupNewsList.add(worldCupNews);
+      }
+
+      for (WorldCupNews news : worldCupNewsList) {
+        if (newsBean.findWorldCupNews(news.getUniqueKey()) == null) {
+          newsBean.save(news);
+          log.log(Level.INFO, "World cup news saved to DB: {0}", news.getId());
+        }
+      }
+    }
+  }
 }

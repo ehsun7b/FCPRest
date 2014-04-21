@@ -29,7 +29,7 @@
           <span class="tab-link" data-tab="topTab" data-content="tab4">بازی قبلی</span>-->
           <span class="tab-link" data-tab="topTab" data-content="tab6">ویدئو‌های برگزیده</span>
           <span class="tab-link" data-tab="topTab" data-content="tab5">جدول لیگ برتر</span>
-          <span class="tab-link" data-tab="topTab" data-content="tab7">جام جهانی</span>
+          <span class="tab-link" style="color: red" data-tab="topTab" data-content="tab7">جام جهانی</span>
         </div>
         <div class="tabs-content">
           <div class="tab-content active" data-tab="topTab" id="tab1">

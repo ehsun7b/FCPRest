@@ -3,15 +3,11 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
 import com.ehsunbehravesh.persepolis.entity.News;
 import com.google.gson.Gson;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,35 +28,19 @@ public class WorldCupNews {
   private static final Logger log = Logger.getLogger(WorldCupNews.class.getName());  
   
   @Inject
-  private NewsBean newsBean;
+  private NewsBean newsBean; 
   
-  public static List<News> cache = new ArrayList<>();
+  public static List<com.ehsunbehravesh.persepolis.entity.WorldCupNews> cache = new ArrayList<>();
   public static Date cacheDate;
   public static final Object cacheLock = new Object();
   public static final long CACHE_MAX_AGE = 10 * 60 * 1000; // milliseconds //
   // first is minutes
-  public static final int MAX_ITEMS = 15;
-  private static final List<String> keywords;
-
-  static {
-    keywords = new ArrayList<>();
-    try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("worldcup_keywords.txt")) {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-      String line;
-      while ((line = reader.readLine()) != null) {        
-        if (line.trim().length() > 0) {
-          keywords.add(line.trim());
-        }
-      }
-    } catch (IOException ex) {
-      log.log(Level.SEVERE, "Error in reading worldcup_keywords.txt. {0}", ex.getMessage());
-    }
-  }
+  public static final int MAX_ITEMS = 15;  
   
   @GET
   @Path("json")
   @Produces("application/json; charset=UTF-8")
-  public List<News> newsJson() throws IOException {
+  public List<com.ehsunbehravesh.persepolis.entity.WorldCupNews> newsJson() throws IOException {
 
     if (cacheIsOld()) {
       try {
@@ -102,7 +82,7 @@ public class WorldCupNews {
 
   private void load() throws ParserConfigurationException, MalformedURLException, SAXException, IOException {
     synchronized (cacheLock) {
-      List<News> news = newsBean.findKeyword(keywords, MAX_ITEMS);
+      List<com.ehsunbehravesh.persepolis.entity.WorldCupNews> news = newsBean.readTopWorldCup(MAX_ITEMS); //newsBean.findKeyword(keywords, MAX_ITEMS);
       if (news.size() > 0) {
         cache.clear();
         cache = news;

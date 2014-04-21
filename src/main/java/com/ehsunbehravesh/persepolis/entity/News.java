@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
@@ -14,24 +16,25 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class News implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  @Column(nullable = false, unique = true)
-  private String uniqueKey;
+  protected Long id;
   @Column(nullable = false)
-  private String title;
+  protected String uniqueKey;
   @Column(nullable = false)
-  private String link;  
-  private String description;
-  private String publishDate;
-  private String image;
-  private String website;
+  protected String title;
+  @Column(nullable = false)
+  protected String link;  
+  protected String description;
+  protected String publishDate;
+  protected String image;
+  protected String website;
   @XmlTransient
   @Column(length = 5000)
-  private String content;
+  protected String content;
 
   public String getContent() {
     return content;

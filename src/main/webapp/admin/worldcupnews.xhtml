@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../template/admin/main.xhtml">
+      
+      <ui:define name="pageTitle">:: #{adm.worldCupNews}</ui:define>
+      
+      <ui:define name="right">
+        <ui:include src="../template/admin/right_hotnews.xhtml"/>
+      </ui:define>
+
+      <ui:define name="content">
+        <h1>#{adm.worldCupNews}</h1>
+        <h:dataTable binding="#{table}" value="#{newsWeb.worldCupNewsList}" var="news"
+                     styleClass="grid"
+                     headerClass="grid-header"
+                     rowClasses="grid-odd,grid-even">
+          <h:column>
+            <f:facet name="header">#{adm.row}</f:facet>
+            #{table.rowIndex + 1}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.title}</f:facet>
+            #{news.title}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.website}</f:facet>
+            #{news.website}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.uniqueKey}</f:facet>
+            #{news.uniqueKey}
+          </h:column>
+          <h:column>
+            <f:facet name="header">#{adm.action}</f:facet>
+            <h:form>
+              <h:commandLink value="#{adm.delete}" action="#{newsWeb.delete(news)}"/>
+            </h:form>
+          </h:column>
+        </h:dataTable>
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

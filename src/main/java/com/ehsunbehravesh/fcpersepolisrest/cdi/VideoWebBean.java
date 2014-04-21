@@ -29,13 +29,14 @@ import javax.servlet.http.Part;
 public class VideoWebBean {
 
   private static final Logger log = Logger.getLogger(VideoWebBean.class.getName());
-  private static final String IMAGE_FOLDER = "/home/ehsun7b/video/image";
+  private static final String IMAGE_FOLDER = "/root/video/image";
   private static final int BUFFER_SIZE = 2048;
 
   @Inject
   private VideoBean videoBean;
 
   private Video video;
+  private VideoCategory videoCategory;
   private List<Video> videoList;
   private List<VideoCategory> categories;
 
@@ -44,6 +45,7 @@ public class VideoWebBean {
   @PostConstruct
   private void init() {
     video = new Video();
+    videoCategory = new VideoCategory();
     categories = videoBean.readCategories();
   }
 
@@ -69,6 +71,18 @@ public class VideoWebBean {
     } catch (Exception ex) {
       log.log(Level.SEVERE, "Video save failed. {0}", ex.getMessage());
       context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, p.getProperty("videoSaveFailed"), ""));
+    }
+  }
+  
+  public void saveCategory() {
+    FacesContext context = FacesContext.getCurrentInstance();
+    Properties p = loadProperties();
+    try {
+      videoBean.save(videoCategory);
+      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, p.getProperty("videoCategorySavedSuccessfully"), ""));
+    } catch (Exception ex) {
+      log.log(Level.SEVERE, "VideoCategory save failed. {0}", ex.getMessage());
+      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, p.getProperty("videoCategorySaveFailed"), ""));
     }
   }
   
@@ -150,6 +164,14 @@ public class VideoWebBean {
   public void setImage(Part image) {
     this.image = image;
   }
+
+  public VideoCategory getCategory() {
+    return videoCategory;
+  }
+
+  public void setCategory(VideoCategory videoCategory) {
+    this.videoCategory = videoCategory;
+  }    
 
   private void writeFile(Part image) throws IOException {
     File file = new File(IMAGE_FOLDER + File.separator + image.getSubmittedFileName());

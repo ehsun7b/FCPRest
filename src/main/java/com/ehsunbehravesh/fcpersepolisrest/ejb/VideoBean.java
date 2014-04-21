@@ -47,6 +47,9 @@ public class VideoBean {
   }
 
   public void save(VideoCategory category) {
+    if (!em.contains(category)) {
+      category = em.merge(category);
+    }
     em.persist(category);
   }
 
