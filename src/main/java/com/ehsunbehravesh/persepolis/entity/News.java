@@ -32,10 +32,16 @@ public class News implements Serializable {
   protected String publishDate;
   protected String image;
   protected String website;
+  @XmlTransient  
+  protected boolean enable;
   @XmlTransient
   @Column(length = 5000)
   protected String content;
 
+  public News() {
+    enable = true;
+  }  
+  
   public String getContent() {
     return content;
   }
@@ -104,4 +110,12 @@ public class News implements Serializable {
   public void setWebsite(String website) {
     this.website = website;
   }
+
+  public boolean isEnable() {
+    return enable;
+  }
+
+  public void setEnable(boolean enable) {
+    this.enable = enable;
+  }    
 }

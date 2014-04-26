@@ -1,9 +1,24 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
-  <head>    
+<html itemscope itemtype="http://schema.org/News">
+  <head>          
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Add the following three tags inside head. -->
+    <meta itemprop="name" content="${news.title}">
+    <meta itemprop="description" content="${news.description}">
+    <meta itemprop="image" content="http://fcpersepolis.info/rest/image/news/${news.uniqueKey}/200/200/photo.png">    
+    
+    <meta property="og:title" content="${news.title}" />
+    <meta property="og:description" content="${news.description}" />
+    <meta property="og:image" content="http://fcpersepolis.info/rest/image/news/${news.uniqueKey}/200/200/photo.png"/>
+    <meta property="og:url" content="http://fcpersepolis.info/news/${news.uniqueKey}"/>
+    <meta property="og:site_name" content="پایگاه خبری پرسپولیس"/>
+    
+    <meta name=robots content="index, follow" />
+    <meta name=googlebot content="index, follow" />
+    <meta name=description content="${news.title}" />
+
     <title>${news.title}</title>    
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/desktop.css"/>
@@ -15,7 +30,7 @@
     <script type="text/javascript" src="/js/single-min.js"></script>
 
     <style type="text/css">
-      div.news {
+      article.news {
         padding: 20px;
       }
 
@@ -58,7 +73,7 @@
       div.link-news {
         display: inline-block;
       }
-      
+
       div.link-news a {        
         text-decoration: none;
         font: normal normal 10px tahoma;
@@ -74,18 +89,20 @@
       <div id="header">
         <%@include file="jspf/header.jspf" %>
       </div>
-      <div class="news">
-        <div class="date-news">${news.publishDate}</div>
-        <div class="title-news">${news.title}</div>
+      <article class="news">
+        <header>
+          <div class="date-news">${news.publishDate}</div>
+          <div class="title-news">${news.title}</div>
+        </header>
         <c:if test="${news.image != null}">
           <div class="image-news">
-            <img src="/rest/image/thumbnail/400/300?url=${news.image}" />
+            <img src="/rest/image/news/${news.uniqueKey}/400/300/photo.png" />
           </div>
         </c:if>
         <div class="text-news">${news.content}</div>                
         <div class="buttons-news">
           <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
-          
+
           <!-- Place this tag where you want the +1 button to render. -->
           <div class="g-plusone"></div>
 
@@ -101,7 +118,7 @@
             })();
           </script>
         </div>
-      </div>
+      </article>
       <div style="clear: both"></div>
 
       <!-- Google adsense -->      

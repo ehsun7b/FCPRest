@@ -7,6 +7,7 @@ import com.ehsunbehravesh.persepolis.entity.News;
 import com.ehsunbehravesh.utils.image.ThumbnailUtils;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -137,12 +138,25 @@ public class Image {
   }
 
   @GET
-  @Path("news/{uniqueKey}/{width}/{height}")
+  @Path("news/{uniqueKey}/{width}/{height}/photo.png")
   @Produces("image/png")
   public byte[] fromNews(@PathParam(value = "uniqueKey") String uniqueKey,
           @PathParam("width") int width,
           @PathParam("height") int height) {
 
+    File imageFile = new File(pathOfNewsImages() + File.separator + uniqueKey + ".png");
+    
+    if (imageFile.exists()) {
+      try {
+        BufferedImage image = ThumbnailUtils.fetchImage(imageFile);
+        BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
+        //log.log(Level.INFO, "Image sent to client from file system. {0}", imageFile.getAbsolutePath());
+        return ThumbnailUtils.toByteArray(newContent, "png");
+      } catch (IOException | URISyntaxException ex) {
+        log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());
+      }
+    }
+    
     News news = newsCache.findOne(uniqueKey);
 
     try {
@@ -152,13 +166,16 @@ public class Image {
         return ThumbnailUtils.toByteArray(newContent, "png");
       }
     } catch (IOException | URISyntaxException ex) {
-      log.log(Level.SEVERE, "Error in sending thumbnail to client. {0}", ex.getMessage());
-      return null;
+      log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());      
     }
 
     return emptyImage();
   }
 
+  private String pathOfNewsImages() {
+    return System.getProperty("user.home") + File.separator + "news/image";
+  }
+  
   private BufferedImage fromCache(String key) {
     //if (cache.containsKey(key)) {
     //return cache.get(key);

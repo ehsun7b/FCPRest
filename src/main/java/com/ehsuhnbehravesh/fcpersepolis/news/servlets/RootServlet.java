@@ -10,15 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.uadetector.ReadableUserAgent;
-import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.UserAgentType;
-import net.sf.uadetector.service.UADetectorServiceFactory;
 
 /**
  *
  * @author ehsun7b
  */
-@WebServlet(name = "RootServlet", urlPatterns = {""})
+@Deprecated
+@WebServlet(name = "RootServlet", urlPatterns = {"/root"})
 public class RootServlet extends HttpServlet {
 
   private static final Logger log = Logger.getLogger(RootServlet.class.getName());

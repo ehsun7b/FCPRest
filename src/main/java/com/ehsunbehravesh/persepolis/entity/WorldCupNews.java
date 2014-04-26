@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class WorldCupNews extends News {
 
   public WorldCupNews() {
+    super();
   }
 
   public WorldCupNews(News news) {

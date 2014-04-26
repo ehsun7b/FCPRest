@@ -12,24 +12,32 @@ import com.ehsuhnbehravesh.fcpersepolis.news.filter.TitleKeywordCondition;
 import com.ehsuhnbehravesh.fcpersepolis.utils.Utils;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetch;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetchFactory;
-import com.ehsunbehravesh.persepolis.entity.WorldCupNews;
 import com.ehsunbehravesh.persepolis.entity.News;
+import com.ehsunbehravesh.persepolis.entity.WorldCupNews;
+import com.ehsunbehravesh.utils.image.ThumbnailUtils;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -148,7 +156,7 @@ public class NewsFetchBean {
         news.setPublishDate(pubDate.getTextContent());
         news.setWebsite(VARZESH3_WEBSITE);
 
-        if (isPersepolisNews(news) && newsBean.findOne(news.getUniqueKey()) == null) {
+        if (newsBean.findOne(news.getUniqueKey()) == null) {
           newsBean.save(news);
         }
       }
@@ -182,7 +190,7 @@ public class NewsFetchBean {
         //news.setPublishDate(pubDate.getTextContent());
         news.setWebsite(KHABARONLINE_WEBSITE);
 
-        if (isPersepolisNews(news) && newsBean.findOne(news.getUniqueKey()) == null) {
+        if (newsBean.findOne(news.getUniqueKey()) == null) {
           newsBean.save(news);
         }
       }
@@ -216,7 +224,7 @@ public class NewsFetchBean {
         news.setPublishDate(pubDate.getTextContent());
         news.setWebsite(ISNA_WEBSITE);
 
-        if (isPersepolisNews(news) && newsBean.findOne(news.getUniqueKey()) == null) {
+        if (newsBean.findOne(news.getUniqueKey()) == null) {
           newsBean.save(news);
         }
       }
@@ -250,25 +258,18 @@ public class NewsFetchBean {
     }
   }
 
-  private boolean isPersepolisNews(News news) {
-    return true; /*
-     PersepolisNewsMatcher matcher = new PersepolisNewsMatcher();
-     return matcher.match(news);*/
-
-  }
-
   @Schedule(minute = "0", hour = "4", dayOfWeek = "1", persistent = false)
   private void cleanupHotNews() {
     log.log(Level.INFO, "Cleaning hot news table.");
     newsBean.deleteAllHotNewsExceptLast();
   }
 
-  @Schedule(minute = "*", hour = "5", dayOfWeek = "1", persistent = false)
-  private void cleanupNews() {
-    log.log(Level.INFO, "Cleaning news table.");
-    newsBean.deleteAllExceptTop(10000);
-  }
-
+  /*
+   @Schedule(minute = "*", hour = "5", dayOfWeek = "1", persistent = false)
+   private void cleanupNews() {
+   log.log(Level.INFO, "Cleaning news table.");
+   newsBean.deleteAllExceptTop(10000);
+   }*/
   @Schedule(minute = "5/15", hour = "*", persistent = false)
   public void findAndSaveWorldCupNews() {
     log.log(Level.INFO, "finding worldcup news.");
@@ -276,7 +277,7 @@ public class NewsFetchBean {
 
     List<Rule> rules = new ArrayList<>();
     List<RuleSeperator> seperators = new ArrayList();
-    
+
     int i = 0;
     for (String word : worldcupKeywords) {
       TitleKeywordCondition titleCondition = new TitleKeywordCondition(new Keyword(word));
@@ -292,7 +293,7 @@ public class NewsFetchBean {
       rules.add(rule2);
 
       seperators.add(RuleSeperator.OR);
-      
+
       if (++i < worldcupKeywords.size()) {
         seperators.add(RuleSeperator.OR);
       }
@@ -320,9 +321,90 @@ public class NewsFetchBean {
       for (WorldCupNews news : worldCupNewsList) {
         if (newsBean.findWorldCupNews(news.getUniqueKey()) == null) {
           newsBean.save(news);
-          log.log(Level.INFO, "World cup news saved to DB: {0}", news.getId());
+          log.log(Level.INFO, "World cup news saved to DB: {0}", news.getUniqueKey());
         }
       }
     }
+  }
+
+  @Schedule(minute = "10/20", hour = "*", persistent = false)
+  public void downloadNewsImage() {
+    List<News> newsList = newsBean.readAnyNews(300);
+    log.log(Level.INFO, "downloading news images. {0}", newsList.size());
+
+    for (News news : newsList) {
+
+      try {
+        String imageUrl = news.getImage();
+
+        if (imageUrl != null && isURL(imageUrl.trim())) {
+          try {
+            String imageFilename = downloadNewsImage(news.getUniqueKey(), imageUrl);
+            news.setImage(imageFilename);            
+            log.log(Level.INFO, "News image downloaded successfully. news id: {0}", news.getId());
+          } catch (Exception ex) {
+            log.log(Level.SEVERE, "News image download failed. news id: {0} {1}", new Object[]{news.getId(), ex.getMessage()});
+          }
+        } else {
+          continue;
+        }
+
+        Thread.sleep(1000);
+      } catch (InterruptedException ex) {
+        log.log(Level.WARNING, "Error during sleep in image download.", ex);
+      }
+    }
+
+    log.log(Level.INFO, "downloading news images finished.");
+  }
+
+  private String pathOfNewsImages() {
+    return System.getProperty("user.home") + File.separator + "news/image";
+  }
+
+  private boolean isURL(String image) {
+    if (image.length() > 0) {
+      final String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+      Pattern patt = Pattern.compile(regex);
+      Matcher matcher = patt.matcher(image);
+      return matcher.matches();
+    }
+
+    return false;
+  }
+
+  private String downloadNewsImage(String uniqueKey, String image) throws IOException, URISyntaxException {
+    String fileName = uniqueKey + ".png";
+
+    File file = new File(pathOfNewsImages() + File.separator + fileName);
+    if (file.exists()) {
+      return fileName;
+    }
+
+    BufferedImage bufferedImage = ThumbnailUtils.fetchImage(new URL(image));
+
+    if (bufferedImage != null) {
+      ImageIO.write(bufferedImage, "png", file);
+      return fileName;
+    } else {
+      throw new IOException("BufferedImage is null. " + image);
+    }
+  }
+
+  private static String prepareForFilename(String title) {
+    String illigals = "/\\";
+    StringBuilder filename = new StringBuilder();
+    title = title.replaceAll(" ", "-");
+    for (char c : title.toCharArray()) {
+      if (illigals.indexOf(c) < 0) {
+        filename.append(c);
+      }
+    }
+    
+    return filename.toString();
+  }
+
+  public static void main(String[] args) {
+    System.out.println(prepareForFilename("fghjbjbj / ghjksow .jpg"));
   }
 }

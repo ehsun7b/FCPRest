@@ -41,6 +41,8 @@
             <f:facet name="header">#{adm.action}</f:facet>
             <h:form>
               <h:commandLink value="#{adm.delete}" action="#{newsWeb.delete(news)}"/>
+              |
+              <h:commandLink value="#{adm.disable}" action="#{newsWeb.disable(news)}"/>
             </h:form>
           </h:column>
         </h:dataTable>

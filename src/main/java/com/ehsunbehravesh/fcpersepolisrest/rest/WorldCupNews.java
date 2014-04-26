@@ -1,7 +1,6 @@
 package com.ehsunbehravesh.fcpersepolisrest.rest;
 
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
-import com.ehsunbehravesh.persepolis.entity.News;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -25,18 +24,19 @@ import org.xml.sax.SAXException;
 @Stateless
 @Path("worldcup")
 public class WorldCupNews {
-  private static final Logger log = Logger.getLogger(WorldCupNews.class.getName());  
-  
+
+  private static final Logger log = Logger.getLogger(WorldCupNews.class.getName());
+
   @Inject
-  private NewsBean newsBean; 
-  
+  private NewsBean newsBean;
+
   public static List<com.ehsunbehravesh.persepolis.entity.WorldCupNews> cache = new ArrayList<>();
   public static Date cacheDate;
   public static final Object cacheLock = new Object();
   public static final long CACHE_MAX_AGE = 10 * 60 * 1000; // milliseconds //
   // first is minutes
-  public static final int MAX_ITEMS = 15;  
-  
+  public static final int MAX_ITEMS = 15;
+
   @GET
   @Path("json")
   @Produces("application/json; charset=UTF-8")
@@ -99,5 +99,5 @@ public class WorldCupNews {
     long diff = now.getTime() - cacheDate.getTime();
     return (diff > CACHE_MAX_AGE);
   }
-  
+
 }

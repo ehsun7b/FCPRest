@@ -27,10 +27,16 @@ public class NewsBean {
   }
 
   public void save(News news) {
+    if (!em.contains(news)) {
+      news = em.merge(news);
+    }
     em.persist(news);
   }
 
   public void save(WorldCupNews news) {
+    if (!em.contains(news)) {
+      news = em.merge(news);
+    }
     em.persist(news);
   }
 
@@ -72,12 +78,13 @@ public class NewsBean {
     TypedQuery<News> query = null;
 
     if (website != null) {
-      query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.website = :website order by n.id DESC", News.class);
+      query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.website = :website and n.enable = :enable order by n.id DESC", News.class);
     } else {
-      query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type order by n.id DESC", News.class);
+      query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.enable = :enable order by n.id DESC", News.class);
     }
 
     query.setParameter("type", News.class);
+    query.setParameter("enable", Boolean.TRUE);
     
     if (website != null) {
       query.setParameter("website", website);
@@ -88,8 +95,9 @@ public class NewsBean {
   }
 
   public List<News> readNewsWithoutContent(int size) {
-    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.content is null order by n.id DESC", News.class);
+    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE TYPE(n) = :type and n.content is null and n.enable = :enable order by n.id DESC", News.class);
     query.setParameter("type", News.class);
+    query.setParameter("enable", Boolean.TRUE);
     query.setMaxResults(size);
     return query.getResultList();
   }
@@ -175,7 +183,15 @@ public class NewsBean {
 
   public List<WorldCupNews> readTopWorldCup(int size) {
     TypedQuery<WorldCupNews> query = null;
-    query = em.createQuery("Select n FROM WorldCupNews n order by n.id DESC", WorldCupNews.class);
+    query = em.createQuery("Select n FROM WorldCupNews n where n.enable = :enable order by n.id DESC", WorldCupNews.class);
+    query.setParameter("enable", Boolean.TRUE);
+    query.setMaxResults(size);
+    return query.getResultList();
+  }
+
+  public List<News> readAnyNews(int size) {
+    TypedQuery<News> query = em.createQuery("Select n FROM News n WHERE n.enable = :enable order by n.id DESC", News.class);
+    query.setParameter("enable", Boolean.TRUE);
     query.setMaxResults(size);
     return query.getResultList();
   }

@@ -25,7 +25,7 @@
               <td>${news.uniqueKey}</td>
               <td><a href="/news/${news.uniqueKey}">${news.title}</a></td>
               <td>${news.description}</td>
-              <td><img src="/rest/image/news/${news.uniqueKey}/70/70"/></td>
+              <td><img src="/rest/image/news/${news.uniqueKey}/70/70/photo.png"/></td>
             </tr>
           </c:forEach>
         </table>

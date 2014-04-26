@@ -7,7 +7,7 @@ function showGeneralNews(data, board) {
   var len = Math.min(data.length, SIZE);
   for (var i = 0; i < len; ++i) {
     var news = data[i];
-    var image = $("<img/>", {src: "rest/image/news/" + news.uniqueKey + "/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height});
+    var image = $("<img/>", {src: "/rest/image/news/" + news.uniqueKey + "/" + IMAGE_SIZE.width + "/" + IMAGE_SIZE.height + "/photo.png"});
     board.append($("<div/>", {"class": "news"}).append($("<a/>", {href: "/news/" + news.uniqueKey}).append(news.title)).append(image));
   }
 }

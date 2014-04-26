@@ -12,9 +12,7 @@
     <script type="text/javascript" src="/js/kineticjs/kinetic-v5.0.1.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.10.4.custom.min.js"></script>
     <script type="text/javascript" src="/js/jquery.flip.min.js"></script>
-
-    <script type="text/javascript" src="/js/single-min.js"></script>
-
+    <script type="text/javascript" src="/js/single-min.js"></script>    
   </head>
   <body>    
     <div id="main_container">
@@ -37,7 +35,7 @@
               <c:forEach items="${hotNewsList}" var="hotNews" varStatus="loop">
                 <div class="hotNews <c:if test="${loop.index > 0}">displayNone</c:if>">
                   <a href="/news/${hotNews.uniqueKey}">
-                    <div class="hotNewsPhoto"><img src="/rest/image/news/${hotNews.uniqueKey}/250/200"/></div>
+                    <div class="hotNewsPhoto"><img src="/rest/image/news/${hotNews.uniqueKey}/250/200/photo.png"/></div>
                     <div class="hotNewsTitle">${hotNews.title}</div>
                     <div class="hotNewsDescription">${hotNews.description}...</div>
                   </a>
@@ -138,7 +136,7 @@
                   <div class="news">
                     <a href="/news/${news.uniqueKey}">${news.title}</a>
                     <c:if test="${news.image != null}">
-                      <img src="/rest/image/news/${news.uniqueKey}/80/50"/>
+                      <img src="/rest/image/news/${news.uniqueKey}/80/50/photo.png"/>
                     </c:if>
                   </div>
                 </c:forEach>

@@ -38,6 +38,15 @@ public class ThumbnailUtils {
     tempFile.delete();
     return thumb;
   }
+  
+  public static BufferedImage thumbnailForce(BufferedImage image, Dimension size) throws IOException {
+    File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + System.nanoTime() + ".png");
+    Thumbnails.of(image).forceSize(size.width, size.height).toFile(tempFile);
+    BufferedImage thumb = ImageIO.read(tempFile);
+    tempFile.delete();
+    return thumb;
+  }
+
 
   public static String toBase64(BufferedImage image) throws IOException {
     BASE64Encoder encoder = new BASE64Encoder();

@@ -2,7 +2,13 @@ package com.ehsunbehravesh.fcpersepolisrest.ejb;
 
 import com.ehsunbehravesh.persepolis.entity.Newspaper;
 import com.ehsunbehravesh.persepolis.entity.NewspaperSet;
+import com.ehsunbehravesh.utils.image.AnimatedGifEncoder;
+import com.ehsunbehravesh.utils.image.ThumbnailUtils;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,13 +37,13 @@ public class NewspaperPhotosBean {
 
   private final String url = "http://varzesh3.com";
 
-  @Schedule(minute = "*/10", hour = "*", persistent = false)
+  @Schedule(minute = "*/1", hour = "*", persistent = false)
   public void check() {
     log.info("Checking for newspapers ...");
     NewspaperSet lastSet = setBean.findLast();
 
     if (lastSet == null) {
-      List<Newspaper> newspapers = fetchPhotos();
+      List<Newspaper> newspapers = fetchPhotos();      
       saveNewspaperSet(null, newspapers);
     } else {
       String currentDate = fetchCurrentDate();
@@ -76,6 +82,13 @@ public class NewspaperPhotosBean {
       NewspaperSet newspaperSet = new NewspaperSet(date);
       newspaperSet.setNewspapers(newspapers);
 
+      try {      
+        String gif = generateGifAnimation(newspaperSet);
+        newspaperSet.setGif(gif);
+      } catch (IOException | URISyntaxException ex) {
+        log.log(Level.SEVERE, null, ex);
+      }
+      
       for (Newspaper newspaper : newspapers) {
         newspaper.setSet(newspaperSet);
       }
@@ -186,5 +199,32 @@ public class NewspaperPhotosBean {
     }
 
     return true;
+  }
+
+  private String pathOfNewspaperImages() {
+    return System.getProperty("user.home") + File.separator + "newspaper/image";
+  }
+  
+  private String generateGifAnimation(NewspaperSet set) throws IOException, URISyntaxException {
+    AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
+    File file = new File(pathOfNewspaperImages() + File.separator + set.getPublishDate().replaceAll("/", "-") + ".gif");
+    gifEncoder.start(file.getAbsolutePath());
+    gifEncoder.setDelay(3000); // 3 seconds
+    
+    for (Newspaper newspaper : set.getNewspapers()) {
+      BufferedImage image = ThumbnailUtils.fetchImage(newspaper.getPhotoURL());
+      
+      if (image != null) {
+        image = ThumbnailUtils.thumbnailForce(image, new Dimension(140, 100));
+        gifEncoder.addFrame(image);
+      }
+    }
+    
+    if (!gifEncoder.finish()) {
+      file.delete();
+      return null;
+    } else {
+      return file.getName();
+    }
   }
 }

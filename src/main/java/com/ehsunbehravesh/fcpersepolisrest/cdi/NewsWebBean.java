@@ -89,6 +89,13 @@ public class NewsWebBean {
     newsList = newsBean.readTop(null, 20);
     worldCupNewsList = newsBean.readTopWorldCup(20);
   }
+  
+  public void disable(News news) {
+    news.setEnable(false);
+    newsBean.save(news);
+    newsList = newsBean.readTop(null, 20);
+    worldCupNewsList = newsBean.readTopWorldCup(20);
+  }
 
   public HotNews getHotNews() {
     return hotNews;

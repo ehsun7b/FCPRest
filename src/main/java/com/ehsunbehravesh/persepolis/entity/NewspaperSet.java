@@ -27,6 +27,8 @@ public class NewspaperSet implements Serializable {
   @Column(nullable = false)
   private String publishDate;
 
+  private String gif;
+  
   @OneToMany(mappedBy = "set", cascade = CascadeType.ALL)
   private List<Newspaper> newspapers;
 
@@ -59,6 +61,14 @@ public class NewspaperSet implements Serializable {
 
   public void setPublishDate(String publishDate) {
     this.publishDate = publishDate;
+  }
+
+  public String getGif() {
+    return gif;
+  }
+
+  public void setGif(String gif) {
+    this.gif = gif;
   }
 
 }

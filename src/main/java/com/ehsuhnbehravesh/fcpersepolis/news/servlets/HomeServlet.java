@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ehsun7b
  */
-@WebServlet(name = "DesktopHomeServlet", urlPatterns = {"/home"})
-public class DesktopHomeServlet extends PageServlet {
+@WebServlet(name = "HomeServlet", urlPatterns = {""})
+public class HomeServlet extends MultiDevicePageServlet {
 
   @Inject
   private NewsBean newsBean;
@@ -27,10 +27,10 @@ public class DesktopHomeServlet extends PageServlet {
   @Inject
   private VideoBean videoBean;
   
-  private static final Logger log = Logger.getLogger(DesktopHomeServlet.class.getName());
+  private static final Logger log = Logger.getLogger(HomeServlet.class.getName());
 
-  public DesktopHomeServlet() {
-    super("desktop_home.jsp");
+  public HomeServlet() {
+    super("home.jsp");
   }
 
   @Override
