@@ -1,9 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html itemscope itemtype="http://schema.org/News">
   <head>
     <meta charset="utf-8" />
+    
+    <!-- Add the following three tags inside head. -->
+    <meta itemprop="name" content="${news.title}">
+    <meta itemprop="description" content="${news.description}">
+    <meta itemprop="image" content="${news.image}">    
+    
+    <meta property="og:title" content="${news.title}" />
+    <meta property="og:description" content="${news.description}" />
+    <meta property="og:image" content="${news.image}"/>
+    <meta property="og:url" content="http://fcpersepolis.info/news/${news.uniqueKey}"/>
+    <meta property="og:site_name" content="پایگاه خبری پرسپولیس"/>
+    
+    <meta name=robots content="index, follow" />
+    <meta name=googlebot content="index, follow" />
+    <meta name=description content="${news.title}" />
+    
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
     <script src="/js/newstext.js"></script>
@@ -28,7 +44,7 @@
         <div class="title-news">${news.title}</div>
         <c:if test="${news.image != null}">
           <div class="image-news">
-            <img src="${news.image}" />
+            <img src="/rest/image/news/${news.uniqueKey}/400/400/photo.png" />
           </div>
         </c:if>
         <div class="text-news">${news.content}</div>

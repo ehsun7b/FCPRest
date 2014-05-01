@@ -25,11 +25,12 @@ div.image-news {
   padding: 1px 20px 20px 1px;	
   float: left;	
   text-align: left;
+  max-width: 50%;
 }
 
 div.image-news img {
   box-shadow: 5px 5px 3px 0px #AAA;
-  max-width: 60%;
+  max-width: 100%;
 }
 
 div.donation {

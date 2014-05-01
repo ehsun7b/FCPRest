@@ -35,68 +35,60 @@ public class NewspaperPhotosBean {
   @Inject
   private NewspaperSetBean setBean;
 
-  private final String url = "http://varzesh3.com";
+  private static final String url = "http://varzesh3.com";
 
-  @Schedule(minute = "*/1", hour = "*", persistent = false)
+  @Schedule(minute = "0", hour = "*/1", persistent = false)
   public void check() {
-    log.info("Checking for newspapers ...");
-    NewspaperSet lastSet = setBean.findLast();
+    log.info("Adding new newspapers");
 
-    if (lastSet == null) {
-      List<Newspaper> newspapers = fetchPhotos();      
-      saveNewspaperSet(null, newspapers);
-    } else {
-      String currentDate = fetchCurrentDate();
+    String currentDate = fetchCurrentDate();
 
-      if (currentDate != null) {
-        if (!currentDate.equals(lastSet.getPublishDate())) {
-          List<Newspaper> newspapers = fetchPhotos();
-          saveNewspaperSet(currentDate, newspapers);
-        } else {
-          boolean lastSetIsInvalid;
-          List<Newspaper> newspapers = fetchPhotos();
-
-          lastSetIsInvalid = !isEqual(newspapers, lastSet.getNewspapers());
-
-          if (lastSetIsInvalid) {
-            log.log(Level.INFO, "Newspaper set is invalid. updatings newspapers.");
-            lastSet.setNewspapers(newspapers);
-
-            for (Newspaper newspaper : newspapers) {
-              newspaper.setSet(lastSet);
-            }
-
-            setBean.save(lastSet);
-          }
-        }
-      }
+    if (currentDate != null) {
+      List<Newspaper> newspapers = fetchPhotos();
+      saveNewspaperSet(currentDate, newspapers);
     }
+
   }
 
-  private void saveNewspaperSet(String date, List<Newspaper> newspapers) {
-    if (date == null) {
-      date = fetchCurrentDate();
-    }
+  @Schedule(minute = "*/10", hour = "*", persistent = false)
+  public void fixThumbnail() {
+    log.info("Fixing newspaper GIF");
 
-    if (date != null) {
-      NewspaperSet newspaperSet = new NewspaperSet(date);
-      newspaperSet.setNewspapers(newspapers);
+    NewspaperSet set = setBean.findLast();
 
-      try {      
-        String gif = generateGifAnimation(newspaperSet);
-        newspaperSet.setGif(gif);
-      } catch (IOException | URISyntaxException ex) {
-        log.log(Level.SEVERE, null, ex);
-      }
+    if (set.getGif() == null) {
+      log.info("GIF is null. Try to generate.");
       
-      for (Newspaper newspaper : newspapers) {
-        newspaper.setSet(newspaperSet);
+      try {
+        String gif = generateGifAnimation(set);
+        
+        if (gif != null) {
+          set.setGif(gif);
+          setBean.save(set);
+        }
+      } catch (IOException | URISyntaxException ex) {
+        log.log(Level.SEVERE, "Exception in gif generation in fixing gif. {0}", ex.getMessage());
       }
-
-      setBean.save(newspaperSet);
-    } else {
-      log.log(Level.SEVERE, "Can not fetch the current date of newspaper!");
     }
+    
+  }
+  
+  private void saveNewspaperSet(String date, List<Newspaper> newspapers) {
+    NewspaperSet newspaperSet = new NewspaperSet(date);
+    newspaperSet.setNewspapers(newspapers);
+
+    try {
+      String gif = generateGifAnimation(newspaperSet);
+      newspaperSet.setGif(gif);
+    } catch (IOException | URISyntaxException ex) {      
+      log.log(Level.SEVERE, "ERROR IN GIF generation.", ex);
+    }
+
+    for (Newspaper newspaper : newspapers) {
+      newspaper.setSet(newspaperSet);
+    }
+
+    setBean.save(newspaperSet);
   }
 
   private List<Newspaper> fetchPhotos() {
@@ -184,42 +176,26 @@ public class NewspaperPhotosBean {
     return result;
   }
 
-  private boolean isEqual(List<Newspaper> newspapers, List<Newspaper> newspapers0) {
-    if (newspapers.size() != newspapers0.size()) {
-      return false;
-    } else {
-      for (int i = 0; i < newspapers.size(); i++) {
-        Newspaper n1 = newspapers.get(i);
-        Newspaper n2 = newspapers0.get(i);
-
-        if (!n1.getTitle().equals(n2.getTitle())) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
-  private String pathOfNewspaperImages() {
+  public static String pathOfNewspaperImages() {
     return System.getProperty("user.home") + File.separator + "newspaper/image";
   }
-  
+
   private String generateGifAnimation(NewspaperSet set) throws IOException, URISyntaxException {
     AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
     File file = new File(pathOfNewspaperImages() + File.separator + set.getPublishDate().replaceAll("/", "-") + ".gif");
     gifEncoder.start(file.getAbsolutePath());
     gifEncoder.setDelay(3000); // 3 seconds
-    
+    gifEncoder.setRepeat(0);
+
     for (Newspaper newspaper : set.getNewspapers()) {
       BufferedImage image = ThumbnailUtils.fetchImage(newspaper.getPhotoURL());
-      
+
       if (image != null) {
-        image = ThumbnailUtils.thumbnailForce(image, new Dimension(140, 100));
+        image = ThumbnailUtils.thumbnailForce(image, new Dimension(70, 50));
         gifEncoder.addFrame(image);
       }
     }
-    
+
     if (!gifEncoder.finish()) {
       file.delete();
       return null;

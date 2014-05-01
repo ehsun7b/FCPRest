@@ -7,14 +7,14 @@
     <!-- Add the following three tags inside head. -->
     <meta itemprop="name" content="${news.title}">
     <meta itemprop="description" content="${news.description}">
-    <meta itemprop="image" content="http://fcpersepolis.info/rest/image/news/${news.uniqueKey}/200/200/photo.png">    
-    
+    <meta itemprop="image" content="${news.image}">    
+
     <meta property="og:title" content="${news.title}" />
     <meta property="og:description" content="${news.description}" />
-    <meta property="og:image" content="http://fcpersepolis.info/rest/image/news/${news.uniqueKey}/200/200/photo.png"/>
+    <meta property="og:image" content="${news.image}"/>
     <meta property="og:url" content="http://fcpersepolis.info/news/${news.uniqueKey}"/>
     <meta property="og:site_name" content="پایگاه خبری پرسپولیس"/>
-    
+
     <meta name=robots content="index, follow" />
     <meta name=googlebot content="index, follow" />
     <meta name=description content="${news.title}" />
@@ -89,37 +89,55 @@
       <div id="header">
         <%@include file="jspf/header.jspf" %>
       </div>
-      <article class="news">
-        <header>
-          <div class="date-news">${news.publishDate}</div>
-          <div class="title-news">${news.title}</div>
-        </header>
-        <c:if test="${news.image != null}">
-          <div class="image-news">
-            <img src="/rest/image/news/${news.uniqueKey}/400/300/photo.png" />
-          </div>
-        </c:if>
-        <div class="text-news">${news.content}</div>                
-        <div class="buttons-news">
-          <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
 
-          <!-- Place this tag where you want the +1 button to render. -->
-          <div class="g-plusone"></div>
-
-          <!-- Place this tag after the last +1 button tag. -->
-          <script type="text/javascript">
-            (function() {
-              var po = document.createElement('script');
-              po.type = 'text/javascript';
-              po.async = true;
-              po.src = 'https://apis.google.com/js/platform.js';
-              var s = document.getElementsByTagName('script')[0];
-              s.parentNode.insertBefore(po, s);
-            })();
-          </script>
+      <div class="middle">
+        <div class="left">
+          <h4>اخبار ${news.websiteName}</h4>
+            <c:forEach items="${newsList}" var="news">
+              <div class="sideNews">
+                <a class="sideNewsSite" href="/cat/${news.website}">${news.websiteName}</a>
+                <div class="sideNewsPhoto"><img src="/rest/image/news/crop/${news.uniqueKey}/50/35/photo.png"/></div>
+                <div class="sideNewsTitle"><a title="${news.title}" href="/news/${news.uniqueKey}">${news.title}</a></div>
+              </div>
+            </c:forEach>
         </div>
-      </article>
-      <div style="clear: both"></div>
+
+        <div class="right">
+          <article class="news">
+            <header>
+              <div class="date-news">${news.publishDate}</div>
+              <div class="title-news">${news.title}</div>
+            </header>
+            <c:if test="${news.image != null}">
+              <div class="image-news">
+                <img src="/rest/image/news/${news.uniqueKey}/400/300/photo.png" />
+              </div>
+            </c:if>
+            <div class="text-news">${news.content}</div>                
+            <div class="buttons-news">
+              <div class="link-news"><a href="${news.link}" target="_blank">منبع خبر</a></div>
+
+              <!-- Place this tag where you want the +1 button to render. -->
+              <div class="g-plusone"></div>
+
+              <!-- Place this tag after the last +1 button tag. -->
+              <script type="text/javascript">
+                (function() {
+                  var po = document.createElement('script');
+                  po.type = 'text/javascript';
+                  po.async = true;
+                  po.src = 'https://apis.google.com/js/platform.js';
+                  var s = document.getElementsByTagName('script')[0];
+                  s.parentNode.insertBefore(po, s);
+                })();
+              </script>
+            </div>
+          </article>
+          <div style="clear: both"></div>
+
+        </div>
+
+      </div>
 
       <!-- Google adsense -->      
       <div style="text-align: center; padding: 30px 0px" id="advert1">

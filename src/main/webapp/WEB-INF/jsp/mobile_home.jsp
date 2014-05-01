@@ -1,257 +1,122 @@
-<%-- 
-    Document   : mobile_home
-    Created on : Mar 12, 2014, 12:57:28 PM
-    Author     : ehsun7b
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8" />    
     <meta name="format-detection" content="telephone=no" />
-    <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCRYiaS1SawMg6ybt0-39FFqUbHMtEtzsU&sensor=false"></script>-->
-    <link rel="stylesheet" href="/js/rtl.jquery.mobile-1.4.0/css/themes/default/rtl.jquery.mobile-1.4.0.css" />    
-    <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/rtl.jquery.mobile-1.4.0/js/rtl.jquery.mobile-1.4.0.js"></script>
-    
-    <script src="/js/mobile-min.js"></script>
-    <script src="/js/mobile_results-min.js"></script>
-    <script src="/js/mobile_stadium_map-min.js"></script>
-    <script src="/js/news-min.js"></script>
-    <script src="/js/mobile_news-min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="/css/mobile.css"/>    
+    <script src="/js/newstext.js"></script>
+    <!-- JQM -->
+    <link rel="stylesheet" href="/js/jquery.mobile-1.3.2/jquery.mobile.structure-1.3.2.min.css" />
+    <link rel="stylesheet" href="/js/jquery.mobile-1.3.2/fcpersepolis.min.css" />
+    <script src="/js/jquery.mobile-1.3.2/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery.mobile-1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <!-- /JQM -->
+    <link rel="stylesheet" href="/css/newstext-min.css" />
+    <style type="text/css">
+
+
+      article.hotNews {
+        margin: 40px 0px;        
+        display: block;
+        line-height: 1.7em;   
+        border-bottom: dotted gray 1px;
+      }
+
+      div.hotNewsPhoto {
+        float: left;        
+        text-align: left;
+        width: 50%;
+      }
+
+      div.hotNewsDescription {
+        min-height: 150px;
+      }
+
+      div.hotNewsPhoto img {
+        max-width: 100%;
+        margin-right: 0px;
+        box-shadow: 2px 2px 2px #888;
+      }
+
+      article.hotNews a {
+        text-decoration: none;
+        display: block;
+        margin-bottom: 20px;
+      }
+      
+      a.news {
+        display: block;
+        text-decoration: none;
+        margin: 40px 0px;
+        line-height: 1.7em;        
+      }
+    </style>
+
     <title>FC Persepolis</title>
   </head>
   <body>
-
-    <div id="pageHome" data-role="page">
+    <div id="home" data-role="page">
+      <div data-role="header" data-id="headerH" data-theme="b"
+           data-position="fixed">
+        <h1 style="white-space: normal; padding: 10px 0px">پایگاه خبری پرسپولیس</h1>
+      </div>
       <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <p style="text-align: center">پایگاه خبری پرسپولیس</p>
-      </div>
-
-      <!-- content -->
       <div data-role="content">
-        <div data-role="controlgroup">
-          <a data-role="button" data-theme="a" data-icon="" href="#pageMatchInfo">برنامه بازی‌ها</a>
-          <a data-role="button" data-theme="a" data-icon="" href="#pageRanking">جدول لیگ برتر</a>
-          <a data-role="button" data-theme="a" data-icon="" href="#pageNews">اخبار</a>
-          <a data-role="button" data-theme="a" data-icon="" href="/newspapers/0">روزنامه‌های ورزشی</a>
-        </div>
+        <c:forEach items="${hotNewsList}" var="hotNews" varStatus="loop">
+          <article class="hotNews">            
+            <header><h1 class="hotNewsTitle">${hotNews.title}</h1></header>
+            <div class="hotNewsPhoto"><img src="/rest/image/news/${hotNews.uniqueKey}/200/200/photo.png"/></div>
+            <div class="hotNewsDescription">${hotNews.description}...</div>
+            <a data-ajax="false" href="/news/${hotNews.uniqueKey}">متن خبر</a>
+          </article>
+        </c:forEach>
+        <div style="clear: both; margin-bottom: 20px;"></div>        
+        <h1 style="text-align: center">اخبار جام‌جهانی</h1>
+        <c:forEach items="${worldCupNewsList}" var="news" varStatus="loop">
+          <a data-ajax="false" class="news" href="/news/${news.uniqueKey}"><h2>${news.title}</h2></a>
+        </c:forEach>
+        <h1 style="text-align: center">اخبار</h1>
+        <c:forEach items="${newsList}" var="news" varStatus="loop">
+          <a data-ajax="false" class="news" href="/news/${news.uniqueKey}"><h2>${news.title}</h2></a>
+        </c:forEach>
       </div>
 
-      <div class="advert" id="home_adsense">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- FCPersepolisMobileBanner -->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:320px;height:100px"
-             data-ad-client="ca-pub-1305937802991389"
-             data-ad-slot="7953692798"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+      <div class="donation">
+        <div style="text-align: center;">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- NewsText_Ad_text_image -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-1305937802991389"
+               data-ad-slot="9621156393"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>                
       </div>
-
-      <div data-role="footer" data-id="footer" data-position="fixed" data-theme="a">
-
-      </div>
+      <!-- content -->
+      <div data-role="footer" data-id="footer" data-theme="b"
+           data-position="fixed"></div>
       <!-- footer -->
     </div>
 
-    <div id="pageMatchInfo" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>برنامه بازی‌ها</h2>
-      </div>
+    <script>
+      (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js',
+              'ga');
 
-      <!-- content -->
-      <div data-role="content">
-        <div id="results"></div>
-
-        <div class="map">
-          <h4>محل برگزاری</h4>          
-          <div id="map-canvas"></div>
-          <input type="button" value="فاصله من ؟" id="btnDistance"/>
-          <div id="distance"></div>
-        </div>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" data-rel="back">صفحه اصلی</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>
-
-    <div id="pageRanking" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>جدول لیگ برتر</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <div id="results"></div>
-
-        <div class="map">          
-          <div id="ranking"></div>
-        </div>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" data-rel="back">صفحه اصلی</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>
-
-    <div id="pageNews" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>اخبار</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <div data-role="controlgroup">
-          <a data-role="button" data-theme="b" href="#pageOfficialNews">اخبار سایت رسمی باشگاه</a>
-          <a data-role="button" data-theme="b" href="#pageArteshNews">اخبار سایت ارتش سرخ</a>
-          <a data-role="button" data-theme="b" href="#pageVarzesh3News">اخبار سایت ورزش۳</a>
-          <a data-role="button" data-theme="b" href="#pageIsnaNews">اخبار سایت ایسنا</a>          
-          <a data-role="button" data-theme="b" href="#pageKhabarOnlineNews">اخبار سایت خبرآنلاین</a>
-        </div>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" data-rel="back">صفحه اصلی</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>    
-
-    <div id="pageOfficialNews" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>سایت باشگاه</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <ul data-role="listview" id="official_news_content"></ul>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
-            <li><a data-rol="button" data-rel="back">اخبار</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>    
-
-    <div id="pageArteshNews" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>سایت ارتش سرخ</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <ul data-role="listview" id="artesh_news_content"></ul>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
-            <li><a data-rol="button" data-rel="back">اخبار</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>
-
-    <div id="pageVarzesh3News" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>سایت ورزش۳</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <ul data-role="listview" id="varzesh3_news_content"></ul>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
-            <li><a data-rol="button" data-rel="back">اخبار</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>
-
-    <div id="pageIsnaNews" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>سایت ایسنا</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <ul data-role="listview" id="isna_news_content"></ul>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
-            <li><a data-rol="button" data-rel="back">اخبار</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>    
-
-    <div id="pageKhabarOnlineNews" data-role="page">
-      <!-- header -->
-      <div data-role="header" data-id="headerH" data-theme="a">
-        <h2>سایت خبرآنلاین</h2>
-      </div>
-
-      <!-- content -->
-      <div data-role="content">
-        <ul data-role="listview" id="khabaronline_news_content"></ul>
-      </div>
-
-      <div data-role="footer" data-id="footer" data-theme="a" data-position="fixed">
-        <div data-role="navbar">
-          <ul>
-            <li><a data-rol="button" href="#pageHome">صفحه اصلی</a></li>
-            <li><a data-rol="button" data-rel="back">اخبار</a></li>
-          </ul>
-        </div>        
-      </div>
-      <!-- footer -->
-    </div>
-
+      ga('create', 'UA-43478531-1', 'perspolis-news.appspot.com');
+      ga('send', 'pageview');
+    </script>
   </body>
 </html>

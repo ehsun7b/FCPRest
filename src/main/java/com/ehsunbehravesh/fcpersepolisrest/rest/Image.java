@@ -3,11 +3,17 @@ package com.ehsunbehravesh.fcpersepolisrest.rest;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetch;
 import com.ehsunbehravesh.fcpersepolis.net.descriptionfetch.NewsDescriptionFetchFactory;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsCacheBean;
+import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperPhotosBean;
+import com.ehsunbehravesh.fcpersepolisrest.ejb.NewspaperSetBean;
 import com.ehsunbehravesh.persepolis.entity.News;
+import com.ehsunbehravesh.persepolis.entity.NewspaperSet;
 import com.ehsunbehravesh.utils.image.ThumbnailUtils;
+import com.sun.imageio.plugins.gif.GIFImageWriter;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -39,8 +45,8 @@ public class Image {
   @Inject
   private NewsCacheBean newsCache;
 
-  private static final int CACHE_SIZE = 50;
-  private static final Map<String, BufferedImage> cache = new HashMap<>();
+  @Inject
+  private NewspaperSetBean newspaperSetBean;
 
   @Context
   private ServletContext context;
@@ -51,15 +57,9 @@ public class Image {
   public byte[] image(@QueryParam("url") String url) {
     try {
       String key = url;
-      BufferedImage cachedContent = fromCache(key);
-      if (cachedContent == null) {
-        BufferedImage image = ThumbnailUtils.fetchImage(url);
-        toCache(key, image);
+      BufferedImage image = ThumbnailUtils.fetchImage(url);
 
-        return ThumbnailUtils.toByteArray(image, "png");
-      } else {
-        return ThumbnailUtils.toByteArray(cachedContent, "png");
-      }
+      return ThumbnailUtils.toByteArray(image, "png");
     } catch (IOException | URISyntaxException ex) {
       log.log(Level.SEVERE, "Error in sending thumbnail to client. {0}", ex.getMessage());
       return emptyImage();
@@ -73,25 +73,44 @@ public class Image {
           @PathParam("width") int width,
           @PathParam("height") int height) {
     try {
-      String key = url + width + "-" + height;
-      BufferedImage cachedContent = fromCache(key);
-      if (cachedContent == null) {
-        key = url;
-        cachedContent = fromCache(key);
-        if (cachedContent == null) {
-          BufferedImage image = ThumbnailUtils.fetchImage(url);
-          BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
-          toCache(key, newContent);
-          return ThumbnailUtils.toByteArray(newContent, "png");
-        } else {
-          BufferedImage newContent = ThumbnailUtils.thumbnail(cachedContent, new Dimension(width, height));
-          toCache(key, newContent);
-          return ThumbnailUtils.toByteArray(newContent, "png");
-        }
-      } else {
-        return ThumbnailUtils.toByteArray(cachedContent, "png");
-      }
+      BufferedImage image = ThumbnailUtils.fetchImage(url);
+      BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
+      return ThumbnailUtils.toByteArray(newContent, "png");
+
     } catch (IOException | URISyntaxException ex) {
+      log.log(Level.SEVERE, "Error in sending thumbnail to client. {0}", ex.getMessage());
+      return emptyImage();
+    }
+  }
+
+  @GET
+  @Path("newspapers/thumbnail.gif")
+  @Produces("image/gif")
+  public byte[] newspapersGif() {
+    try {
+      NewspaperSet set = newspaperSetBean.findLast();
+
+      if (set != null) {
+        String gif = set.getGif();
+
+        File gifFile = new File(NewspaperPhotosBean.pathOfNewspaperImages() + File.separator + gif);
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        try (InputStream input = new FileInputStream(gifFile)) {
+          byte[] buf = new byte[2048];
+          int bytesRead = input.read(buf);
+          while (bytesRead != -1) {
+            output.write(buf, 0, bytesRead);
+            bytesRead = input.read(buf);
+          }
+          output.flush();
+        }
+        
+        return output.toByteArray();
+      } else {
+        return emptyImage();
+      }
+    } catch (IOException ex) {
       log.log(Level.SEVERE, "Error in sending thumbnail to client. {0}", ex.getMessage());
       return emptyImage();
     }
@@ -108,26 +127,9 @@ public class Image {
       String url = findImageUrl(newsUrl);
 
       if (url != null) {
-        String key = url.concat(width + "").concat(height + "");
-        BufferedImage cachedContent = null;
-        fromCache(key);
-        if (cachedContent == null) {
-          key = url;
-          cachedContent = null;
-          fromCache(key);
-          if (cachedContent == null) {
-            BufferedImage image = ThumbnailUtils.fetchImage(url);
-            BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
-            toCache(key, newContent);
-            return ThumbnailUtils.toByteArray(newContent, "png");
-          } else {
-            BufferedImage newContent = ThumbnailUtils.thumbnail(cachedContent, new Dimension(width, height));
-            toCache(key, newContent);
-            return ThumbnailUtils.toByteArray(newContent, "png");
-          }
-        } else {
-          return ThumbnailUtils.toByteArray(cachedContent, "png");
-        }
+        BufferedImage image = ThumbnailUtils.fetchImage(url);
+        BufferedImage newContent = ThumbnailUtils.thumbnail(image, new Dimension(width, height));
+        return ThumbnailUtils.toByteArray(newContent, "png");
       } else {
         return emptyImage();
       }
@@ -145,7 +147,7 @@ public class Image {
           @PathParam("height") int height) {
 
     File imageFile = new File(pathOfNewsImages() + File.separator + uniqueKey + ".png");
-    
+
     if (imageFile.exists()) {
       try {
         BufferedImage image = ThumbnailUtils.fetchImage(imageFile);
@@ -156,7 +158,7 @@ public class Image {
         log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());
       }
     }
-    
+
     News news = newsCache.findOne(uniqueKey);
 
     try {
@@ -166,7 +168,77 @@ public class Image {
         return ThumbnailUtils.toByteArray(newContent, "png");
       }
     } catch (IOException | URISyntaxException ex) {
-      log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());      
+      log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());
+    }
+
+    return emptyImage();
+  }
+
+  @GET
+  @Path("news/force/{uniqueKey}/{width}/{height}/photo.png")
+  @Produces("image/png")
+  public byte[] fromNewsForce(@PathParam(value = "uniqueKey") String uniqueKey,
+          @PathParam("width") int width,
+          @PathParam("height") int height) {
+
+    File imageFile = new File(pathOfNewsImages() + File.separator + uniqueKey + ".png");
+
+    if (imageFile.exists()) {
+      try {
+        BufferedImage image = ThumbnailUtils.fetchImage(imageFile);
+        BufferedImage newContent = ThumbnailUtils.thumbnailForce(image, new Dimension(width, height));
+
+        return ThumbnailUtils.toByteArray(newContent, "png");
+      } catch (IOException | URISyntaxException ex) {
+        log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());
+      }
+    }
+
+    News news = newsCache.findOne(uniqueKey);
+
+    try {
+      if (news != null && news.getImage() != null) {
+        BufferedImage image = ThumbnailUtils.fetchImage(news.getImage());
+        BufferedImage newContent = ThumbnailUtils.thumbnailForce(image, new Dimension(width, height));
+        return ThumbnailUtils.toByteArray(newContent, "png");
+      }
+    } catch (IOException | URISyntaxException ex) {
+      log.log(Level.WARNING, "Error in sending thumbnail to client. {0}", ex.getMessage());
+    }
+
+    return emptyImage();
+  }
+
+  @GET
+  @Path("news/crop/{uniqueKey}/{width}/{height}/photo.png")
+  @Produces("image/png")
+  public byte[] fromNewsCrop(@PathParam(value = "uniqueKey") String uniqueKey,
+          @PathParam("width") int width,
+          @PathParam("height") int height) {
+
+    File imageFile = new File(pathOfNewsImages() + File.separator + uniqueKey + ".png");
+
+    if (imageFile.exists()) {
+      try {
+        BufferedImage image = ThumbnailUtils.fetchImage(imageFile);
+        BufferedImage newContent = ThumbnailUtils.thumbnailCrop(image, new Dimension(width, height));
+
+        return ThumbnailUtils.toByteArray(newContent, "png");
+      } catch (IOException | URISyntaxException ex) {
+        log.log(Level.WARNING, "Error in sending thumbnail (file) to client. {0}", ex.getMessage());
+      }
+    }
+
+    News news = newsCache.findOne(uniqueKey);
+
+    try {
+      if (news != null && news.getImage() != null) {
+        BufferedImage image = ThumbnailUtils.fetchImage(news.getImage());
+        BufferedImage newContent = ThumbnailUtils.thumbnailCrop(image, new Dimension(width, height));
+        return ThumbnailUtils.toByteArray(newContent, "png");
+      }
+    } catch (IOException | URISyntaxException ex) {
+      log.log(Level.WARNING, "Error in sending thumbnail (url) to client. {0}", ex.getMessage());
     }
 
     return emptyImage();
@@ -174,21 +246,6 @@ public class Image {
 
   private String pathOfNewsImages() {
     return System.getProperty("user.home") + File.separator + "news/image";
-  }
-  
-  private BufferedImage fromCache(String key) {
-    //if (cache.containsKey(key)) {
-    //return cache.get(key);
-    //} else {
-    return null;
-    //}
-  }
-
-  private synchronized void toCache(String key, BufferedImage content) {
-    if (cache.size() >= CACHE_SIZE) {
-      cache.clear();
-    }
-    cache.put(key, content);
   }
 
   private String findImageUrl(String newsUrl) {

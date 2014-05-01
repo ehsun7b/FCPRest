@@ -1,6 +1,7 @@
 package com.ehsunbehravesh.persepolis.entity;
 
 import com.ehsuhnbehravesh.fcpersepolis.utils.Utils;
+import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsFetchBean;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -118,4 +119,41 @@ public class News implements Serializable {
   public void setEnable(boolean enable) {
     this.enable = enable;
   }    
+  
+  public String getWebsiteName() {
+    switch (website) {
+      case NewsFetchBean.OFFICIAL_WEBSITE:
+        return "باشگاه";
+      case NewsFetchBean.ARTESH_WEBSITE:
+        return "ارتش‌سرخ";
+      case NewsFetchBean.ISNA_WEBSITE:
+        return "ایسنا";
+      case NewsFetchBean.KHABARONLINE_WEBSITE:
+        return "خبرآنلاین";
+      case NewsFetchBean.VARZESH3_WEBSITE:
+        return "ورزش۳";
+      default:
+        return "";
+    }
+  }
+  
+  public String getShortDescription() {
+    if (description == null || description.trim().length() <= 0) {
+      return "";
+    }
+    
+    int size = 200;
+    StringBuilder result = new StringBuilder();
+    
+    for (int i = 0; i < description.length(); ++i) {
+      if (i < size) {
+        result.append(description.charAt(i));
+      } else {
+        result.append("...");
+        break;
+      }
+    }
+    
+    return result.toString();
+  }
 }

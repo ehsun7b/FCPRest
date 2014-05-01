@@ -1,5 +1,5 @@
 $(function() {  
-  showRanking("ranking");
+  //showRanking("ranking");
   //showMatchInfo("results");
   //showMatchInfoTabs("tab2", "tab4");
 });

@@ -1,44 +1,18 @@
-/*
 @font-face {
-  font-family: Khoramshahr;
-  src: url('font/XB Khoramshahr.ttf') format('truetype'); 
+  font-family: "BBCNassim";
+  src: url("http://www.bbc.co.uk/worldservice/fonts/persian/nassim/bbc-nassim-regular.eot");
+  src: local("☺"),
+    url("http://www.bbc.co.uk/worldservice/fonts/persian/nassim/bbc-nassim-regular.woff") format("woff"),
+    url("http://www.bbc.co.uk/worldservice/fonts/persian/nassim/bbc-nassim-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-
 @font-face {
-  font-family: Khoramshahr;
-  src: url('font/XB KhoramshahrBd.ttf') format('truetype');
+  font-family: "BBCNassim";
+  src: url("http://www.bbc.co.uk/worldservice/fonts/persian/nassim/bbc-nassim-bold.eot");
+  src: local("☺"),
+    url("http://www.bbc.co.uk/worldservice/fonts/persian/nassim/bbc-nassim-bold.woff") format("woff"),
+    url("http://www.bbc.co.uk/worldservice/fonts/persian/nassim/bbc-nassim-bold.ttf") format("truetype");
   font-weight: bold;
-}
-
-
-@font-face {
-  font-family: Khoramshahr;
-  src: url('font/XB KhoramshahrBdIt.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: Khoramshahr;
-  src: url('font/XB KhoramshahrIt.ttf') format('truetype');  
-  font-style: italic;
-}
-*/
-
-/* ------------------ */
-
-@font-face {
-  font-family: Traffic;
-  src: url('font/BTraffic.ttf') format('truetype'); 
-}
-
-@font-face {
-  font-family: Traffic;
-  src: url('font/BTrafcBd.ttf') format('truetype'); 
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: Nazanin;
-  src: url('font/BNazanin.ttf') format('truetype'); 
+  font-style: normal;
 }

@@ -1,10 +1,10 @@
 package com.ehsuhnbehravesh.fcpersepolis.news.servlets;
 
 import com.ehsunbehravesh.fcpersepolisrest.ejb.NewsBean;
-import static com.ehsunbehravesh.fcpersepolisrest.ejb.NewsFetchBean.OFFICIAL_WEBSITE;
 import com.ehsunbehravesh.fcpersepolisrest.ejb.VideoBean;
 import com.ehsunbehravesh.persepolis.entity.News;
 import com.ehsunbehravesh.persepolis.entity.Video;
+import com.ehsunbehravesh.persepolis.entity.WorldCupNews;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -36,11 +36,14 @@ public class HomeServlet extends MultiDevicePageServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     
-    List<News> officialNewsList = newsBean.readTop(OFFICIAL_WEBSITE, 10);
-    List<Video> videos = videoBean.readTop(4);
-    setAttr("officialNewsList", officialNewsList);
+    List<WorldCupNews> worldCupNewsList = newsBean.readTopWorldCup(10);
+    List<News> newsList = newsBean.readTop(null, 10);    
+    
+    List<Video> videos = videoBean.readTop(10);
+    setAttr("newsList", newsList);
     setAttr("videos", videos);
     setAttr("hotNewsList", newsBean.currentHotNews());
+    setAttr("worldCupNewsList", worldCupNewsList);
     
     
     showTemplate(req, resp);

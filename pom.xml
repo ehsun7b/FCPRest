@@ -140,6 +140,7 @@
                 <exclude>**/*kinetic*.js</exclude>
                 <exclude>**/mobile*.js</exclude>
                 <exclude>**/live.js</exclude>
+                <exclude>**/newspaper.js</exclude>
                 <exclude>**/stadium_map.js</exclude>                
               </excludes>
             </aggregation>

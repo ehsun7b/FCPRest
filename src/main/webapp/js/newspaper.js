@@ -1,10 +1,10 @@
-var NEWSPAPER_THUMBNAIL_SIZE = {width: 138, height: 100};
-var NEWSPAPERS_THUMBNAIL_SIZE = {width: 100, height: 60};
-var img, pdf, layer;
+var NEWSPAPER_THUMBNAIL_SIZE = {width: 70, height: 50};
+var NEWSPAPERS_THUMBNAIL_SIZE = {width: 70, height: 50};
+var img, layer;
 var index = 0;
 
 $(function() {
-  showAllNewspaperThumbnails("newspaper", NEWSPAPERS_THUMBNAIL_SIZE); 
+  //showAllNewspaperThumbnails("newspaper", NEWSPAPERS_THUMBNAIL_SIZE); 
 });
 
 function getNewspaperPhotos(callback) {
@@ -92,17 +92,7 @@ function showAnimatedNewspapers(board, photos, size) {
 
         layer.add(img[j]);
         img[j].moveToBottom();
-        layer.draw();
-        
-        img[j].on("mouseover", function(){
-          pdf.moveToTop();
-          layer.draw();
-        });
-        
-        img[j].on("mouseout", function(){
-          pdf.moveToBottom();
-          layer.draw();
-        });
+        layer.draw();                
         
       };
     }(i));
@@ -111,30 +101,7 @@ function showAnimatedNewspapers(board, photos, size) {
     console.log("src: " + photos[i]);
   }
 
-  pdf = new Kinetic.Text({
-    x: 36,
-    y: 26,
-    text: 'روزنامه\nورزشی',
-    stroke: "#000",
-    strokeWidth: 1,
-    fontSize: 20,
-    fontFamily: 'Times New Roman',
-    fontStyle: 'bold',
-    fill: '#f00',
-    align: 'center',
-    shadowColor: 'black',
-    shadowBlur: 2,
-    shadowOffset: {x: 3, y: 3},
-    shadowOpacity: 0.4,
-    opacity: 0.6
-  });
   
-  pdf.on("mouseover", function() {
-    pdf.moveToTop();
-    layer.draw();
-  });
-
-  layer.add(pdf);
   stage.add(layer);
   layer.draw();
 

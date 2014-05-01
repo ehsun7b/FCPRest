@@ -37,7 +37,6 @@ import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -339,9 +338,8 @@ public class NewsFetchBean {
 
         if (imageUrl != null && isURL(imageUrl.trim())) {
           try {
-            String imageFilename = downloadNewsImage(news.getUniqueKey(), imageUrl);
-            news.setImage(imageFilename);            
-            log.log(Level.INFO, "News image downloaded successfully. news id: {0}", news.getId());
+            String imageFilename = downloadNewsImage(news.getUniqueKey(), imageUrl);                      
+            log.log(Level.INFO, "News image downloaded successfully. news id: {0} {1}", new Object[]{news.getId(), imageFilename});
           } catch (Exception ex) {
             log.log(Level.SEVERE, "News image download failed. news id: {0} {1}", new Object[]{news.getId(), ex.getMessage()});
           }

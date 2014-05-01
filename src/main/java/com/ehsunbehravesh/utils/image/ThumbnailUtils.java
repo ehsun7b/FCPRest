@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -47,6 +48,13 @@ public class ThumbnailUtils {
     return thumb;
   }
 
+  public static BufferedImage thumbnailCrop(BufferedImage image, Dimension size) throws IOException {
+    File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + System.nanoTime() + ".png");
+    Thumbnails.of(image).size(size.width, size.height).crop(Positions.TOP_CENTER).toFile(tempFile);
+    BufferedImage thumb = ImageIO.read(tempFile);
+    tempFile.delete();
+    return thumb;
+  }
 
   public static String toBase64(BufferedImage image) throws IOException {
     BASE64Encoder encoder = new BASE64Encoder();
